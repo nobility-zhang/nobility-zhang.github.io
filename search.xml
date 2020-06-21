@@ -1,0 +1,3069 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>编译原理</title>
+    <url>/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h2 id="概论"><a href="#概论" class="headerlink" title="概论"></a>概论</h2><ul>
+<li>编译程序是指：将高级语言翻译成<strong>汇编语言</strong>或者<strong>机器语言</strong></li>
+<li>编译过程<ol>
+<li>词法分析：<strong>拼写</strong>，识别出一个个单词（保留字、运算符、分界符、标识符、常量）</li>
+<li>语法分析：<strong>语句结构、表达式结构</strong>括号匹配，赋值和运算符两端必须有值</li>
+<li>语义分析：<strong>类型匹配</strong>数据类型不对是否要强制转换，赋值给常量</li>
+<li>中间代码产生（非必须产生）伪汇编代码，四元式（运算符，运算对象1，运算对象2，结果）</li>
+<li>代码优化：为了产生更高效的目标代码，更加省时间和空间</li>
+<li>目标代码生成</li>
+</ol>
+</li>
+<li>表格管理：编译过程中源程序的各种信息，保留在不同的表中，最重要的是符号表（变量信息表）</li>
+<li>出错处理：能处理的错误处理，不能处理的错误可以继续编译，也可以终止编译<ul>
+<li>编译时错误：词法、语法错误</li>
+<li>运行时错误：编译程序不管</li>
+</ul>
+</li>
+<li><strong>以中间代码产生分隔前端和后端</strong>：前端依赖与源程序，后端依赖目标计算机</li>
+<li>遍<ul>
+<li>一遍扫描：一遍扫描将前端工作全部干完，即一个单词一个单词的进行词法分析，语法分析，语义分析，废空间省时间</li>
+<li>多遍扫描：每一遍扫描都将全部单词进行词法分析，语法分析，语义分析，省空间废时间</li>
+</ul>
+</li>
+<li>解释程序效率低，编译程序效率高</li>
+</ul>
+<h2 id="文法和语言"><a href="#文法和语言" class="headerlink" title="文法和语言"></a>文法和语言</h2><p>掌握：已知上下文无关文法和句型，构造推导，最左推导，最右推导，语法树，找出语法树的短语，直接短语，句柄</p>
+<h3 id="直观概念"><a href="#直观概念" class="headerlink" title="直观概念"></a>直观概念</h3><h4 id="语言"><a href="#语言" class="headerlink" title="语言"></a>语言</h4><ul>
+<li>语法<ul>
+<li>字母表：可以在程序中出现的字符</li>
+<li>词法规则：字符的排列组合组成词的规则（标识符，关键字等）</li>
+<li>语法规则：词的排列组合组成句子（表达式、函数等）</li>
+</ul>
+</li>
+<li>语义：指定程序意义的规则</li>
+</ul>
+<h4 id="文法"><a href="#文法" class="headerlink" title="文法"></a>文法</h4><p>描述语言的语法结构的规则，即语法规则</p>
+<h4 id="符号和符号串"><a href="#符号和符号串" class="headerlink" title="符号和符号串"></a>符号和符号串</h4><ul>
+<li>字母表：符号的<strong>非空有穷</strong>集合</li>
+<li>符号：可以互相区别的记号</li>
+<li><p>符号串（字、句子）：由符号组成的<strong>有穷序列</strong></p>
+<ul>
+<li>由字母表零个或多个字母（字母可重复）构成</li>
+</ul>
+</li>
+<li>基本术语</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>表示</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>空串</td>
+<td>$\epsilon$</td>
+<td>没有任何符号的符号串</td>
+</tr>
+<tr>
+<td>长度</td>
+<td>$\vert{a}\vert=1、\vert{\epsilon}\vert=0$</td>
+<td>串的长度</td>
+</tr>
+<tr>
+<td>前缀（头） 后缀（尾）</td>
+<td>ab中的a、ab、$\epsilon$都是前缀 ab中的b、ab、$\epsilon$都是后缀</td>
+<td>删除头、尾若干个字母的符号串 (包括删0个和全部个）</td>
+</tr>
+<tr>
+<td>真前缀（固有头） 真后缀（固有尾）</td>
+<td>ab中的a、$\epsilon$都是前缀 ab中的b、$\epsilon$都是后缀</td>
+<td>删除头、尾至少删除一个字母的符号串 (不包括不删，但包括全删）</td>
+</tr>
+<tr>
+<td>子串</td>
+<td>abc中a、b、c、ab、bc都是子串</td>
+<td>删除前缀后缀的符号串 （包括本身和空串）</td>
+</tr>
+<tr>
+<td>逆转</td>
+<td>ab逆转ba</td>
+<td>将符号串逆序</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="符号串的运算"><a href="#符号串的运算" class="headerlink" title="符号串的运算"></a>符号串的运算</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">连接</td>
+<td>相乘</td>
+</tr>
+<tr>
+<td style="text-align:left">方幂</td>
+<td>n次幂就是n个符号串连接（0个连接是$\epsilon$）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="符号串集合运算"><a href="#符号串集合运算" class="headerlink" title="符号串集合运算"></a>符号串集合运算</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>乘积</td>
+<td>笛卡尔积的符号串连接（空集乘任何集合都是空）</td>
+</tr>
+<tr>
+<td>合并</td>
+<td>非重复并集</td>
+</tr>
+<tr>
+<td>方幂</td>
+<td>n个集合的乘积（0个是{ $\epsilon$ }）</td>
+</tr>
+<tr>
+<td>闭包</td>
+<td>$A^*$，字符串的任意长度连接（包括$\epsilon$）</td>
+</tr>
+<tr>
+<td>正闭包</td>
+<td>$A^+$，字符串的任意长度连接（不包括$\epsilon$的闭包）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="形式定义"><a href="#形式定义" class="headerlink" title="形式定义"></a>形式定义</h3><h5 id="四部分"><a href="#四部分" class="headerlink" title="四部分"></a>四部分</h5><ul>
+<li><p>终结符号集：$V_T$，一组字母表</p>
+</li>
+<li><p>非终结符号集（语法变量）：$V_N$，语法范畴</p>
+</li>
+<li><p>语法规则集合（产生式集合）：P，语法规则</p>
+</li>
+<li><p>开始符号：S，特殊的非终结符，一个文法的起始符只有一个</p>
+<p>写法</p>
+<ul>
+<li>习惯大写字母是非终结符，小写字母是终结符</li>
+<li>-&gt;(推)、::=（推）、|（或）、&lt;&gt;（非终结符）</li>
+<li>起始符写法：显式G:[S]，隐式默认G：第一个符号是起始符</li>
+</ul>
+</li>
+</ul>
+<h5 id="其他概念"><a href="#其他概念" class="headerlink" title="其他概念"></a>其他概念</h5><p>产生式：文法的一条规则</p>
+<p>推导：由规则推出句子</p>
+<p>归约：由句子推出规则</p>
+<ul>
+<li>$=&gt;$一步</li>
+<li>$=^+&gt;$一步或多步</li>
+<li>$=^*&gt;$零步或多步（这就有可能左面等于右面）</li>
+</ul>
+<p>句型：文法通过星步推到出来的（包括起始符号本身）</p>
+<p>句子：终结符的组合（包括$\epsilon$），是特殊的句型</p>
+<p>语言：文法的句子集合</p>
+<h3 id="文法类型"><a href="#文法类型" class="headerlink" title="文法类型"></a>文法类型</h3><ul>
+<li>0型文法（短语文法）：$\alpha\longrightarrow \beta$，$\alpha$不允许是$\epsilon$，$\beta$允许是$\epsilon$</li>
+<li>1型文法（上下文有关文法）：$\alpha\longrightarrow \beta$，$\alpha$的长度大于等于$\beta$的长度，但是除外$\alpha\longrightarrow \epsilon$</li>
+<li>2型文法（上下文无关文法）：$\alpha\longrightarrow \beta$，$\alpha$是一个非终结符，$\beta$随意（语法分析）</li>
+<li>3型文法（正规文法）：$\alpha\longrightarrow \beta$，$\alpha$是一个非终结符，$\beta$最多只能有一个非终结符并且非终结符还得在最右（左）面出现（词法分析）</li>
+</ul>
+<h3 id="2型文法（上下文无关文法）"><a href="#2型文法（上下文无关文法）" class="headerlink" title="2型文法（上下文无关文法）"></a>2型文法（上下文无关文法）</h3><h4 id="语法树"><a href="#语法树" class="headerlink" title="语法树"></a>语法树</h4><h5 id="语法树与推导的区别"><a href="#语法树与推导的区别" class="headerlink" title="语法树与推导的区别"></a>语法树与推导的区别</h5><p>一颗语法树对应多个推导过程，因为树的生长过程只表明了非终结符被谁替换了，未表明顺序</p>
+<h5 id="最左推导和最右推导"><a href="#最左推导和最右推导" class="headerlink" title="最左推导和最右推导"></a>最左推导和最右推导</h5><p>当有多个非终结符时，总紧着最左（最右）的非终结符推导</p>
+<p>若文法没有二义性，则语法树唯一，最左推导和最有推到唯一</p>
+<p>规范推导：最右推导</p>
+<p>规范规约（最左规约）：最右推掉的逆过程</p>
+<p>规范句型：由规范推导推导出的句型</p>
+<h4 id="句型分析"><a href="#句型分析" class="headerlink" title="句型分析"></a>句型分析</h4><p>自上而下分析方法：推导</p>
+<p>自下而上分析方法：规约</p>
+<p>短语：多次规约成非终结符，即非叶节点为根的子树，叶节点序列</p>
+<p>直接短语：一次规约成非终结符，即简单子树，只有两层的子树的叶子节点</p>
+<p>句柄：最左直接短语</p>
+<h4 id="文法化简"><a href="#文法化简" class="headerlink" title="文法化简"></a>文法化简</h4><ul>
+<li>有害规则：$\alpha\longrightarrow \alpha$，左右都一样，会引起二义性</li>
+<li>多余规则<ul>
+<li>不可到达：含有（除拉起始符号）非终结符未在右部出现过规则</li>
+<li>不可终止：含有不能推出终止符号的非终结符规则</li>
+</ul>
+</li>
+</ul>
+<h2 id="词法分析（字符串-gt-单词序列）"><a href="#词法分析（字符串-gt-单词序列）" class="headerlink" title="词法分析（字符串-&gt;单词序列）"></a>词法分析（字符串-&gt;单词序列）</h2><p>掌握：给出正规式，能描述出正规集。NFA确定化，DFA最小化，正规式、正规文法、有穷自动机之间的互相转换</p>
+<h3 id="单词的描述工具"><a href="#单词的描述工具" class="headerlink" title="单词的描述工具"></a>单词的描述工具</h3><h4 id="3型文法（正规文法）"><a href="#3型文法（正规文法）" class="headerlink" title="3型文法（正规文法）"></a>3型文法（正规文法）</h4><p>右线性：右部唯一非终结符在最右面</p>
+<p>左线性：左部唯一非终结符在最左面</p>
+<p>不允许既有右线性又有左线性的文法</p>
+<p>正规集：正规文法对应的句子集合，即语言</p>
+<h4 id="正规式（正则表达式）"><a href="#正规式（正则表达式）" class="headerlink" title="正规式（正则表达式）"></a>正规式（正则表达式）</h4><p>正规集描述的数学工具，正规式描述的集合就是正规集</p>
+<ul>
+<li>优先级（高-低）：$*&gt;·&gt;|$，且左结合，闭包看作方幂，连接看作乘，或看作加</li>
+<li>（）只是改变运算优先级</li>
+</ul>
+<h4 id="正规式与正规文法的互相转换"><a href="#正规式与正规文法的互相转换" class="headerlink" title="正规式与正规文法的互相转换"></a>正规式与正规文法的互相转换</h4><h5 id="正规式转换为正规文法"><a href="#正规式转换为正规文法" class="headerlink" title="正规式转换为正规文法"></a>正规式转换为正规文法</h5><p>直到产生式右部最多有一个终结符</p>
+<ul>
+<li>$xy$     $A\longrightarrow xB$、$B\longrightarrow y$</li>
+<li>$x*y$      $A\longrightarrow xA$、$A\longrightarrow y$</li>
+<li>$x|y$     $A\longrightarrow x$、$A\longrightarrow y$</li>
+</ul>
+<h5 id="正规文法转换伟正规式"><a href="#正规文法转换伟正规式" class="headerlink" title="正规文法转换伟正规式"></a>正规文法转换伟正规式</h5><p>先将左部一样的写到一起，消除终结符，直到只剩下一个起始符号（注意带入时并不是可以消除产生式，若带入后的产生式是不可到达的才能删除）</p>
+<ul>
+<li>$A\longrightarrow xB$、$B\longrightarrow y$    $A=xy$</li>
+<li>$A\longrightarrow xA|y$   $ A=x*y$</li>
+<li>$A\longrightarrow x$、$A\longrightarrow y$    $A=x|y$</li>
+</ul>
+<h3 id="有穷自动机"><a href="#有穷自动机" class="headerlink" title="有穷自动机"></a>有穷自动机</h3><h4 id="DFA（确定有穷自动机）"><a href="#DFA（确定有穷自动机）" class="headerlink" title="DFA（确定有穷自动机）"></a>DFA（确定有穷自动机）</h4><p>确定：一个状态面临同一输入符号，有确定的下一个状态，即相同输入符号弧只有一条</p>
+<ul>
+<li>五元组<ul>
+<li>状态集：所有状态</li>
+<li>输入符号表：弧上</li>
+<li>转换函数集：有向弧，合并时是逗号分隔，并非竖线<ul>
+<li>$f(当前状态，输入符号)=变换后状态$</li>
+<li>不允许输入符号是$\epsilon$</li>
+<li>一个输入符号只有一种状态</li>
+</ul>
+</li>
+<li>唯一初态：箭头指向的状态</li>
+<li>终态集：双圈状态</li>
+</ul>
+</li>
+<li>矩阵表示<ul>
+<li>行是输入符号</li>
+<li>列是状态<ul>
+<li>起始状态一般第一行</li>
+<li>最后一列是区别终态和非终态用的标记位</li>
+</ul>
+</li>
+<li>表内是当前状态对应输入符号转换后的状态</li>
+</ul>
+</li>
+</ul>
+<h4 id="NFA（不确定有穷自动机）"><a href="#NFA（不确定有穷自动机）" class="headerlink" title="NFA（不确定有穷自动机）"></a>NFA（不确定有穷自动机）</h4><p>不确定：一个状态面临同一输入符号，有多个下一个状态，即相同输入符号弧只有多条</p>
+<ul>
+<li><p>五元组</p>
+<ul>
+<li>状态集：所有状态</li>
+<li>输入符号表：弧上</li>
+<li>转换函数集：有向弧，合并时是逗号分隔，并非竖线<ul>
+<li>$f(当前状态，输入符号)=变换后状态集$，若变换后状态集是空集，表示没有射出该输入符号的弧</li>
+<li><strong>允许输入符号是$\epsilon$</strong></li>
+<li><strong>同一输入符号可以到达多个状态</strong></li>
+</ul>
+</li>
+<li>初态集：箭头指向的状态<ul>
+<li><strong>允许有多个起始状态</strong></li>
+</ul>
+</li>
+<li>终态集：双圈状态</li>
+</ul>
+</li>
+<li><p>矩阵表示</p>
+<ul>
+<li>行是输入符号</li>
+<li>列是状态<ul>
+<li>起始状态一般第一行</li>
+<li>最后一列是区别终态和非终态用的标记位</li>
+<li><strong>表内是当前状态对应输入符号转换后的状态</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="NFA确定化"><a href="#NFA确定化" class="headerlink" title="NFA确定化"></a>NFA确定化</h4><h5 id="运算规则"><a href="#运算规则" class="headerlink" title="运算规则"></a>运算规则</h5><ul>
+<li>$\epsilon$闭包：$\epsilon -closure(状态集)$=状态集中的每个元素经过任意$\epsilon$弧到达的状态集合（注意默认自己到自己有一条$\epsilon$弧，所以当前状态集也会在到达状态集中）</li>
+<li>a弧转换：$moce(状态集,输入符号)$=从状态集出发经过一条输入符号弧到达的状态集</li>
+</ul>
+<h5 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h5><ol>
+<li>唯一初态：将NFA的初始状态集，做$\epsilon$闭包运算得到的集合，作为DFA的初始状态</li>
+<li>转换函数和其他状态：构造NFA矩阵，反复对已经出现的状态集合，先做a弧转换得到集合后，再对该集合做$\epsilon$闭包，得到新状态集合（集合中有NFA终止状态则该集合是DFA终止状态），直到不出现新状态为止</li>
+<li>根据矩阵画出转换图</li>
+</ol>
+<h4 id="DFA最小化"><a href="#DFA最小化" class="headerlink" title="DFA最小化"></a>DFA最小化</h4><h5 id="理论支持"><a href="#理论支持" class="headerlink" title="理论支持"></a>理论支持</h5><p><strong>同一语言的DFA可能不同，但最小DFA是唯一的</strong></p>
+<ol>
+<li>删除多余状态：不可到达状态、不可终止状态</li>
+<li>合并等价状态（不能删除转换函数）<ul>
+<li>一致性条件：同是非终态或同是终态</li>
+<li>蔓延性条件：对每一个相同的输入符号，到达的状态是一样的</li>
+</ul>
+</li>
+</ol>
+<h5 id="分割法（找不等价状态）"><a href="#分割法（找不等价状态）" class="headerlink" title="分割法（找不等价状态）"></a>分割法（找不等价状态）</h5><ol>
+<li>根据一致性条件对所有状态进行分组：终态和非终态分组</li>
+<li>对同一组的状态使用蔓延性条件检查：当到达状态集中出现不等价状态，逆推这组状态部分不等价，就分隔，反复分隔，直到不能分隔，若还有非单个元素的集合，则该集合中的状态等价<ul>
+<li>当某些状态没有射出要检查的弧时<ul>
+<li>增加弧射到死状态</li>
+<li>死状态面临任何输入符号时都到自己</li>
+<li>死状态属于非终态</li>
+<li>算法结束后将死状态删除</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="正规式与NFA互相转换"><a href="#正规式与NFA互相转换" class="headerlink" title="正规式与NFA互相转换"></a>正规式与NFA互相转换</h3><h4 id="正规式转换NFA"><a href="#正规式转换NFA" class="headerlink" title="正规式转换NFA"></a>正规式转换NFA</h4><ol>
+<li>引入两个状态，x起始状态，y终止状态</li>
+<li>弧上是正规式</li>
+<li>根据三条规则将规则分解，直到每条弧上只有一个输入符号</li>
+</ol>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/正规式转换NFA的转换规则.svg" alt="正规式转换NFA的转换规则"></p>
+<h4 id="NFA转换正规式"><a href="#NFA转换正规式" class="headerlink" title="NFA转换正规式"></a>NFA转换正规式</h4><ol>
+<li>增加一个状态x射出$\epsilon$所有的起始状态</li>
+<li>增加一个状态y被所有的终止状态射入$\epsilon$弧</li>
+<li>根据这三条规则将原来的所有状态消除，只剩下x和y，弧上的就是正规式</li>
+</ol>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/NFA转换正规式的转换规则.svg" alt="NFA转换正规式的转换规则"></p>
+<h3 id="正规文法与NFA互相转换"><a href="#正规文法与NFA互相转换" class="headerlink" title="正规文法与NFA互相转换"></a>正规文法与NFA互相转换</h3><h4 id="正规文法转换NFA"><a href="#正规文法转换NFA" class="headerlink" title="正规文法转换NFA"></a>正规文法转换NFA</h4><ol>
+<li>文法每个非终结符都对应NFA的一个状态（起始符号就是起始状态）</li>
+<li>文法终结符对应NFA输入符号</li>
+<li>新增加一个终止状态Z</li>
+<li>NFA转换函数由这两条规则转换<ul>
+<li>$A\longrightarrow a$：$f(A,a)=Z$，即A状态射出a弧到终态</li>
+<li>$A\longrightarrow aB$：$f(A,a)=B$，即A状态射出a弧到B</li>
+</ul>
+</li>
+</ol>
+<h4 id="DFA转换正规文法"><a href="#DFA转换正规文法" class="headerlink" title="DFA转换正规文法"></a>DFA转换正规文法</h4><ol>
+<li>自动机的状态对应文法的非终结符</li>
+<li>自动机起始状态对应文法起始符号</li>
+<li>自动机的输入符号（字母表）对应文法的终结符</li>
+<li>文法转换函数由这两条规则转换<ul>
+<li>$f(A,a)=B$：$A\longrightarrow aB$，即A状态射出a弧到B</li>
+<li>对于终态Z，增加$Z \longrightarrow\epsilon$</li>
+</ul>
+</li>
+</ol>
+<h2 id="语法分析（单词序列-gt-语法单位）"><a href="#语法分析（单词序列-gt-语法单位）" class="headerlink" title="语法分析（单词序列-&gt;语法单位）"></a>语法分析（单词序列-&gt;语法单位）</h2><h3 id="自顶向下语法分析方法"><a href="#自顶向下语法分析方法" class="headerlink" title="自顶向下语法分析方法"></a>自顶向下语法分析方法</h3><h4 id="确定的自顶向下语法分析"><a href="#确定的自顶向下语法分析" class="headerlink" title="确定的自顶向下语法分析"></a>确定的自顶向下语法分析</h4><p>确定：根据输入符号能唯一确定选择那个产生式向下推导</p>
+<ul>
+<li>first集：产生式右部能推出的首个终结符集合（若右部是$\epsilon$，则$\epsilon$属于first集）</li>
+<li><p>follow集：产生式左部非终结符，在全部产生式中紧跟在该非终结符后面的终结符集合（若该非终结符是起始符，则#属于follow集）</p>
+</li>
+<li><p>select集</p>
+<ul>
+<li>若产生式右部能推出是$\epsilon$：select集就是该产生式的first集合刨去$\epsilon$，并上follow集</li>
+<li>若产生式右部能推出不是$\epsilon$：select集就是该产生式的first集</li>
+</ul>
+</li>
+</ul>
+<h4 id="不确定的自顶向下语法分析"><a href="#不确定的自顶向下语法分析" class="headerlink" title="不确定的自顶向下语法分析"></a>不确定的自顶向下语法分析</h4><p>不确定：带回溯的分析方法，穷举试探方法</p>
+<h4 id="LL（1）文法"><a href="#LL（1）文法" class="headerlink" title="LL（1）文法"></a>LL（1）文法</h4><h5 id="LL（1）文法判别步骤"><a href="#LL（1）文法判别步骤" class="headerlink" title="LL（1）文法判别步骤"></a>LL（1）文法判别步骤</h5><ol>
+<li><p>求出能推出空的非终结符</p>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/LL（1）判空.svg" alt="LL（1）判空"></p>
+</li>
+<li><p>求出每个非终结符的first集</p>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/求全部非终结符的first集.svg" alt="求全部非终结符的first集"></p>
+</li>
+<li><p>求出每个非终结符的follow集</p>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/求全部非终结符的follow集.svg" alt="求全部非终结符的follow集"></p>
+</li>
+<li><p>求出每个产生式的select集</p>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/求出全部产生式的select集.svg" alt="求出全部产生式的select集"></p>
+</li>
+<li><p>判定文法是否是LL（1）文法：左部相同的产生式的select集是若没有相同的元素则是LL（1）文法</p>
+</li>
+</ol>
+<h5 id="LL（1）预测分析分析"><a href="#LL（1）预测分析分析" class="headerlink" title="LL（1）预测分析分析"></a>LL（1）预测分析分析</h5><ol>
+<li>构造预测分析表</li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>终结符1</th>
+<th>终结符2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>非终结符1</td>
+<td>以非终结符1为左部<br>select集有终结符1的产生式</td>
+<td></td>
+</tr>
+<tr>
+<td>非终结符2</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li>分析过程表</li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>步骤号</th>
+<th>分析栈</th>
+<th>剩余匹配串</th>
+<th>使用的产生式或匹配</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>分析栈：倒着入栈，以保证栈顶是要替换的非终结符</p>
+<p>匹配：分析栈栈顶与剩余串首部一样则匹配</p>
+<p>查表：分析栈栈顶非终结符与剩余串首部终结符查表</p>
+<p>接受：若最后的“#”匹配则说明接收</p>
+<p>当前句型：分析栈与已匹配串的正确拼接，当前句型发生改变输出</p>
+<h4 id="某些非LL（1）文法转换到LL（1）文法"><a href="#某些非LL（1）文法转换到LL（1）文法" class="headerlink" title="某些非LL（1）文法转换到LL（1）文法"></a>某些非LL（1）文法转换到LL（1）文法</h4><ul>
+<li><p>消除左公因子：右部相同的产生式，左部前缀相同</p>
+<ol>
+<li>若有间接左公因子，转变为直接左公因子<ul>
+<li>以非终结符打头的就有可能是间接作公因子</li>
+<li>将所有以该非终结符为左部的都替换到该产生式，等价替换，不能丢失信息（可以去除多余非终结符的所有产生式）</li>
+</ul>
+</li>
+<li>将有左公因子的产生式合并到一起</li>
+<li>将公因子提取出来</li>
+<li>新引入非终结符代替不是公因子部分</li>
+<li>新产生式是该新引入的非终结符推出不是公因子部分</li>
+</ol>
+</li>
+<li><p>消除左递归：产生式右部非终结符与左部首个非终结符相同</p>
+<ol>
+<li>若有间接左递归，转变为直接左公递归<ol>
+<li>将所有非终结符排序（起始符排最后）</li>
+<li>先消除第一个的直接左递归</li>
+<li>找以第二个为左部，右部有第一个的产生式进行替换，并检查当前有没有直接左递归，以此类推</li>
+</ol>
+</li>
+<li>将有左公递归的非终结符的所有并到一起</li>
+<li>根据$A\longrightarrow A \alpha |\beta$ 改为有递归$A\longrightarrow \beta A’$、$A’\longrightarrow \alpha A’|\epsilon$</li>
+</ol>
+</li>
+</ul>
+<h3 id="自底向上语法分析方法"><a href="#自底向上语法分析方法" class="headerlink" title="自底向上语法分析方法"></a>自底向上语法分析方法</h3><p>可规约前缀：采取规约动作前符号栈的内容，即含有一个句柄的前缀</p>
+<p>活前缀：可规约前缀的前缀，可规前缀是特殊的活前缀</p>
+<h4 id="LR（0）分析步骤"><a href="#LR（0）分析步骤" class="headerlink" title="LR（0）分析步骤"></a>LR（0）分析步骤</h4><h5 id="对已有文法进行拓广"><a href="#对已有文法进行拓广" class="headerlink" title="对已有文法进行拓广"></a>对已有文法进行拓广</h5><p>引入新的起始符号推出旧的起始符号，$S’\longrightarrow S$，为了解决起始符号再其他产生式的右部出现引起的规约结束标准不明确现象</p>
+<h5 id="构造识别可规约前缀的DFA：项目规范族的构造自动机"><a href="#构造识别可规约前缀的DFA：项目规范族的构造自动机" class="headerlink" title="构造识别可规约前缀的DFA：项目规范族的构造自动机"></a>构造识别可规约前缀的DFA：项目规范族的构造自动机</h5><h6 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h6><p>项目：产生式右部加点，表示圆点左部是符号栈中已经出现的部分，右部是没出现的部分，特殊的$A\longrightarrow\epsilon$ $A\longrightarrow·$</p>
+<p>移进项目：点后面是终结符的项目</p>
+<p>待约项目：点后是非终结符的项目</p>
+<p>规约项目：点在最后的项目</p>
+<p>接受项目：特殊的规约项目$S’\longrightarrow S·$</p>
+<p>项目集：项目的集合</p>
+<p>族：多个项目集</p>
+<p>项目集的闭包运算：将原项目集中的待约项目，将以点后非终结符为左部的右部以点开始的项目加进来，直到没有待约项目</p>
+<p>GO运算：将项目集针对某个符号进行点的右移，然后再对项目集进行闭包运算</p>
+<h6 id="LR（0）的项目集规范族构建"><a href="#LR（0）的项目集规范族构建" class="headerlink" title="LR（0）的项目集规范族构建"></a>LR（0）的项目集规范族构建</h6><ol>
+<li>以拓广后的产生式，点在最前面的项目为核做闭包运算</li>
+<li>对点后有符号的项目做GO运算</li>
+<li>直到没有新的项目集出现</li>
+</ol>
+<h6 id="SLR（1）"><a href="#SLR（1）" class="headerlink" title="SLR（1）"></a>SLR（1）</h6><p>移进规约冲突：项目集中既有移进项目又有规约项目，移进项目点后非终结符和规约项目左部follow集没有重复元素，若下一个符号是移进项目点后非终结符，则移进，若下一个符号是规约项目左部follow集的元素，则规约</p>
+<p>规约规约冲突：项目集中有多个不同的规约项目，解决方法规约项目左部的follow集没有重复元素，若下一个符号是规约项目左部follow集的元素，则规约</p>
+<p>改进的SLR（1）：对所有的规约项目都求左部的follow集</p>
+<h6 id="LALR（1）"><a href="#LALR（1）" class="headerlink" title="LALR（1）"></a>LALR（1）</h6><p>同心集：项目集一样，只是向前搜索符不一样</p>
+<p>有同心集能合并的项目集进行合并后没有冲突的文法是LALR（1）否则是LR（1），LALR（1）是特殊的LR（1）</p>
+<p>合并冲突只能是规约规约冲突</p>
+<h6 id="LR（1）"><a href="#LR（1）" class="headerlink" title="LR（1）"></a>LR（1）</h6><p>多个向前搜索符用斜杠隔开</p>
+<p>新的项目集的闭包运算：将原项目集中的待约项目，将以点后非终结符为左部的右部以点开始的项目加进来，并且求<strong>核的点后符号的符号</strong>的向前搜索符，即点后符号的后面与向前搜索符的连接的first集，直到没有待约项目</p>
+<p>新GO运算：将项目集针对某个符号进行点的右移，并且将向前搜索符带过来，然后再对项目集进行新闭包运算</p>
+<p>对于移进规约冲突解决方法：移进项目点后非终结符和规约项目左部follow集有重复元素，规约项目遇到向前搜索符才规约</p>
+<ol>
+<li>以拓广后的产生式，点在最前面的项目为核做闭包运算，向前搜索符是#</li>
+<li>对点后有符号的项目做GO运算</li>
+<li>直到没有新的项目集出现</li>
+</ol>
+<h5 id="根据DFA构造分析表"><a href="#根据DFA构造分析表" class="headerlink" title="根据DFA构造分析表"></a>根据DFA构造分析表</h5><p>ACTTON部分：非终结符和#</p>
+<p>$S_n$：移进，转化到n状态</p>
+<p>$r_n$：规约，用n号产生式规约</p>
+<p>acc：接受状态</p>
+<p>GOTO部分：终结符</p>
+<h5 id="进行LR分析"><a href="#进行LR分析" class="headerlink" title="进行LR分析"></a>进行LR分析</h5><ol>
+<li>0状态（初始状态）入状态栈，#入符号栈，符号栈和状态栈共享栈顶</li>
+<li>根据状态栈顶状态和剩余串的最左面符号进行查表</li>
+<li>出现规约项目，先将出栈，再进栈，goto部分填写转移到的状态，为出现规约项目则接着从剩余串中入栈</li>
+</ol>
+<h2 id="考试题型"><a href="#考试题型" class="headerlink" title="考试题型"></a>考试题型</h2><p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/编译原理考试.svg" alt="编译原理考试"></p>
+]]></content>
+      <categories>
+        <category>编译原理</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关系型数据库理论</title>
+    <url>/2020/05/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h2 id="概论"><a href="#概论" class="headerlink" title="概论"></a>概论</h2><h4 id="数据：（数据库中存储的基本对象）"><a href="#数据：（数据库中存储的基本对象）" class="headerlink" title="数据：（数据库中存储的基本对象）"></a>数据：（数据库中存储的基本对象）</h4><ul>
+<li>描述事物的符号记录</li>
+<li>承载信息的媒体</li>
+<li>数据和语义密不可分</li>
+</ul>
+<h4 id="数据库Database：（长期存储在计算机内、有组织的、可共享的大量数据集合）"><a href="#数据库Database：（长期存储在计算机内、有组织的、可共享的大量数据集合）" class="headerlink" title="数据库Database：（长期存储在计算机内、有组织的、可共享的大量数据集合）"></a>数据库Database：（长期存储在计算机内、有组织的、可共享的大量数据集合）</h4><ul>
+<li>数据按一定的数据模型组织、描述和储存</li>
+<li>可为各种用户共享</li>
+<li>冗余度较小</li>
+<li>数据独立性较高</li>
+<li>易扩展</li>
+</ul>
+<h4 id="数据库管理系统DBMS（系统软件，数据库-一组用以访问、更新和管理这些数据的程序，位于操作系统和用户应用之间）"><a href="#数据库管理系统DBMS（系统软件，数据库-一组用以访问、更新和管理这些数据的程序，位于操作系统和用户应用之间）" class="headerlink" title="数据库管理系统DBMS（系统软件，数据库+ 一组用以访问、更新和管理这些数据的程序，位于操作系统和用户应用之间）"></a>数据库管理系统DBMS（系统软件，数据库+ 一组用以访问、更新和管理这些数据的程序，位于操作系统和用户应用之间）</h4><ul>
+<li>DDL:数据定义语音</li>
+<li>DML:数据操纵语言</li>
+<li>DQL:数据查询语音</li>
+</ul>
+<h4 id="数据库系统DBS（基于数据库的计算机应用系统）"><a href="#数据库系统DBS（基于数据库的计算机应用系统）" class="headerlink" title="数据库系统DBS（基于数据库的计算机应用系统）"></a>数据库系统DBS（基于数据库的计算机应用系统）</h4><p>包括：软件、硬件、人员</p>
+<h5 id="数据库管理员DBA"><a href="#数据库管理员DBA" class="headerlink" title="数据库管理员DBA"></a>数据库管理员DBA</h5><ul>
+<li>监控数据库的使用运行、周期性转存数据库</li>
+<li>数据恢复，数据库重构、数据库改进和重组</li>
+</ul>
+<h4 id="模式与实例"><a href="#模式与实例" class="headerlink" title="模式与实例"></a>模式与实例</h4><p>模式：对数据库逻辑结构和特征的描述</p>
+<p>实例：模式的具体值，同一模式可以有多个实例，实例随数据更新而变动</p>
+<h4 id="三级模式结构"><a href="#三级模式结构" class="headerlink" title="三级模式结构"></a>三级模式结构</h4><p>外模式（局部数据的逻辑结构，一个模式可以有多个外模式，一个外模式可为多个应用使用，保证了数据安全性）</p>
+<p>外模式/模式，映像（数据逻辑独立性）</p>
+<p>模式（全体数据的逻辑结构，一般只有一个模式）</p>
+<p>模式/内模式，映像（数据物理独立性）</p>
+<p>内模式（数据物理结构和存储方式的描述，一个数据库只有一个内模式）</p>
+<h2 id="关系数据库定义"><a href="#关系数据库定义" class="headerlink" title="关系数据库定义"></a>关系数据库定义</h2><h4 id="数据模型（数据结构、数据操作、数据完整性约束）"><a href="#数据模型（数据结构、数据操作、数据完整性约束）" class="headerlink" title="数据模型（数据结构、数据操作、数据完整性约束）"></a>数据模型（数据结构、数据操作、数据完整性约束）</h4><p>概念模型：用于数据库的设计</p>
+<p>逻辑模型：用于DBMS实现</p>
+<p>物理模型：描述数据的物理存储结构和存取方法</p>
+<h4 id="关系数据模型（关系数据结构、关系数据操作、关系数据完整性约束）"><a href="#关系数据模型（关系数据结构、关系数据操作、关系数据完整性约束）" class="headerlink" title="关系数据模型（关系数据结构、关系数据操作、关系数据完整性约束）"></a>关系数据模型（关系数据结构、关系数据操作、关系数据完整性约束）</h4><p>关系模式，即是定义字段，没有约束条件和数据类型</p>
+<p>关系模式与属性顺序和元组顺序无关</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>表名</th>
+<th>关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>字段</td>
+<td>属性</td>
+</tr>
+<tr>
+<td>一行数据</td>
+<td>元组（原则上每行数据都不能一样）</td>
+</tr>
+<tr>
+<td>一行数据中的一个数据</td>
+<td>分量（原子：不可拆分，在域中取值）</td>
+</tr>
+<tr>
+<td>域</td>
+<td>相同数据类型的值的集合（枚举）</td>
+</tr>
+<tr>
+<td>码、键</td>
+<td>一个或多个属性组成</td>
+</tr>
+<tr>
+<td>超键、码</td>
+<td>一个或多个属性的集合，能唯一标识元组（可以包含非唯一键）</td>
+</tr>
+<tr>
+<td>候选键、码</td>
+<td>一个或多个属性的集合，能唯一标识元组（不能包含非唯一键）</td>
+</tr>
+<tr>
+<td>主键、码</td>
+<td>选择一个候选码当主键（可以是多个属性）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="关系数据模型的数据结构（不要在程序中约束）"><a href="#关系数据模型的数据结构（不要在程序中约束）" class="headerlink" title="关系数据模型的数据结构（不要在程序中约束）"></a>关系数据模型的数据结构（不要在程序中约束）</h4><h4 id="关系模型中的完整行约束"><a href="#关系模型中的完整行约束" class="headerlink" title="关系模型中的完整行约束"></a>关系模型中的完整行约束</h4><p>实体完整性：要有主键</p>
+<p>参照完整性：当前表的属性取值受到另一个表的相关列的的约束（外键：用其他表的==主键==当域（可以为空）、也可以自身关联）</p>
+<p>用户自定义的完整性：比如性别只能是男和女</p>
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件工程</title>
+    <url>/2020/05/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="软件与软件工程"><a href="#软件与软件工程" class="headerlink" title="软件与软件工程"></a>软件与软件工程</h2><ul>
+<li>软件含义：程序+数据+文档</li>
+<li>软件分类：系统软件、应用软件、工具软件、可重用软件</li>
+<li>软件危机：软件开发和维护过程中遇到的一系列严重问题</li>
+<li>什么是软件危机？<ul>
+<li><strong>进度拖延、成本超标</strong></li>
+<li>没有文档资料，<strong>生产力低</strong></li>
+<li>软件<strong>质量无法保证</strong></li>
+<li>软件<strong>难以维护</strong></li>
+</ul>
+</li>
+<li>软件危机产生的原因<ul>
+<li>需求不明确</li>
+<li>缺乏正确理论指导</li>
+<li>主要：规模越来越大，越来越复杂</li>
+</ul>
+</li>
+<li>软件工程定义<ul>
+<li>是用工程、科学和数学的原则与方法开发、维护计算机软件的有关技术及管理方法。</li>
+</ul>
+</li>
+</ul>
+<h2 id="软件工程模式"><a href="#软件工程模式" class="headerlink" title="软件工程模式"></a>软件工程模式</h2><ul>
+<li>瀑布模型（无重大变化的软件系统的开发）：按照软件生命周期线性方式，以文档驱动<ul>
+<li>可行性分析阶段 </li>
+<li>系统需求分析阶段</li>
+<li>系统设计阶段</li>
+<li>系统实施阶段 </li>
+<li>系统测试阶段</li>
+<li>使用和维护阶段</li>
+</ul>
+</li>
+<li>增量模型（需求不明确的软件项目）：将需求分解为若干分量，排序后，每个分量都经过瀑布模型的阶段<ul>
+<li>快速原型模型</li>
+<li>渐增模型</li>
+</ul>
+</li>
+<li>螺旋模型：将风险管理融入到原型模型</li>
+</ul>
+<h2 id="软件的生命周期"><a href="#软件的生命周期" class="headerlink" title="软件的生命周期"></a>软件的生命周期</h2><ul>
+<li>软件定义阶段<ul>
+<li>可行性研究和项目开发计划阶段：系统解决的问题，是否可行</li>
+<li>需求分析：确定功能和性能</li>
+</ul>
+</li>
+<li>软件开发阶段<ul>
+<li>概要设计（模块划分）：数据设计、体系结构设计、接口设计、过程设计</li>
+<li>详细设计（数据结构与算法）：各个模块的实现细节和局部数据结构</li>
+<li>编码</li>
+<li>测试：单元测试、综合测试</li>
+</ul>
+</li>
+<li>软件使用和维护阶段<ul>
+<li>使用和维护</li>
+</ul>
+</li>
+</ul>
+<h2 id="软件的可行性分析"><a href="#软件的可行性分析" class="headerlink" title="软件的可行性分析"></a>软件的可行性分析</h2><ul>
+<li>任务<ul>
+<li>经济可行性</li>
+<li>技术可行性</li>
+<li>操作可行性</li>
+<li>法律可行性</li>
+</ul>
+</li>
+<li>步骤：（立即开始，推迟，不可行三种结果）<ol>
+<li>确定项目规模和目标</li>
+<li>研究正在运行的系统</li>
+<li>建立新系统的高层逻辑模型</li>
+<li>导出和评价各种方案</li>
+<li>推荐可行性方案</li>
+<li>编写可行性分析报告</li>
+</ol>
+</li>
+<li>成本/效益<ul>
+<li>成本：购买软硬件费用、系统安装运行维护费用、人员培训费</li>
+<li>效益<ul>
+<li>经济效益：可增加的收入、可节省的费用、工资、物资、时间等</li>
+<li>社会效益：定性估计对社会影响</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>分析报告</li>
+</ul>
+<h2 id="软件的需求分析"><a href="#软件的需求分析" class="headerlink" title="软件的需求分析"></a>软件的需求分析</h2><p>对系统描述=&gt;构建分析模型=&gt;构建设计模型</p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
+<li>起始：客户和开发人员初步的交流和合作</li>
+<li>导出：范围问题、理解问题、易变问题</li>
+<li>精化：形成分析模型，信息域、功能域、行为域</li>
+<li>协商：需求工程师通过协商调解冲突</li>
+<li>规格说明：描述功能和性能，以及系统开发约束</li>
+<li>确认：正式的技术评审机制</li>
+<li>管理：在项目迚展中标示、控制和跟踪需求以及变更。</li>
+</ul>
+<h3 id="功能和非功能需求"><a href="#功能和非功能需求" class="headerlink" title="功能和非功能需求"></a>功能和非功能需求</h3><ul>
+<li>功能需求：对外提供的服务，为人们能做些什么</li>
+<li>非功能需求<ul>
+<li>过程需求：交付方式、实现方式、验收标准</li>
+<li>产品需求：性能、可移植性、安全性、存储空间</li>
+<li>外部需求 ：互操作性、道德、法律、成本</li>
+</ul>
+</li>
+</ul>
+<h3 id="需求的描述"><a href="#需求的描述" class="headerlink" title="需求的描述"></a>需求的描述</h3><h4 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h4><ul>
+<li><p>无二义性：使用自然语言描述避免二义性</p>
+</li>
+<li><p>完整性：不遗漏需求</p>
+</li>
+<li><p>正确性：正确的反应用户需求</p>
+</li>
+<li><p>可行性：技术、经济、操作可行性</p>
+</li>
+<li><p>必要性：不自作主张添加需求</p>
+</li>
+<li><p>可验证性：对非功能性的度量</p>
+<p>划分优先级：对所有需求进行排序，制定执行计划</p>
+</li>
+</ul>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><ul>
+<li>自然语言</li>
+<li>图形化符号<ul>
+<li>数据流图</li>
+<li>UML语言</li>
+<li>实体关系图</li>
+</ul>
+</li>
+<li>数学描述</li>
+</ul>
+<h3 id="需求分析方法"><a href="#需求分析方法" class="headerlink" title="需求分析方法"></a>需求分析方法</h3><p>域分析：对领域知识进行分析，构建域分析模型</p>
+<h3 id="结构化分析方法（SA）"><a href="#结构化分析方法（SA）" class="headerlink" title="结构化分析方法（SA）"></a>结构化分析方法（SA）</h3><ul>
+<li>数据流图（DFD图）：功能建模<ul>
+<li>包括<ul>
+<li>外部项</li>
+<li>加工</li>
+<li>数据存储</li>
+<li>数据流</li>
+</ul>
+</li>
+<li>分为<ul>
+<li>关联图（系统边界）</li>
+<li>=&gt;TOP图（系统与外部实体的交互）</li>
+<li>=&gt;第一层图（细化数据输入输出关系）</li>
+</ul>
+</li>
+<li>数据字典<ul>
+<li>外部项的定义描述</li>
+<li>加工的定义描述：策略树（面向编程）、策略表方式（面向测试，因果图）</li>
+<li>数据存储的定义描述</li>
+<li>数据流的定义描述</li>
+<li>数据元素的定义描述</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>业务流图（TFD图）：业务处理过程</li>
+<li>实体关系图（ER图）：数据建模</li>
+<li>状态迁移图：行为建模</li>
+</ul>
+<h3 id="面向对象方法（OO方法）"><a href="#面向对象方法（OO方法）" class="headerlink" title="面向对象方法（OO方法）"></a>面向对象方法（OO方法）</h3><h2 id="软件的设计工程"><a href="#软件的设计工程" class="headerlink" title="软件的设计工程"></a>软件的设计工程</h2><h3 id="概要设计"><a href="#概要设计" class="headerlink" title="概要设计"></a>概要设计</h3><h4 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h4><ul>
+<li>抽象、逐步求精</li>
+<li>模块化</li>
+<li>信息隐蔽与局部化</li>
+<li>复用性</li>
+</ul>
+<h4 id="模块独立性衡量标准"><a href="#模块独立性衡量标准" class="headerlink" title="模块独立性衡量标准"></a>模块独立性衡量标准</h4><h5 id="耦合：模块之间相对独立性"><a href="#耦合：模块之间相对独立性" class="headerlink" title="耦合：模块之间相对独立性"></a>耦合：模块之间相对独立性</h5><ol>
+<li>非直接耦合：模块之间没有联系</li>
+<li>数据耦合：不同模块之间传递简单参数（数值型）</li>
+<li>标记耦合：不同模块之间穿的的参数是某个复杂数据结构的一部分</li>
+<li>控制耦合：不同模块之间传递的参数包含的控制信息</li>
+<li>外部耦合：不同模块能访问简单的全局变量（数值型）</li>
+<li>公共耦合：不同模块能访问复杂的公共的区域（数组、结构体、类…）<ol>
+<li>紧密公共耦合：不同模块对公共区域，同时具有读写权限</li>
+<li>松散公共耦合：不同模块对公共区域，只有读或写权限</li>
+</ol>
+</li>
+<li>内容耦合：访问其他模块内部数据，非正常入口进入模块内部，模块间有代码重叠，模块有多个入口</li>
+</ol>
+<h5 id="内聚：模块内部元素的紧密成度"><a href="#内聚：模块内部元素的紧密成度" class="headerlink" title="内聚：模块内部元素的紧密成度"></a>内聚：模块内部元素的紧密成度</h5><ol>
+<li>功能内聚：一个模块完成一个功能</li>
+<li>信息内聚：多个功能，对同一个操作对象进行操作，且入口唯一</li>
+<li>通信内聚：内部多个功能使用相同输入数据，产生不同的输出结果；或使用不同的输入数据，产生相同的输出结果</li>
+<li>过程内聚：模块内部多个功能都要执行，时间上串行执行按照一定顺序要求，且无数据传递（同一操作对象）</li>
+<li>时间内聚：模块内部多个功能都要执行，时间上串行执行无顺序要求，（同一操作对象）</li>
+<li>逻辑内聚：根据参数的控制信息反应出不同的功能，（同一操作对象）</li>
+<li>巧合（偶然）内聚：模块内部元素没有联系，（不同操作对象）</li>
+</ol>
+<h4 id="软件体系结构图"><a href="#软件体系结构图" class="headerlink" title="软件体系结构图"></a>软件体系结构图</h4><h5 id="模块调用"><a href="#模块调用" class="headerlink" title="模块调用"></a>模块调用</h5><ul>
+<li>一般调用：调用模块箭头指向被调用模块</li>
+<li>条件调用：菱形</li>
+<li>循环调用：弧形</li>
+</ul>
+<h5 id="数据通信"><a href="#数据通信" class="headerlink" title="数据通信"></a>数据通信</h5><ul>
+<li>数据信息：尾部空心箭头</li>
+<li>控制信息：尾部实心箭头</li>
+</ul>
+<h5 id="结构图的相关概念"><a href="#结构图的相关概念" class="headerlink" title="结构图的相关概念"></a>结构图的相关概念</h5><p>好的体系结构：顶层高扇出，中层和底层高扇入</p>
+<ul>
+<li>结构的深度：层数</li>
+<li>结构的宽度：最大宽度层的宽度</li>
+<li>扇出：一个模块直接调用的模块数量</li>
+<li>扇入：一个模块直接被调用的模块数量</li>
+</ul>
+<h3 id="体系结构设计方法"><a href="#体系结构设计方法" class="headerlink" title="体系结构设计方法"></a>体系结构设计方法</h3><h4 id="结构化设计方法（SD数据流图转换为体系结构图）"><a href="#结构化设计方法（SD数据流图转换为体系结构图）" class="headerlink" title="结构化设计方法（SD数据流图转换为体系结构图）"></a>结构化设计方法（SD数据流图转换为体系结构图）</h4><h5 id="变换分析策略"><a href="#变换分析策略" class="headerlink" title="变换分析策略"></a>变换分析策略</h5><p>多条输入经过变换中心输出一条输出</p>
+<h5 id="事务分析策略"><a href="#事务分析策略" class="headerlink" title="事务分析策略"></a>事务分析策略</h5><p>一条输入经过事务中心输出多条输出</p>
+<h4 id="面向对象设计方法"><a href="#面向对象设计方法" class="headerlink" title="面向对象设计方法"></a>面向对象设计方法</h4><h3 id="详细设计"><a href="#详细设计" class="headerlink" title="详细设计"></a>详细设计</h3><h4 id="代码设计（编号）"><a href="#代码设计（编号）" class="headerlink" title="代码设计（编号）"></a>代码设计（编号）</h4><ul>
+<li>顺序码</li>
+<li>分段码</li>
+<li>字母码：首字母缩写</li>
+<li>组合码：顺序、分段、字母编码方式组合</li>
+<li>混合码：字符、数字混合</li>
+<li>特征组合码：人为规定的标记码</li>
+</ul>
+<h4 id="数据库设计（物理数据库）"><a href="#数据库设计（物理数据库）" class="headerlink" title="数据库设计（物理数据库）"></a>数据库设计（物理数据库）</h4><h5 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h5><ol>
+<li>数据需求分析：在系统分析阶段以数据流图和数据字典为依据</li>
+<li>数据概念模型设计：ER图</li>
+<li>将概念模型转换为数据模型</li>
+<li>结构规范化</li>
+<li>物理设计</li>
+</ol>
+<h5 id="ER图"><a href="#ER图" class="headerlink" title="ER图"></a>ER图</h5><ul>
+<li>实体：矩形</li>
+<li>关系：菱形<ul>
+<li>关系的类型<ul>
+<li>一对一：实体各自对应一张表，任意一段存外键，该外键是另一端的主键</li>
+<li>一对多：实体各自对应一张表，多的一端存外键，该外键是少的一端的主键</li>
+<li>多对多：实体各对应一张表，将实体中的主键拿到关系表中充当联合主键</li>
+</ul>
+</li>
+<li>关系的元或度<ul>
+<li>自关联：一张表，增加一个自关联外键参照该表主键</li>
+<li>二元关系</li>
+<li>多元关系：每个实体对应一张表，将每个实体中的主键拿到关系表中充当联合主键</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>属性：椭圆<ul>
+<li>主键属性：下划线</li>
+<li>外码属性：波浪线</li>
+<li>域：属性的取值范围</li>
+</ul>
+</li>
+</ul>
+<h3 id="人机界面设计"><a href="#人机界面设计" class="headerlink" title="人机界面设计"></a>人机界面设计</h3><ul>
+<li>置用户于控制之下</li>
+<li>减少用户的记忆负担</li>
+<li>保持界面一致</li>
+</ul>
+<h3 id="交互设计"><a href="#交互设计" class="headerlink" title="交互设计"></a>交互设计</h3><p>菜单方式：合理分类，合理分级</p>
+<p>会话方式：提示和警告确认</p>
+<p>错误消息：简洁，礼貌，明了</p>
+<h3 id="输入输出设计"><a href="#输入输出设计" class="headerlink" title="输入输出设计"></a>输入输出设计</h3><p>输出类型：外部输出，内部输出</p>
+<p>输入类型：外部输入、计算机输入</p>
+<p>输入格式注意顺序</p>
+<h3 id="处理过程设计"><a href="#处理过程设计" class="headerlink" title="处理过程设计"></a>处理过程设计</h3><p>目的：为编程和测试提供依据</p>
+<p>方式：</p>
+<ul>
+<li>程序流程图</li>
+<li>盒图</li>
+<li>问题分析图（PAD图）</li>
+</ul>
+<h3 id="系统设计说明书"><a href="#系统设计说明书" class="headerlink" title="系统设计说明书"></a>系统设计说明书</h3><h2 id="软件的编码与测试"><a href="#软件的编码与测试" class="headerlink" title="软件的编码与测试"></a>软件的编码与测试</h2><h3 id="编码风格"><a href="#编码风格" class="headerlink" title="编码风格"></a>编码风格</h3><h4 id="程序的内部文档"><a href="#程序的内部文档" class="headerlink" title="程序的内部文档"></a>程序的内部文档</h4><ul>
+<li>命名：见名知意、精简、缩写一致。一个变量一种用途<ul>
+<li>用Pascal命名法：每个单词首字母大写，其他小写</li>
+<li>用Camel（驼峰）命名法：首单词小写，之后的单词首字母大写</li>
+<li>匈牙利命名法：标注作用域和类型下划线隔开再写意义</li>
+</ul>
+</li>
+<li>注释<ul>
+<li>序言注释：整体说明</li>
+<li>功能注释：描述程序语句作用</li>
+</ul>
+</li>
+</ul>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>需求分析阶段指定过的测试计划，为了发现程序中错误而产生的</p>
+<h4 id="衡量软件质量因素的标准"><a href="#衡量软件质量因素的标准" class="headerlink" title="衡量软件质量因素的标准"></a>衡量软件质量因素的标准</h4><ul>
+<li>MCC77</li>
+<li>ISO9126</li>
+</ul>
+<h4 id="软件测试的过程"><a href="#软件测试的过程" class="headerlink" title="软件测试的过程"></a>软件测试的过程</h4><ol>
+<li>单元测试：程序员对单个模块检查是否完成预期功能-&gt;编码与详细设计（算法）的错误</li>
+<li>集成测试：测试人员对通过了单元测试的模块，集成的系统进行测试-&gt;全局数据结构、接口（概要设计）的错误<ul>
+<li>渐增式集成：有回归测试集产生回归测试问题<ul>
+<li>自顶向下（宽度、广度）</li>
+<li>自定向上</li>
+<li>三明治</li>
+</ul>
+</li>
+<li>非渐增式集成<ul>
+<li>一次性集成</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>确认测试：测试人员依据软件需求说明书检查软件功能是否符合用户要求-&gt;系统说明书中的错误</li>
+<li>系统测试：测试人员对软硬件、网络环境等运行测试和性能测试-&gt;运行平台中的错误</li>
+<li>验收测试：软件使用者或第三方软件监理机构完成<ul>
+<li>alpha测试：开发环境，由开发者指导用户完成</li>
+<li>beta测试：生产环境，用户独立完成</li>
+</ul>
+</li>
+</ol>
+<h4 id="软件测试技术"><a href="#软件测试技术" class="headerlink" title="软件测试技术"></a>软件测试技术</h4><p>白盒测试：利用程序内部的逻辑结构选择测试用例</p>
+<ul>
+<li>逻辑覆盖<ul>
+<li>语句覆盖、点覆盖：程序中的每个可执行语句都至少执行一次</li>
+<li>判定覆盖、边覆盖：程序中的分支分别取真或假值一次</li>
+<li>条件覆盖：程序中的分支中的条件（单个条件，非组合条件）的可能取值至少执行一次</li>
+<li>判定/条件覆盖：既要满足判断条件的准则，也要满足条件覆盖的准则</li>
+<li>条件组合覆盖：程序中的分支中的条件（组合条件）的可能取值至少执行一次</li>
+<li>路径覆盖：可达路径和非可达路径都要走一遍</li>
+</ul>
+</li>
+<li>控制结构测试</li>
+</ul>
+<p>黑盒测试：只依据软件规格说明书检查程序是否符合功能或遗漏说明</p>
+<ul>
+<li>等价划分<ul>
+<li>有效等价类：有意义的输入数据，通过性测试</li>
+<li>无效等价类：无意义的输入数据，非通过性测试</li>
+</ul>
+</li>
+<li>边界值分析：针对各种边界情况设计测试用例</li>
+<li>错误推测：靠经验和直觉推测程序中可能存在的各种错误</li>
+<li>因果图：根据规格说明书描述，对原因和结果分类标识，写出判定（决策）表，根据判定表测试</li>
+</ul>
+<h3 id="软件调试技术"><a href="#软件调试技术" class="headerlink" title="软件调试技术"></a>软件调试技术</h3><p>对错误进行定位，对错误进行修改</p>
+<h4 id="调试方法"><a href="#调试方法" class="headerlink" title="调试方法"></a>调试方法</h4><ul>
+<li>蛮干法</li>
+<li>回溯法</li>
+<li>对分查找法</li>
+<li>归纳法</li>
+<li>演绎法</li>
+</ul>
+<h2 id="软件的维护"><a href="#软件的维护" class="headerlink" title="软件的维护"></a>软件的维护</h2><h3 id="软件维护定义"><a href="#软件维护定义" class="headerlink" title="软件维护定义"></a>软件维护定义</h3><p>软件交付之后，为了纠正错误和满足新需求而修改软件的过程</p>
+<p>软件再工程过程：软件重构和逆向工程</p>
+<p>维护的副作用：软件修改产生的错误</p>
+<ul>
+<li>代码副作用</li>
+<li>数据副作用</li>
+<li>文档副作用</li>
+</ul>
+<h3 id="软件维护类型的分类"><a href="#软件维护类型的分类" class="headerlink" title="软件维护类型的分类"></a>软件维护类型的分类</h3><ul>
+<li>改正性维护：对软件错误进行修正</li>
+<li>适应性维护：对软硬件平台变化，对软件做的升级修改</li>
+<li>完善性维护：增加新需求</li>
+<li>预防性维护（占比最小）</li>
+</ul>
+<h3 id="软件维护特点"><a href="#软件维护特点" class="headerlink" title="软件维护特点"></a>软件维护特点</h3><ul>
+<li>结构化的维护：有文档</li>
+<li>非结构化的维护：没文档</li>
+<li>维护的代价高</li>
+</ul>
+<h4 id="软件的可维护性因素：维护难易程度"><a href="#软件的可维护性因素：维护难易程度" class="headerlink" title="软件的可维护性因素：维护难易程度"></a>软件的可维护性因素：维护难易程度</h4><ul>
+<li>可理解性、可测试性（相辅相成）</li>
+<li>可修改性</li>
+<li>可移指性</li>
+<li>可重用性</li>
+</ul>
+<h2 id="软件项目管理"><a href="#软件项目管理" class="headerlink" title="软件项目管理"></a>软件项目管理</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>项目：独特的，暂时性的，至少满足干系人的期望</p>
+<p>制约项目的条件：工作范围、时间、成本、质量、资源</p>
+<h3 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h3><ul>
+<li>成本管理：估算项目成本</li>
+<li>质量管理：制定软件质量保证计划，评审-验证-确认</li>
+<li>软件配置管理：制定配置管理计划，对程序、文档和数据版本控制</li>
+<li><strong>风险管理</strong>：软件开发过程中预算和进度等问题，这些问题对软件项目的影响，辨别风险后评估发生概率和影响，建立规划，来预防风险</li>
+<li>计划管理：项目开发计划文档</li>
+<li>资源管理：人力资源，软硬件资源</li>
+</ul>
+<h2 id="进度安排与跟踪"><a href="#进度安排与跟踪" class="headerlink" title="进度安排与跟踪"></a>进度安排与跟踪</h2><p>工作分解阶段性任务（明确起始时间），交付阶段性成果</p>
+<ul>
+<li>甘特图：任务之间的串并形关系</li>
+<li>工程计划网络图</li>
+<li>里程碑图：表现关键任务</li>
+</ul>
+<h2 id="项目的质量与成本估算"><a href="#项目的质量与成本估算" class="headerlink" title="项目的质量与成本估算"></a>项目的质量与成本估算</h2><ul>
+<li>面向规模的度量</li>
+<li>面向功能的度量</li>
+<li>COCOMO模型：利用专家经验估算</li>
+</ul>
+<h2 id="风险分析与管理"><a href="#风险分析与管理" class="headerlink" title="风险分析与管理"></a>风险分析与管理</h2><h3 id="风险"><a href="#风险" class="headerlink" title="风险"></a>风险</h3><p>使软件项目可能（发生会带来损失）受到影响、损失、失败，可能发生（未发生，不确定）的事件</p>
+<p>风险与机遇机会并存的</p>
+<h3 id="危机管理"><a href="#危机管理" class="headerlink" title="危机管理"></a>危机管理</h3><ul>
+<li>救火模式：风险出现后</li>
+<li>失败处理：风险察觉后</li>
+<li>风险缓解：识别风险后</li>
+<li>风险预防：对未发生风险制定措施</li>
+<li>消灭根源：防止风险发生</li>
+</ul>
+<h3 id="风险识别"><a href="#风险识别" class="headerlink" title="风险识别"></a>风险识别</h3><ul>
+<li>计划编制</li>
+<li>组织和管理</li>
+<li>开发环境</li>
+<li>最终用户</li>
+<li>客户</li>
+<li>承包商</li>
+<li>需求</li>
+<li>产品外部环境</li>
+<li>人员</li>
+<li>设计和实现</li>
+<li>过程</li>
+</ul>
+<h3 id="风险分析"><a href="#风险分析" class="headerlink" title="风险分析"></a>风险分析</h3><ol>
+<li>估计风险发生概率</li>
+<li>估算风险造成的损失</li>
+<li>计算风险度</li>
+</ol>
+<h3 id="风险控制"><a href="#风险控制" class="headerlink" title="风险控制"></a>风险控制</h3><ol>
+<li>制定风险管理计划</li>
+<li>化解风险</li>
+<li>监控风险</li>
+</ol>
+<h2 id="软件配置管理（SCM）"><a href="#软件配置管理（SCM）" class="headerlink" title="软件配置管理（SCM）"></a>软件配置管理（SCM）</h2><p>对软件配置项的（SCI）管理：配置项包括程序文档和数据</p>
+<h3 id="任务-1"><a href="#任务-1" class="headerlink" title="任务"></a>任务</h3><ul>
+<li>SCI的标识</li>
+<li>版本控制</li>
+<li>变化控制</li>
+<li>配置审计</li>
+<li>状态报告</li>
+</ul>
+<h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><ul>
+<li>管理型文档<ul>
+<li>软件开发计划</li>
+<li>软件测试计划</li>
+</ul>
+</li>
+<li>开发类文档<ul>
+<li>需求规格说明书（SRS）</li>
+<li>概要设计说明书</li>
+<li>详细设计说明书</li>
+<li>接口设计说明书</li>
+<li>数据库设计说明书</li>
+<li>程序设计文档</li>
+</ul>
+</li>
+<li>应用类文档<ul>
+<li>用户使用说明书</li>
+<li>用户手册</li>
+<li>安装手册</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>软件工程</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机图形学</title>
+    <url>/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/</url>
+    <content><![CDATA[<h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><ul>
+<li>构成图形的要素：点线面体等几何要素，物体材质颜色非几何要素</li>
+<li>参数法描述的图叫图形，点阵法描述的图叫图像</li>
+<li>专业词汇<ul>
+<li>计算机图形核心系统：GKS</li>
+<li>三维图形核心系统：GKS-3D</li>
+<li>交互式图形系统：PHIGS</li>
+<li>计算机图形元文件：CGM</li>
+<li>计算机图形接口：CGI</li>
+<li>基本图形转换规范：IGES</li>
+<li>产品数据转换规范：STEP</li>
+<li>计算机辅助设计：CAD</li>
+<li>计算机辅助制造：CAM</li>
+<li>计算机辅助教学：CAI</li>
+<li>计算机辅助手术：CAS（Computer-Aided Surgery）</li>
+<li>人机界面：HCI（Human Computer Interface）</li>
+<li>图形用户界面：GUI（Graphical User Interface）</li>
+<li>地理信息系统：GIS（Geographic Information System）</li>
+<li>虚拟现实：Virtual-reality</li>
+<li>科学计算可视化：Visualization in Scientific Computing</li>
+<li>工作站网络：NOW（Network of Workstation）</li>
+<li>工作站集群：Workstation Cluster</li>
+<li>可升级连接界面：Scalable Link Interface</li>
+<li>图形/视觉处理单元：Graphics/Visual Process Unit</li>
+</ul>
+</li>
+</ul>
+<h2 id="计算机图形系统及图形硬件"><a href="#计算机图形系统及图形硬件" class="headerlink" title="计算机图形系统及图形硬件"></a>计算机图形系统及图形硬件</h2><ul>
+<li>交互式计算机图形系统应该具备：计算、存储、交互、输入、输出五种功能</li>
+<li>CRT的成像原理：利用电磁场产生高速的、经过聚焦的电子束，偏转到屏幕的不同位置，轰击屏幕表面的荧光材料，从而产生课件图形</li>
+<li>CRT基本组成：电子枪、偏转系统、荧光屏</li>
+<li>CRT显示器：优点颜色视觉效果好，视角宽，可靠性高，便宜；缺点体积大耗电多<ul>
+<li>随机扫描图形显示器：电子束的扫描轨迹随显示内容而变化，只在需要的地方扫描</li>
+<li>直视存储管图形显示器：将图像信息存储在CRT内，不刷新屏幕，通过紧贴在屏幕荧光屏层后的电荷分布来存储图像信息</li>
+<li>光栅扫描图形显示器：电子束横向扫描屏幕，一次一行，从上到下顺次进行</li>
+</ul>
+</li>
+<li>LCD显示器：优点屏幕尺寸不受限，亮度高；缺点颜色视觉效果略差，对比度略差<ul>
+<li>利用液晶的电光效应，通过施加电压改变液晶的光学特性，从而造成入射光的调制，使通过液晶的透射光或反射光受所加电压的控制，达到显示的目的</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本图形生成算法"><a href="#基本图形生成算法" class="headerlink" title="基本图形生成算法"></a>基本图形生成算法</h2><h3 id="直线"><a href="#直线" class="headerlink" title="直线"></a>直线</h3><h4 id="DDA数值微分法"><a href="#DDA数值微分法" class="headerlink" title="DDA数值微分法"></a>DDA数值微分法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/DDA数值微分法.svg" alt="DDA数值微分法"></p>
+<h4 id="中点Bresenham算法"><a href="#中点Bresenham算法" class="headerlink" title="中点Bresenham算法"></a>中点Bresenham算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/中点画线算法.svg" alt="中点画线算法"></p>
+<h4 id="Bresenham算法"><a href="#Bresenham算法" class="headerlink" title="Bresenham算法"></a>Bresenham算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/改进Bresenham算法.svg" alt="改进Bresenham算法"></p>
+<h3 id="圆"><a href="#圆" class="headerlink" title="圆"></a>圆</h3><h4 id="八分法画圆"><a href="#八分法画圆" class="headerlink" title="八分法画圆"></a>八分法画圆</h4><p>由于圆的对称性，只要画出圆的八分之一即可</p>
+<h4 id="中点Bresenham画圆"><a href="#中点Bresenham画圆" class="headerlink" title="中点Bresenham画圆"></a>中点Bresenham画圆</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/中点Bresenham画圆.svg" alt="中点Bresenham画圆"></p>
+<h4 id="椭圆的特征"><a href="#椭圆的特征" class="headerlink" title="椭圆的特征"></a>椭圆的特征</h4><p>椭圆是四分象限中对称的，需要进一步对一象限内分为上(-1&lt;=k&lt;=0)下(-1&lt;=1/k&lt;=0)两部分，即二分量相等的法向量</p>
+<h3 id="多边形"><a href="#多边形" class="headerlink" title="多边形"></a>多边形</h3><p>多边形的表示方法：顶点表示（顶点坐标表示边），点阵表示（内部像素表示形）</p>
+<h4 id="x扫描线的特点"><a href="#x扫描线的特点" class="headerlink" title="x扫描线的特点"></a>x扫描线的特点</h4><p>判定顶点交点取舍问题：共享顶点的另外两个端点的y值，大于交点的个数决定0，1，2</p>
+<h4 id="改进的有效边表算法"><a href="#改进的有效边表算法" class="headerlink" title="改进的有效边表算法"></a>改进的有效边表算法</h4><ul>
+<li>某扫描线的ATE表（活性边表）：（当前==交点==的x值，x的增量即斜率倒数，该条边的顶点y最大值，指向下一个==点==的指针）</li>
+<li>NET（新边表）<ul>
+<li>一个纵向的链表，长度为最大扫描线数，横向指向吊桶链表（只有顶点交点指向，若包括全部边后不再向后循环）</li>
+<li>吊桶：线段链表(当前==线段==的最大y值，当前==线段==的最小x值，x的增量即斜率倒数，指向下一条==边==的指针）</li>
+<li>水平线无需管</li>
+</ul>
+</li>
+</ul>
+<h4 id="区域填充"><a href="#区域填充" class="headerlink" title="区域填充"></a>区域填充</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/区域填充算法.svg" alt="区域填充算法"></p>
+<h5 id="边界填充算法"><a href="#边界填充算法" class="headerlink" title="边界填充算法"></a>边界填充算法</h5><p>用户勾划出轮廓后，填充颜色</p>
+<h5 id="泛填充算法"><a href="#泛填充算法" class="headerlink" title="泛填充算法"></a>泛填充算法</h5><p>给区域重新着色</p>
+<h4 id="内外测试"><a href="#内外测试" class="headerlink" title="内外测试"></a>内外测试</h4><p>奇偶规则：做射线，与多边形交点是奇数则是内部，否则是外部</p>
+<p>非零环绕数规则：做射线，多边形边为方向矢量，穿过正向向量环绕数+1,反之-1，最后环绕数0在外部，否则在外部</p>
+<h4 id="字符存储"><a href="#字符存储" class="headerlink" title="字符存储"></a>字符存储</h4><p>点阵字符：每个字符由点阵位图表示，存储空间大，缩放失真</p>
+<p>矢量字符：记录笔画信息，需要时间进行笔画扫描转换</p>
+<h3 id="反走样"><a href="#反走样" class="headerlink" title="反走样"></a>反走样</h3><p>走样：离散量表示连续量引起的失真</p>
+<p>非加权区域采样方法：根据物体覆盖像素的覆盖率，来给像素填充不同亮度的颜色</p>
+<p>加权区域采样方法：将一个像素分隔成为九宫格，每个宫格的权值不同，权值如此<script type="math/tex">\left[
+ \begin{matrix}
+   1 & 2 & 1\\
+   2 & 4 & 2\\
+   1 & 2 & 1
+  \end{matrix} 
+\right]</script>，根据覆盖权值之和来给像素填充不同颜色</p>
+<h2 id="二维变换和二维观察"><a href="#二维变换和二维观察" class="headerlink" title="二维变换和二维观察"></a>二维变换和二维观察</h2><h3 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h3><p>用n+1维向量表示n维向量</p>
+<p>规范化齐次坐标：n+1维向量的最后一维是1</p>
+<h3 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h3><h4 id="平移变换"><a href="#平移变换" class="headerlink" title="平移变换"></a>平移变换</h4><script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   0 & 1 & 0\\
+   x变化量 & y变化量 & 1
+  \end{matrix} 
+\right]</script><h4 id="比例变换"><a href="#比例变换" class="headerlink" title="比例变换"></a>比例变换</h4><ul>
+<li><p>缩放系数不相等</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   x缩放系数 & 0 & 0\\
+   0 & y缩放系数 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>等比例缩放</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   0 & 1 & 0\\
+   0& 0 & 缩放系数
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="对称变换"><a href="#对称变换" class="headerlink" title="对称变换"></a>对称变换</h4><ul>
+<li><p>关于x轴对称</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   0 & -1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>关于y轴对称</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0\\
+   0 & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="旋转变换"><a href="#旋转变换" class="headerlink" title="旋转变换"></a>旋转变换</h4><ul>
+<li><p>绕原点逆时针旋转θ度</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & sin\theta & 0\\
+   -sin\theta & cos\theta & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>绕原点顺时针旋转θ度</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & -sin\theta & 0\\
+   sin\theta & cos\theta & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="错切变换"><a href="#错切变换" class="headerlink" title="错切变换"></a>错切变换</h4><ul>
+<li><p>沿x方向错切</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   x错切量 & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>沿y方向错切</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & y错切量 & 0\\
+   0 & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>沿xy方向错切</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & b & 0\\
+   c & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="复合变换"><a href="#复合变换" class="headerlink" title="复合变换"></a>复合变换</h4><p>即变换矩阵相乘（注意顺序，因为矩阵乘法不满足交换律）</p>
+<h4 id="多点变换齐次坐标"><a href="#多点变换齐次坐标" class="headerlink" title="多点变换齐次坐标"></a>多点变换齐次坐标</h4><script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   x_1 & y_1 & 1\\
+   x_2 & y_2 & 1\\
+   ... & ... & 1
+  \end{matrix} 
+\right]</script><h4 id="相对任意参考点的二维几何变换"><a href="#相对任意参考点的二维几何变换" class="headerlink" title="相对任意参考点的二维几何变换"></a>相对任意参考点的二维几何变换</h4><ol>
+<li>将参考点移到原点</li>
+<li>对原点进行二维变换</li>
+<li>将参考点反平移回原来位置</li>
+</ol>
+<h3 id="窗口和视区"><a href="#窗口和视区" class="headerlink" title="窗口和视区"></a>窗口和视区</h3><p>世界坐标系的窗口与屏幕坐标系中的视区的映射</p>
+<h3 id="直线裁剪"><a href="#直线裁剪" class="headerlink" title="直线裁剪"></a>直线裁剪</h3><h4 id="Cohen-Sutherland裁剪算法"><a href="#Cohen-Sutherland裁剪算法" class="headerlink" title="Cohen-Sutherland裁剪算法"></a>Cohen-Sutherland裁剪算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/编码裁剪算法.svg" alt="编码裁剪算法"></p>
+<h4 id="Liang-Barsky算法"><a href="#Liang-Barsky算法" class="headerlink" title="Liang-Barsky算法"></a>Liang-Barsky算法</h4><ol>
+<li><p>计算p和q值的值</p>
+<p>$p_1=x_1-x_2$  $q_1=x_1-x_{left}$</p>
+<p>$p_2=x_2-x_1$  $q_2=x_{right}-x_1$</p>
+<p>$p_3=y_1-y_2$  $q_3=y_1-y_{bottom}$</p>
+<p>$p_4=y_2-y_1$  $q_4=y_{top}-y_1$</p>
+</li>
+<li><p>计算使用公式$u_k=\frac{q_k}{p_k}$，计算出各个u值</p>
+</li>
+<li><p>根据$p_k$的符号将$u_k$两两分组</p>
+<ol>
+<li>$p_k&lt;0$组与0取最大</li>
+<li>$p_k&gt;0$组与1取最小</li>
+</ol>
+</li>
+<li><p>得到两个u值分别带入直线参数方程即可得到裁剪后的结果</p>
+<script type="math/tex; mode=display">\begin{cases}  x=x_1+u(x_2-x_1)  \\ y=y_1+u(y_2-y_1) \end{cases}</script></li>
+</ol>
+<h3 id="多边形裁剪"><a href="#多边形裁剪" class="headerlink" title="多边形裁剪"></a>多边形裁剪</h3><h4 id="Sutherland-Hodgeman算法"><a href="#Sutherland-Hodgeman算法" class="headerlink" title="Sutherland-Hodgeman算法"></a>Sutherland-Hodgeman算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/Sutherland-Hodgeman算法.svg" alt="Sutherland-Hodgeman算法"></p>
+<h4 id="Weiler-Atherton算法"><a href="#Weiler-Atherton算法" class="headerlink" title="Weiler-Atherton算法"></a>Weiler-Atherton算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/Weiler-Atherton算法.svg" alt="Weiler-Atherton算法"></p>
+<h3 id="二维观察流程"><a href="#二维观察流程" class="headerlink" title="二维观察流程"></a>二维观察流程</h3><ol>
+<li>用户坐标系生成图形</li>
+<li>将用户坐标系下的图形描述变换到观察坐标系</li>
+<li>在观察坐标系下对窗口进行裁剪</li>
+<li>裁剪后进行窗口到视区的变换</li>
+<li>将视区中图形内容变换到设备坐标系中</li>
+</ol>
+<h2 id="三维变换和三违观察"><a href="#三维变换和三违观察" class="headerlink" title="三维变换和三违观察"></a>三维变换和三违观察</h2><h3 id="变换-1"><a href="#变换-1" class="headerlink" title="变换"></a>变换</h3><h4 id="平移变换-1"><a href="#平移变换-1" class="headerlink" title="平移变换"></a>平移变换</h4><script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   x变化量 & y变化量 & z变化量 & 0
+  \end{matrix} 
+\right]</script><h4 id="比例变换-1"><a href="#比例变换-1" class="headerlink" title="比例变换"></a>比例变换</h4><ul>
+<li><p>局部</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   x缩放系数 & 0 & 0 & 0\\
+   0 & y缩放系数 & 0 & 0\\
+   0 & 0 & z缩放系数 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>整体</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 缩放系数
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="旋转变换-1"><a href="#旋转变换-1" class="headerlink" title="旋转变换"></a>旋转变换</h4><ul>
+<li><p>z轴旋转变换</p>
+<p>顺时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & sin\theta & 0 & 0\\
+   -sin\theta & cos\theta & 0 & 0\\
+   0& 0 & 1 & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script><p>逆时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & -sin\theta & 0 & 0\\
+   sin\theta & cos\theta & 0 & 0\\
+   0& 0 & 1 & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script></li>
+<li><p>x轴旋转变换</p>
+<p>顺时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & cos\theta & sin\theta & 0\\
+   0& -sin\theta & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script><p>逆时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & cos\theta & -sin\theta & 0\\
+   0& sin\theta & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script></li>
+<li><p>y轴旋转变换</p>
+<p>顺时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+    cos\theta & 0 & -sin\theta & 0\\
+   0 & 1 & 0 & 0\\
+   sin\theta& 0 & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script><p>逆时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+    cos\theta & 0 & sin\theta & 0\\
+   0 & 1 & 0 & 0\\
+   -sin\theta& 0 & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="对称变换-1"><a href="#对称变换-1" class="headerlink" title="对称变换"></a>对称变换</h4><ul>
+<li><p>xoy平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>yoz平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>zox平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>x轴</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>y轴</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>z轴</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>原点</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="相对任意参考点的三维变换"><a href="#相对任意参考点的三维变换" class="headerlink" title="相对任意参考点的三维变换"></a>相对任意参考点的三维变换</h4><ol>
+<li>将参考点移到原点</li>
+<li>针对原点进行变换</li>
+<li>参考点反平移到原来位置</li>
+</ol>
+<h4 id="参考任意轴的三维旋转变换"><a href="#参考任意轴的三维旋转变换" class="headerlink" title="参考任意轴的三维旋转变换"></a>参考任意轴的三维旋转变换</h4><ol>
+<li>将轴线段的一端移动到坐标原点</li>
+<li>将轴线段先旋转到坐标系平面上，再旋转到轴上</li>
+<li>进行绕轴旋转变换</li>
+<li>在将轴线段移动到原来位置</li>
+</ol>
+<h3 id="投影"><a href="#投影" class="headerlink" title="投影"></a>投影</h3><h4 id="三视图"><a href="#三视图" class="headerlink" title="三视图"></a>三视图</h4><ul>
+<li><p>主视图（xoz）</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 0 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>俯视图(xoy)：再绕x轴旋转负九十度，再z轴方向平移$z_0$距离</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & -z_0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>侧视图（yoz）：再绕z轴旋转负九十度，再x轴方向平移$x_0$距离</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   0 & 0 & 0 & 0\\
+   -1 & 0 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   -x_0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h4><ul>
+<li><p>一点透视:将三维物体平移到适当位置（l,m,n）,进行透视变换（d是视距），为了方便绘制，向xoy平面做正投影变换，将结果变换到xoy平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 0 & \frac{1}{d}\\
+   l & m & 0 & 1+\frac{n}{d}
+  \end{matrix} 
+\right]</script></li>
+<li><p>两点透视</p>
+</li>
+<li><p>三点透视</p>
+</li>
+</ul>
+<h3 id="观察变换"><a href="#观察变换" class="headerlink" title="观察变换"></a>观察变换</h3><h4 id="观察坐标系"><a href="#观察坐标系" class="headerlink" title="观察坐标系"></a>观察坐标系</h4><p>$z_v$：视点（观察坐标系原点）与物体焦点的连线</p>
+<p>$y_v$：向上方向</p>
+<p>$x_v$：已知y和z轴后，根据右手定则得出</p>
+<h4 id="变换-2"><a href="#变换-2" class="headerlink" title="变换"></a>变换</h4><p>即求世界坐标系中点在观察坐标系中的坐标值</p>
+<ol>
+<li>将观察坐标系原点（视点）与世界坐标系移动重合，再经过旋转，使得两坐标系重合</li>
+<li>无需逆过程移回去，此变换矩阵就是点在观察坐标系的坐标的变换矩阵</li>
+</ol>
+<h3 id="三维观察流程"><a href="#三维观察流程" class="headerlink" title="三维观察流程"></a>三维观察流程</h3><ol>
+<li>在用户坐标系生成图形</li>
+<li>将用户坐标系下的图形描述变换到观察坐标系</li>
+<li>根据要求在观察坐标系下进行规范化投影变换</li>
+<li>进行三维裁剪</li>
+<li>进行正投影，投影到观察平面</li>
+<li>将矩形窗口图形依据二维坐标重构二维图形，经过窗口到视区的变换</li>
+</ol>
+<h2 id="简单光照模型"><a href="#简单光照模型" class="headerlink" title="简单光照模型"></a>简单光照模型</h2><ul>
+<li>环境光：$I_{环境光}=I_{环境光强度}K_{环境光反射系数}$</li>
+<li>理想漫反射光：$I_{漫反射光}=I_{点光源强度}K_{漫反射系数}(L_{点光源向量}·N_{物体表面法向量})$</li>
+<li>镜面反射光：$I_{镜面反射光}=I_{点光源强度}K_{镜面反射系数}(R_{镜面反射方向向量}·V_{视线方向向量})^{n_{镜面反射指数}}$</li>
+<li>向量点积：$\overrightarrow{a}·\overrightarrow{b}=x_1x_2+y_1y_2+z_1z_2$</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机图形学</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面向对象系统分析与设计</title>
+    <url>/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="面向对象系统开发概述"><a href="#面向对象系统开发概述" class="headerlink" title="面向对象系统开发概述"></a>面向对象系统开发概述</h2><h3 id="系统与系统思想"><a href="#系统与系统思想" class="headerlink" title="系统与系统思想"></a>系统与系统思想</h3><ul>
+<li>系统<ul>
+<li>components（部件）：系统是由若干要素组成的集合体</li>
+<li>Interrelationship（相互关系）：系统有一定的结构，同一系统元素之间相互联系相互作用</li>
+<li>Boundary（边界）：划分系统内部和外部的界限</li>
+<li>Interface（接口）：系统与其所处环境相连接点，是系统对外表现的行为</li>
+<li>环境：系统边界之外影响该系统</li>
+<li>input（输入）：从环境到系统的输入数据</li>
+<li>output（输出）：从系统到环境的输出数据</li>
+</ul>
+</li>
+<li>系统特性<ul>
+<li>系统多元性：多个部件构成</li>
+<li>系统相关性：部件之间有相互依赖与作用关系</li>
+<li>系统层次性；多个子系统构成整个系统</li>
+<li>系统的整体性：不是简单的部件组合，系统有新的性质和行为</li>
+</ul>
+</li>
+<li>系统相关概念<ul>
+<li>系统分解：将系统分解为更小要素单元，子系统或最终单元</li>
+<li>模块化：系统分解直接后果</li>
+<li>耦合：子系统间的相互依赖（高内聚低耦合）</li>
+<li>内聚：子系统仅实现的单元功能（高内聚低耦合）</li>
+</ul>
+</li>
+<li>系统思想：从定义需求出发，明确目标，设计满足需求的系统</li>
+</ul>
+<h3 id="信息系统概述"><a href="#信息系统概述" class="headerlink" title="信息系统概述"></a>信息系统概述</h3><h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
+<li>事务处理系统（TPS）：也被称为数据处理系统(data processing system，DPS)，面向企业最底层的管理系统</li>
+<li>管理信息系统（MIS）：以事务处理系统为基础，对事务处理系统获得数据进行分析</li>
+<li>决策支持系统（DDS）：在管理信息系统基础上，服务于高层决策的管理信息系统</li>
+<li>专家系统：模拟人类专家解决问题的计算机程序系统</li>
+<li>办公自动化（OA）：利用现代化设备和信息化技术，代替手工办公</li>
+</ul>
+<h4 id="信息系统的分析与设计"><a href="#信息系统的分析与设计" class="headerlink" title="信息系统的分析与设计"></a>信息系统的分析与设计</h4><h5 id="系统常用开发方式"><a href="#系统常用开发方式" class="headerlink" title="系统常用开发方式"></a>系统常用开发方式</h5><ul>
+<li>独立开发方式</li>
+<li>委托开发方式</li>
+<li>合作开发方式</li>
+<li>购买现成软件</li>
+</ul>
+<h5 id="SDLC—-System-Development-Life-Cycle（系统开发生命周期）"><a href="#SDLC—-System-Development-Life-Cycle（系统开发生命周期）" class="headerlink" title="SDLC—- System Development Life Cycle（系统开发生命周期）"></a>SDLC—- System Development Life Cycle（系统开发生命周期）</h5><p>项目管理与计划：定义需求，指定项目计划</p>
+<p>系统分析：确定需求，研究需求，申城初始设计方案</p>
+<p>系统设计：逻辑设计，物理设计（决定用的编程语音和数据库等）</p>
+<p>系统实现与运转：编码、测试</p>
+<h5 id="结构化开发方式"><a href="#结构化开发方式" class="headerlink" title="结构化开发方式"></a>结构化开发方式</h5><p>四阶段：计划与选择，分析，设计，实现与操作</p>
+<p>基本思想：自顶向下、逐步求精，分阶段实现的软件开发方法</p>
+<h5 id="原型化开发方式"><a href="#原型化开发方式" class="headerlink" title="原型化开发方式"></a>原型化开发方式</h5><p>明确用户的基本需求后，构建系统原型，然后反复对原型进行修改，使之逐步完善，直到用户对系统完全满意为止。</p>
+<h4 id="面向对象的系统分析与设计"><a href="#面向对象的系统分析与设计" class="headerlink" title="面向对象的系统分析与设计"></a>面向对象的系统分析与设计</h4><ul>
+<li>面向对象开发（Object Oriented ，简称OO方法）：用面向对象方法模拟客观世界，子系统相对独立，便于维护</li>
+<li>迭代递增<ul>
+<li>迭代方法：经历若干时间周期增长、改进和细化方法来开发软件部分</li>
+<li>递增方法：逐个部分开发，这些部分渐进集成和测试</li>
+</ul>
+</li>
+<li>RUP（Rational Unified Process，统一软件开发过程）<ul>
+<li>初始阶段：确定项目作用域和业务用例</li>
+<li>细化阶段：细化项目需求分析</li>
+<li>构造阶段：写程序设计和源代码</li>
+<li>交付阶段：将系统交付用户</li>
+</ul>
+</li>
+</ul>
+<h2 id="面向对象导论"><a href="#面向对象导论" class="headerlink" title="面向对象导论"></a>面向对象导论</h2><p>对象：对客观世界具体的或抽象的事物</p>
+<p>类：类是对对象的抽象</p>
+<p>抽象：对复杂世界的简单表示</p>
+<p>类和类之间的关系：</p>
+<ul>
+<li>关联：同一个类实例化的对象之间的关系</li>
+<li>聚合：整体消失，部分不消失</li>
+<li>组合：整体消失，部分也消失</li>
+</ul>
+<p>封装：把对象属性和行为结合成一个独立单位，外界不能直接访问这些数据和代码，只能通过接口函数来访问</p>
+<p>继承：是机制，子类自动拥有父类非私有属性和方法</p>
+<p>多态：使用指向父类的指针，能调用子类对象，表现有重载和覆盖</p>
+<h2 id="UML模型图介绍"><a href="#UML模型图介绍" class="headerlink" title="UML模型图介绍"></a>UML模型图介绍</h2><h3 id="结构图（静态）"><a href="#结构图（静态）" class="headerlink" title="结构图（静态）"></a>结构图（静态）</h3><h4 id="类图：一组类之间的关系"><a href="#类图：一组类之间的关系" class="headerlink" title="类图：一组类之间的关系"></a>类图：一组类之间的关系</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/类图.svg" alt="类图"></p>
+<h4 id="对象图（与类图类似，只不过是类的实例化）"><a href="#对象图（与类图类似，只不过是类的实例化）" class="headerlink" title="对象图（与类图类似，只不过是类的实例化）"></a>对象图（与类图类似，只不过是类的实例化）</h4><h4 id="组件图"><a href="#组件图" class="headerlink" title="组件图"></a>组件图</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/组件图.svg" alt="组件图"></p>
+<h4 id="部署图"><a href="#部署图" class="headerlink" title="部署图"></a>部署图</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/部署图.svg" alt="部署图"></p>
+<h3 id="行为图（动态）"><a href="#行为图（动态）" class="headerlink" title="行为图（动态）"></a>行为图（动态）</h3><h4 id="用例图：对外部角色和系统功能建模"><a href="#用例图：对外部角色和系统功能建模" class="headerlink" title="用例图：对外部角色和系统功能建模"></a>用例图：对外部角色和系统功能建模</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/用例图.svg" alt="用例图"></p>
+<h4 id="顺序图：时序方式说明对象之间的交互"><a href="#顺序图：时序方式说明对象之间的交互" class="headerlink" title="顺序图：时序方式说明对象之间的交互"></a>顺序图：时序方式说明对象之间的交互</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/顺序图.svg" alt="顺序图"></p>
+<h4 id="通信图：非时序方式说明对象之间的交互"><a href="#通信图：非时序方式说明对象之间的交互" class="headerlink" title="通信图：非时序方式说明对象之间的交互"></a>通信图：非时序方式说明对象之间的交互</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/通信图.svg" alt="通信图"></p>
+<h4 id="状态图：对象响应各种事件状态的改变"><a href="#状态图：对象响应各种事件状态的改变" class="headerlink" title="状态图：对象响应各种事件状态的改变"></a>状态图：对象响应各种事件状态的改变</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/状态图.svg" alt="状态图"></p>
+<h4 id="活动图：一个活动（对象）到另一个活动（对象）的工作流"><a href="#活动图：一个活动（对象）到另一个活动（对象）的工作流" class="headerlink" title="活动图：一个活动（对象）到另一个活动（对象）的工作流"></a>活动图：一个活动（对象）到另一个活动（对象）的工作流</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/活动图.svg" alt="活动图"></p>
+<h2 id="面向对象项目管理"><a href="#面向对象项目管理" class="headerlink" title="面向对象项目管理"></a>面向对象项目管理</h2><h3 id="面向对象项目特点"><a href="#面向对象项目特点" class="headerlink" title="面向对象项目特点"></a>面向对象项目特点</h3><ul>
+<li>主要特点：迭代、递增</li>
+<li>将系统定义为一组组件（组件又称垂直切片，即一个系统用例）</li>
+<li>首先处理难题：可减少项目风险</li>
+<li>使用迭代来管理项目：<ul>
+<li>每次迭代都执行系统开发周期活动，包括管理与计划、分析、设计、实现与运转</li>
+<li>迭代输入就是上一次迭代的结果和当前期间要完成的项目组件，输出也是下一次迭代的输入</li>
+</ul>
+</li>
+<li>不要在前期计划的过于详细</li>
+<li>每个阶段的重点不同<ul>
+<li>初始阶段重点：分析</li>
+<li>细化阶段重点：设计</li>
+<li>构建阶段重点：实现</li>
+<li>转换阶段重点：运转</li>
+</ul>
+</li>
+</ul>
+<h3 id="面向对象的项目四个阶段"><a href="#面向对象的项目四个阶段" class="headerlink" title="面向对象的项目四个阶段"></a>面向对象的项目四个阶段</h3><ol>
+<li>初始</li>
+<li>细化</li>
+<li>构建</li>
+<li>转换</li>
+</ol>
+<h3 id="项目管理过程的四个阶段"><a href="#项目管理过程的四个阶段" class="headerlink" title="项目管理过程的四个阶段"></a>项目管理过程的四个阶段</h3><ol>
+<li>项目启动：估计项目规模、作用域、复杂度、并建立支持后续工作的规程</li>
+<li>项目计划：明确离散活动和完成这些活动所需要的工作</li>
+<li>项目执行：执行基准项目计划（简称BPP：结构化走查方式评审；项目章程SOW给用户看），并加以监控</li>
+<li>项目关闭：结束一个项目</li>
+</ol>
+<h3 id="项目进度计划（PM-项目经理）"><a href="#项目进度计划（PM-项目经理）" class="headerlink" title="项目进度计划（PM=项目经理）"></a>项目进度计划（PM=项目经理）</h3><h4 id="甘特图"><a href="#甘特图" class="headerlink" title="甘特图"></a>甘特图</h4><p>侧轴：任务列表</p>
+<p>横轴：日期</p>
+<p>需要了解：各个任务，任务开始时间，任务持续时间，根据日期来追踪项目进度</p>
+<h4 id="网络图"><a href="#网络图" class="headerlink" title="网络图"></a>网络图</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/网络图.svg" alt="网络图"></p>
+<p>正推最早：多个前趋取最大，第一个最早开始时间假设为0</p>
+<p>逆推最晚：多个前趋取最小，最后一个最晚结束时间假设与最早结束时间相等</p>
+<p>富裕时间：最早开始减最晚开始，或最早完成减最晚完成</p>
+<p>关键路径：富裕时间为0的活动串，即为关键路径</p>
+<h2 id="项目的管理和计划"><a href="#项目的管理和计划" class="headerlink" title="项目的管理和计划"></a>项目的管理和计划</h2><h3 id="经济可行性分析"><a href="#经济可行性分析" class="headerlink" title="经济可行性分析"></a>经济可行性分析</h3><p>资金时间价值：$n年折扣率=\frac {n-1年折扣率}{(1+题目折扣率)^n}$、$现在的价值=收益*折扣率$</p>
+<p>投资回报率：$总净现值/总成本$</p>
+<p>收支平衡比例(总净现值为正的拐点)：$(年净现值-总净现值)/年净现值$</p>
+<h3 id="技术可行性分析"><a href="#技术可行性分析" class="headerlink" title="技术可行性分析"></a>技术可行性分析</h3><h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><h3 id="传统需求获取方法"><a href="#传统需求获取方法" class="headerlink" title="传统需求获取方法"></a>传统需求获取方法</h3><ul>
+<li>访谈与倾听</li>
+<li>问卷</li>
+<li>观察工作人员</li>
+<li>业务文档</li>
+</ul>
+<h3 id="现代需求获取方法"><a href="#现代需求获取方法" class="headerlink" title="现代需求获取方法"></a>现代需求获取方法</h3><ul>
+<li>联合应用程序设计（JAD）</li>
+<li>原型化</li>
+</ul>
+<h2 id="用例分析"><a href="#用例分析" class="headerlink" title="用例分析"></a>用例分析</h2><h3 id="功能性需求"><a href="#功能性需求" class="headerlink" title="功能性需求"></a>功能性需求</h3><p>系统必须能做什么</p>
+<h3 id="非功能性需求"><a href="#非功能性需求" class="headerlink" title="非功能性需求"></a>非功能性需求</h3><ul>
+<li>性能需求</li>
+<li>可靠性需求：失效频率，易恢复性、故障预测性</li>
+<li>易用性需求：易上手</li>
+<li>可保障性需求：可维护可扩展</li>
+<li>安全性需求</li>
+<li>运行环境需求</li>
+<li>接口需求</li>
+</ul>
+<h3 id="用例图"><a href="#用例图" class="headerlink" title="用例图"></a>用例图</h3><ul>
+<li>参与者</li>
+<li>用例</li>
+<li>系统边界</li>
+<li>连接</li>
+<li>用例关系<ul>
+<li>扩展关系：可选或特定条件下执行的用例</li>
+<li>包含关系：对重复行为的抽离</li>
+</ul>
+</li>
+</ul>
+<h3 id="用例描述"><a href="#用例描述" class="headerlink" title="用例描述"></a>用例描述</h3><p>用例名称</p>
+<p>参与者</p>
+<p>简要描述</p>
+<p>前置条件：用例开始之前需要满足的条件</p>
+<p>后置条件：用例结束后的成功保证</p>
+<p>主事件流：成功的业务流程</p>
+<h2 id="数据概念模型"><a href="#数据概念模型" class="headerlink" title="数据概念模型"></a>数据概念模型</h2><h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
+<li>简单属性：简单数据项</li>
+<li>标识符：即主键，用<code>&lt;&lt;PK&gt;&gt;</code>来表示</li>
+<li>多值属性：同时包含多个值的属性，用<code>&lt;&lt;Multivalued&gt;&gt;</code>表示（例如电话号码，一个人可以有好多个）</li>
+<li>组合属性：相关属性的组合（类的嵌套，如地址）</li>
+</ul>
+<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><h4 id="实体"><a href="#实体" class="headerlink" title="实体"></a>实体</h4><ul>
+<li>一元关系（一度）</li>
+<li>二元关系（二度）</li>
+<li>多元关系（多度）</li>
+</ul>
+<h4 id="类-1"><a href="#类-1" class="headerlink" title="类"></a>类</h4><p>越往下关系越强</p>
+<ul>
+<li>依赖：使用关系，虚线箭头</li>
+<li>关联：拥有关系，实线</li>
+<li>聚合：整体消失部分不消失，实线空心菱形箭头</li>
+<li>组合：整体消失部分消失，实线实心菱形箭头</li>
+<li>实现：类实现接口，虚线空心三角箭头</li>
+<li>泛化：继承，实线空心三角箭头</li>
+</ul>
+<h2 id="对象关系建模"><a href="#对象关系建模" class="headerlink" title="对象关系建模"></a>对象关系建模</h2><h3 id="关系-1"><a href="#关系-1" class="headerlink" title="关系"></a>关系</h3><ul>
+<li>继承</li>
+<li>多值属性</li>
+<li>聚合或组合</li>
+<li>其他面向对象扩展</li>
+</ul>
+<h2 id="判定表"><a href="#判定表" class="headerlink" title="判定表"></a>判定表</h2><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/判定表.svg" alt="判定表"></p>
+<h2 id="物理数据库设计（索引）"><a href="#物理数据库设计（索引）" class="headerlink" title="物理数据库设计（索引）"></a>物理数据库设计（索引）</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>表名</th>
+<th>行对象数目</th>
+<th>单行字节数</th>
+<th>分块因子</th>
+<th>总块数</th>
+<th>总扫描时间</th>
+<th>索引</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>已知</td>
+<td>已知</td>
+<td>已知</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>分块因子=数据块大小(B)÷单行对象字节数(B)</p>
+<p>总数据块数=行对象数÷分块因子</p>
+<p>总扫描时间=总数据块数*磁盘块扫描时间</p>
+]]></content>
+      <categories>
+        <category>面向对象系统分析与设计</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Oracle</title>
+    <url>/2020/05/12/Oracle/</url>
+    <content><![CDATA[<h2 id="数据库启动与关闭"><a href="#数据库启动与关闭" class="headerlink" title="数据库启动与关闭"></a>数据库启动与关闭</h2><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">//只有sys用户能关闭数据库</span><br><span class="line"></span><br><span class="line">startup nomount</span><br><span class="line">//启动实例</span><br><span class="line">alter database mount</span><br><span class="line">//装载数据库</span><br><span class="line">alter database open</span><br><span class="line">//打开数据库</span><br><span class="line"></span><br><span class="line">startup mount</span><br><span class="line">//启动实例，并且装载数据库</span><br><span class="line">alter database open</span><br><span class="line">//打开数据库</span><br><span class="line"></span><br><span class="line">startup open</span><br><span class="line">//启动实例后装载数据库，最后打开数据库</span><br><span class="line"></span><br><span class="line">shutdown normal</span><br><span class="line">//（默认方式）阻止新连接，等待用户主动断开连接后关闭数据库</span><br><span class="line">shutdown transactional</span><br><span class="line">//阻止新连接和新事务，等待所有事务提交后主动让用户断开连接后关闭数据库</span><br><span class="line">shutdow immediate</span><br><span class="line">//阻止用户新连接和新事务，未提交的事务回退，关闭数据库</span><br><span class="line">shutdow abort</span><br><span class="line">//强制中断任何数据库操作</span><br></pre></td></tr></table></figure>
+<h2 id="sqlplus命令"><a href="#sqlplus命令" class="headerlink" title="sqlplus命令"></a>sqlplus命令</h2><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">show user//查看当前登入用户</span><br><span class="line">conn 用户名[/密码][AS SYSDBA]//切换使用用户,若使用超级管理员登入必须加 AS SYSDBA</span><br><span class="line">clear scr//清屏</span><br><span class="line"><span class="built_in">set</span> linesize 大小//每行显示数据长度</span><br><span class="line"><span class="built_in">set</span> pagesize 大小//每页长度</span><br><span class="line"><span class="built_in">set</span> newpage 大小//页间隔</span><br><span class="line">@绝对路径//执行sql脚本，不加后缀默认为*.sql</span><br><span class="line">host 系统命令//调用系统命令</span><br><span class="line">col 列名 <span class="built_in">format</span> 格式//控制数字格式 或 显示长度 a长度</span><br><span class="line">col 列名 clear//清除显示格式</span><br></pre></td></tr></table></figure>
+<h2 id="scoot-tager表"><a href="#scoot-tager表" class="headerlink" title="scoot/tager表"></a>scoot/tager表</h2><ol>
+<li><p>dept（部门表）</p>
+<p>| 字段名 |   含义   |<br>| :——: | :———: |<br>| DEPTNO | 部门编号 |<br>| DNAME  | 部门名称 |<br>|  LOC   | 部门位置 |</p>
+</li>
+<li><p>emp（雇员表）</p>
+<p>|  字段名  |   含义   |<br>| :———: | :———: |<br>|  EMONO   | 雇员编号 |<br>|  ENAME   | 雇员姓名 |<br>|   JOB    |   职位   |<br>|   MGR    | 雇员领导 |<br>| HIREDATE | 雇佣日期 |<br>|   SAL    | 基本工资 |<br>|   COMM   |   佣金   |<br>|  DEPTNO  | 部门编号 |</p>
+</li>
+<li><p>salgrade（工资等级表）</p>
+<p>| 字段名 |   含义   |<br>| :——: | :———: |<br>| GRADE  | 等级编号 |<br>| LOSAL  | 最低工资 |<br>| HISAL  | 最高工资 |</p>
+</li>
+<li><p>bonus（工资表）</p>
+<p>| 字段名 |   含义   |<br>| :——: | :———: |<br>| ENAME  | 雇员姓名 |<br>|  JOB   |   职位   |<br>|  SAL   | 基本工资 |<br>|  COMM  |   佣金   |</p>
+</li>
+</ol>
+<h2 id="DQL"><a href="#DQL" class="headerlink" title="DQL"></a>DQL</h2><h3 id="简单查询"><a href="#简单查询" class="headerlink" title="简单查询"></a>简单查询</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> TAB;</span><br><span class="line"><span class="comment">--查看数据库所有的表</span></span><br><span class="line">DESC emp;</span><br><span class="line"><span class="comment">--查看emp表的结构</span></span><br><span class="line"><span class="comment">--describe 描述</span></span><br><span class="line"><span class="keyword">SELECT</span> [<span class="keyword">DISTINCT</span>] *| 列名称 [别名],列名称 [别名]... | 数据计算 </span><br><span class="line"><span class="keyword">FROM</span> 数据表 [别名]</span><br><span class="line"><span class="comment">--优先执行FROM</span></span><br><span class="line"><span class="comment">--DISTINCT消除重复数据</span></span><br><span class="line"><span class="comment">-- * 查询所有列</span></span><br><span class="line"><span class="comment">--也可以经行常量查询，字符串用单引号，数字不需要，常量后面加别名不需要加单引号</span></span><br><span class="line"><span class="comment">--使用||经行字符串连接处理</span></span><br></pre></td></tr></table></figure>
+<h3 id="限定查询"><a href="#限定查询" class="headerlink" title="限定查询"></a>限定查询</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> [<span class="keyword">DISTINCT</span>] * | 列名称 [别名],列名称 [别名],... | 数学计算 </span><br><span class="line"><span class="keyword">FROM</span> 数据表 [别名] </span><br><span class="line">[<span class="keyword">WHERE</span> 限定条件];</span><br><span class="line"><span class="comment">--先执行FROM，然后执行WHERE,最后SELECT</span></span><br><span class="line"><span class="comment">--数据是字符串要用单引号，且区分大小写</span></span><br></pre></td></tr></table></figure>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">AND</td>
+<td style="text-align:left">&amp;、与操作</td>
+</tr>
+<tr>
+<td style="text-align:center">NOT</td>
+<td style="text-align:left">!、非操作</td>
+</tr>
+<tr>
+<td style="text-align:center">OR</td>
+<td style="text-align:left">\</td>
+<td>、或操作</td>
+</tr>
+<tr>
+<td style="text-align:center">BETWEEN 最小值 AND 最大值</td>
+<td style="text-align:left">带边界的查询<br>支持各种数据类型</td>
+</tr>
+<tr>
+<td style="text-align:center">IS NULL</td>
+<td style="text-align:left">是空</td>
+</tr>
+<tr>
+<td style="text-align:center">IS NOT NULL</td>
+<td style="text-align:left">不是空</td>
+</tr>
+<tr>
+<td style="text-align:center">LIKE</td>
+<td style="text-align:left">模糊查询<br>支持各种数据类型</td>
+</tr>
+<tr>
+<td style="text-align:center">NOT IN 和 IN</td>
+<td style="text-align:left">范围查询</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">_</td>
+<td style="text-align:left">一位</td>
+</tr>
+<tr>
+<td style="text-align:center">%</td>
+<td style="text-align:left">零位，一位，多位</td>
+</tr>
+<tr>
+<td style="text-align:center">%关键字%</td>
+<td style="text-align:left">只要有关键字就列出<br>无关键字就是查询全部</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="范围查询"><a href="#范围查询" class="headerlink" title="范围查询"></a>范围查询</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">符号</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">IN (数据1，数据2…)</td>
+<td style="text-align:center">查询在种子数据中的数据</td>
+</tr>
+<tr>
+<td style="text-align:left">NOT IN (数据1，数据2…)</td>
+<td style="text-align:center">查询不在种子数据中的数据</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li>在NOT IN 操作中，种子数据中不能出现NULL,若出现NULL直接不查询</li>
+<li>在IN操作中，种子数据中出现NULL，则不会理会NULL</li>
+</ol>
+<h3 id="查询排序"><a href="#查询排序" class="headerlink" title="查询排序"></a>查询排序</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> [<span class="keyword">DISTINCT</span>] * | 列名称 [别名],列名称 [别名]... | 数学计算</span><br><span class="line"><span class="keyword">FROM</span> 数据表 [表名]</span><br><span class="line">[<span class="keyword">WHERE</span> 限定条件]</span><br><span class="line">[<span class="keyword">ORDER</span> <span class="keyword">BY</span> 排序字段 [<span class="keyword">ASC</span> | <span class="keyword">DESC</span>],排序字段 [<span class="keyword">ASC</span> | <span class="keyword">DESC</span>]...;</span><br><span class="line"><span class="comment">--先执行FROM,之后执行WHERE,然后执行SELECT,之后执行ORDER BY</span></span><br><span class="line"> <span class="comment">--ASC 升序 默认</span></span><br><span class="line"> <span class="comment">--DESC 降序 默认</span></span><br></pre></td></tr></table></figure>
+<h3 id="单行函数"><a href="#单行函数" class="headerlink" title="单行函数"></a>单行函数</h3><h4 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h4><ul>
+<li>转大写：<code>字符串 UPPER(数据 | 字段名)</code></li>
+<li>转小写：<code>字符串 LOWER(数据 | 字段名)</code></li>
+<li>首字母大写：<code>字符串 INITCAP(数据 | 字段名)</code></li>
+<li>计算字符串长度：<code>NUMBER LENGTH(数据 | 字段名)</code></li>
+<li>字符串截取：<code>字符串 SUBSTR(数据 |字段名,截取起始点[,截取长度])</code><ul>
+<li>截取起始位置是从1开始的，设置成0也是从1开始</li>
+<li>截取起始位置可以是负数，代表从倒数第几个开始截取</li>
+</ul>
+</li>
+<li>字符串替换：<code>字符串 REPLACE(数据 | 字段名,要替换的数据,替换数据)</code></li>
+<li>日期转换：<code>日期 TO_DATE(&#39;1999-10-10 10:10:10&#39;,&#39;yyyy-mm-dd hh24:mi,ss&#39;)</code><ul>
+<li>忽略时分秒自动置0</li>
+<li>忽略DD默认置为1</li>
+<li>忽略MM默认取当前月</li>
+</ul>
+</li>
+</ul>
+<h4 id="数值函数"><a href="#数值函数" class="headerlink" title="数值函数"></a>数值函数</h4><ul>
+<li>四舍五入：<code>ROUND(数据 | 字段名[,保留小数位])</code><ul>
+<li>保留位可以是负数</li>
+</ul>
+</li>
+<li>取整数：<code>TRUNC(数据 | 字段名[,保留小数位])</code></li>
+<li>取余：<code>MOD(数据1 | 字段名1,数据2 | 字段名2)</code><ul>
+<li>结果是<code>数据1%数据2</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> [<span class="keyword">DISTINCT</span>] * | 字段名 [别名],列名称 [别名]... | 数据计算</span><br><span class="line"><span class="keyword">FROM</span> 数据表<span class="number">1</span> [别名],数据表<span class="number">2</span> [别名]...</span><br><span class="line">[<span class="keyword">WHERE</span> 限定条件]</span><br><span class="line">[<span class="keyword">ORDER</span> <span class="keyword">BY</span> 排序字段 [<span class="keyword">ASC</span> | <span class="keyword">DESC</span>],排序字段[<span class="keyword">ASC</span> | <span class="keyword">DESC</span>]...];</span><br><span class="line"><span class="comment">--先执行FROM,之后执行WHERE,然后执行SELECT,之后执行ORDER BY</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>内连接：等值连接</li>
+<li>外连接<ul>
+<li>左外连接：Oracle自己的，右加 ‘(+)’，<code>字段=字段（+）</code></li>
+<li>右外连接：Oracle自己的，左加 ‘(+)’，<code>字段（+）=字段</code></li>
+<li>全外连接</li>
+</ul>
+</li>
+<li>自身连接</li>
+</ul>
+<h4 id="SQL-1999语法标准"><a href="#SQL-1999语法标准" class="headerlink" title="SQL:1999语法标准"></a>SQL:1999语法标准</h4><ul>
+<li>交叉连接：<code>表1 CROSS JOIN 表2</code>：产生笛卡尔积</li>
+<li>自然连接<ul>
+<li><code>表1 NATURAL JOIN 表2</code>:内连接，自动找到同名字段消除笛卡尔积</li>
+<li><code>表1 JOIN 表2 USING(相同字段名)</code>：内连接，当有多个相同字段使用USING来确定关联字段</li>
+<li><code>表1 JOIN 表2 ON（设置关联条件）</code>：内连接，和WHERE相同</li>
+</ul>
+</li>
+<li>外连接<ul>
+<li>左外连接：<code>表1 LEFT OUTER JOIN 表2 NO(设置连接条件)</code></li>
+<li>右外连接：<code>表1 RIGHT OUTER JOIN 表2 NO(设置连接条件)</code></li>
+<li>全外连接：<code>表1 FULL OUTER JOIN 表2 NO(设置连接条件)</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="集合处理"><a href="#集合处理" class="headerlink" title="集合处理"></a>集合处理</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">关键字</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">UNION</td>
+<td style="text-align:center">重复部分不显示</td>
+</tr>
+<tr>
+<td style="text-align:center">UNION ALL</td>
+<td style="text-align:center">重复部分也显示</td>
+</tr>
+<tr>
+<td style="text-align:center">MINUS</td>
+<td style="text-align:center">显示不同部分</td>
+</tr>
+<tr>
+<td style="text-align:center">INTERSECT</td>
+<td style="text-align:center">显示相同部分</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="分组统计查询"><a href="#分组统计查询" class="headerlink" title="分组统计查询"></a>分组统计查询</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">5. <span class="keyword">SELECT</span> [<span class="keyword">DISTINCT</span>] 分组依据字段 | 统计函数,...</span><br><span class="line"><span class="number">1.</span> <span class="keyword">FROM</span> 数据表<span class="number">1</span> [别名],数据表<span class="number">2</span> [别名]...</span><br><span class="line"><span class="number">2.</span> [<span class="keyword">WHERE</span> 限定条件]</span><br><span class="line"><span class="number">3.</span> [<span class="keyword">GROUP</span> <span class="keyword">BY</span> 分组依据字段]</span><br><span class="line"><span class="comment">--只有在GROUP BY 中出现的字段才能在 SELECT 中出现</span></span><br><span class="line"><span class="number">4.</span> [<span class="keyword">HAVING</span> 分组后过滤]</span><br><span class="line"><span class="comment">--可以使用统计函数</span></span><br><span class="line"><span class="number">6.</span> [<span class="keyword">ORDER</span> <span class="keyword">BY</span> 排序字段 [<span class="keyword">ASC</span> | <span class="keyword">DESC</span>],排序字段[<span class="keyword">ASC</span> | <span class="keyword">DESC</span>]...]</span><br><span class="line"><span class="comment">--先执行FROM,之后执行WHERE,然后执行GROUP BY,然后执行SELECT,之后执行ORDER BY</span></span><br></pre></td></tr></table></figure>
+<h4 id="统计函数"><a href="#统计函数" class="headerlink" title="统计函数"></a>统计函数</h4><p>统计数据条目数：<code>COUNT(* | [DISTINCT] 字段名)</code>,注意不统计空</p>
+<p>统计数据总和：<code>SUM(字段名)</code></p>
+<p>统计数据平均值：<code>AVG(字段名)</code></p>
+<p>统计出最大值：<code>MAX(字段名)</code></p>
+<p>统计出最小值：<code>MIN(字段名)</code></p>
+<h3 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h3><h5 id="WHERE（单行或单列）"><a href="#WHERE（单行或单列）" class="headerlink" title="WHERE（单行或单列）"></a>WHERE（单行或单列）</h5><ul>
+<li>单行单列：直接将数据拿来对比</li>
+<li>单行多列：使用<code>(子查询返回字段1,子查询返回字段2...)</code>来进行对比</li>
+<li>多行单列：集合操作<ul>
+<li>IN：范围内的数据，注意NOT IN 若是NULL不返回结果</li>
+<li>ANY<ul>
+<li>＝ANY：与IN相同</li>
+<li>＞ANY：比最小的大</li>
+<li>＜ANY：比最大的小</li>
+</ul>
+</li>
+<li>ALL：<ul>
+<li>＞ALL：比最大的大</li>
+<li>＜ALL：比最小的小</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="HAVING（单行单列且需要统计时）"><a href="#HAVING（单行单列且需要统计时）" class="headerlink" title="HAVING（单行单列且需要统计时）"></a>HAVING（单行单列且需要统计时）</h5><h5 id="FROM（多行多列，及表）"><a href="#FROM（多行多列，及表）" class="headerlink" title="FROM（多行多列，及表）"></a>FROM（多行多列，及表）</h5><ul>
+<li>比分组统计查询效率高</li>
+<li><p>分组统计查询若是空为0，子查询若是空还是空</p>
+</li>
+<li><p>EXISTS函数：有查询结果返回TRUE否则返回FALSE，不会参与到数据运算中</p>
+</li>
+</ul>
+<h2 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h2><h4 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h4><ul>
+<li>语法：<code>INSERT INTO 表 (字段名,字段名,...)VALUES(内容1,内容2...);</code></li>
+<li>若某些字段不想设置值，则不写字段名，或者，将内容写为NULL</li>
+<li>注意<ul>
+<li>字符串要使用单引号括起来</li>
+<li>数字直接编写</li>
+<li>日期<ul>
+<li>当前日期：SYSDATE</li>
+<li>自定义日期：TO_DATE()函数转换：注意有下划线</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="UPDATE"><a href="#UPDATE" class="headerlink" title="UPDATE"></a>UPDATE</h4><ul>
+<li>语法：<code>UPDATE 表 SET 字段1=内容1,字段2=内容2,...[WHERE 更新条件]</code></li>
+<li>注意：没写WHERE 则表示更新所有数据</li>
+</ul>
+<h4 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h4><ul>
+<li>语法：<code>DELETE FROM 表 [WHERE 删除条件]</code></li>
+<li>注意：没有写WHERE则表示删除全表记录</li>
+</ul>
+<h2 id="TCL"><a href="#TCL" class="headerlink" title="TCL"></a>TCL</h2><h4 id="ACID原则"><a href="#ACID原则" class="headerlink" title="ACID原则"></a>ACID原则</h4><ul>
+<li>原子性，一致性，隔离性，持久性</li>
+</ul>
+<h4 id="commit：提交"><a href="#commit：提交" class="headerlink" title="commit：提交"></a>commit：提交</h4><h4 id="rollback：回滚"><a href="#rollback：回滚" class="headerlink" title="rollback：回滚"></a>rollback：回滚</h4><h4 id="事务锁"><a href="#事务锁" class="headerlink" title="事务锁"></a>事务锁</h4><p>在一个session中对某条数据更新，另一个session只能等待上一个session解锁后才能更新</p>
+<p>commit或rollback解锁</p>
+<p>在查询语句后加上<code>FOR UPDATE</code>会为其加锁</p>
+<h2 id="数据伪列"><a href="#数据伪列" class="headerlink" title="数据伪列"></a>数据伪列</h2><h4 id="SYSDATE"><a href="#SYSDATE" class="headerlink" title="SYSDATE"></a>SYSDATE</h4><h4 id="ROWNUM"><a href="#ROWNUM" class="headerlink" title="ROWNUM"></a>ROWNUM</h4><ul>
+<li>查询第一行记录：用WHERE ROWNUM=1</li>
+<li>查询前N行记录：用WHERE ROWNUM&lt; ==N== </li>
+<li>查询部分数据：利用子查询</li>
+</ul>
+<h4 id="ROWID"><a href="#ROWID" class="headerlink" title="ROWID"></a>ROWID</h4><p>删除重复数据</p>
+<p>先根据字段分组找到最小的ROWID（MIN（ROWID））进行分组</p>
+<p>利用delete from 表 where not in(子查询)</p>
+<h2 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h2><p>不会受到事务的控制，创建数据表后自动commit</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VARCHAR2（n）</td>
+<td>最多n个字符</td>
+</tr>
+<tr>
+<td>NUMBER（n,m）</td>
+<td>最多n位，有m个小数位</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>日期和时间</td>
+</tr>
+<tr>
+<td>CLOB</td>
+<td>大文本数据（4G）</td>
+</tr>
+<tr>
+<td>BLOB</td>
+<td>二进制数据（4G）多媒体文件</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名 (</span><br><span class="line">2列名称 数据类型[<span class="keyword">DEFAULT</span> 默认值],</span><br><span class="line">    列名称 数据类型[<span class="keyword">DEFAULT</span> 默认值],</span><br><span class="line">    ...</span><br><span class="line">    列名称 数据类型[<span class="keyword">DEFAULT</span> 默认值]</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h4 id="表的复制"><a href="#表的复制" class="headerlink" title="表的复制"></a>表的复制</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> TAB 表名 <span class="keyword">AS</span> 子查询;</span><br><span class="line"><span class="comment">--此处子查询不需要加括号</span></span><br><span class="line"><span class="comment">--只复制表结构就编写一个不会返回数据的子查询</span></span><br></pre></td></tr></table></figure>
+<h3 id="数据字典"><a href="#数据字典" class="headerlink" title="数据字典"></a>数据字典</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">dba_users</span><br><span class="line"><span class="comment">--用户信息</span></span><br><span class="line">v$database</span><br><span class="line"><span class="comment">--数据库信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--/app/oracle/admin/实例名称/pfile/init.ora.0192020115156</span></span><br><span class="line"><span class="comment">--数据库实例的启动初始化参数文件</span></span><br></pre></td></tr></table></figure>
+<h3 id="表名称修改（只有Oracle支持）"><a href="#表名称修改（只有Oracle支持）" class="headerlink" title="表名称修改（只有Oracle支持）"></a>表名称修改（只有Oracle支持）</h3><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">RENAME</span> 旧表名 <span class="keyword">TO</span> 新表名</span><br></pre></td></tr></table></figure>
+<h3 id="删除和闪回表"><a href="#删除和闪回表" class="headerlink" title="删除和闪回表"></a>删除和闪回表</h3><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> 表名[<span class="keyword">PURGE</span>];</span><br><span class="line"><span class="comment">--删除表,加上PURGE是彻底删除</span></span><br><span class="line"><span class="keyword">PURGE</span> <span class="keyword">TABLE</span> 表名;</span><br><span class="line"><span class="comment">--删除回收站的表</span></span><br><span class="line"><span class="keyword">PURGE</span> RECYCLEBIN</span><br><span class="line"><span class="comment">--清空回收站</span></span><br><span class="line"><span class="keyword">SHOW</span> RECYCLEBIN</span><br><span class="line"><span class="keyword">SELECT</span> object_name,original_name,droptime <span class="keyword">FROM</span> user_recyclebin;</span><br><span class="line"><span class="comment">--查看回收站</span></span><br><span class="line">FLASHBACK TABLE 表名 TO BEFORE <span class="keyword">DROP</span>;</span><br><span class="line"><span class="comment">--闪回表</span></span><br></pre></td></tr></table></figure>
+<h4 id="表结构修改"><a href="#表结构修改" class="headerlink" title="表结构修改"></a>表结构修改</h4><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名称 <span class="keyword">ADD</span> (</span><br><span class="line">2列名称 数据类型[<span class="keyword">DEFAULT</span> 默认值],</span><br><span class="line">2列名称 数据类型[<span class="keyword">DEFAULT</span> 默认值]...</span><br><span class="line">)</span><br><span class="line"><span class="comment">--不设置默认值，默认为null</span></span><br><span class="line"><span class="comment">--设置默认值，默认为默认值</span></span><br><span class="line"><span class="comment">--会触发事务锁</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名称 <span class="keyword">MODIFY</span> (</span><br><span class="line">2列名称 数据类型[<span class="keyword">DEFAULT</span> 默认值],</span><br><span class="line">2列名称 数据类型[<span class="keyword">DEFAULT</span> 默认值]...</span><br><span class="line">)</span><br><span class="line"><span class="comment">--修改字段类型，若想有缩小字段长度或修改类型需要列为空</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名称 <span class="keyword">DROP</span> <span class="keyword">COLUMN</span> 字段名称;</span><br><span class="line"><span class="comment">--删除字段，不管有没有数据，都会被删除</span></span><br></pre></td></tr></table></figure>
+<h2 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h2><h3 id="添加约束条件"><a href="#添加约束条件" class="headerlink" title="添加约束条件"></a>添加约束条件</h3><p>多个检查条件都违反约束，将一个一个检查，所以约束条件越多效率越慢</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名 (</span><br><span class="line">2字段<span class="number">1</span> 数据类型 约束条件,</span><br><span class="line">    字段<span class="number">1</span> 数据类型 约束条件,</span><br><span class="line">    ...</span><br><span class="line">);</span><br><span class="line"><span class="comment">--这中形式最好除拉NOT NULL其他的不要用，因为错误提示信息不明显</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名 (</span><br><span class="line">2字段<span class="number">1</span> 数据类型,</span><br><span class="line">    字段<span class="number">1</span> 数据类型,</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">CONSTRAINT</span> 约束名称<span class="number">1</span> 约束条件(字段名<span class="number">1</span>),</span><br><span class="line">    <span class="keyword">CONSTRAINT</span> 约束名称<span class="number">2</span> 约束条件(字段名<span class="number">2</span>)</span><br><span class="line">    ...</span><br><span class="line">);</span><br><span class="line"><span class="comment">--此种形式不包括非空约束，因为非空约束会给出明确的错误提示信息</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>非空约束：NOT NULL、简称NK</p>
+</li>
+<li><p>唯一约束：UNIQUE、简称UK</p>
+<ul>
+<li>null不在唯一约束的范畴之内，可以有多个null</li>
+</ul>
+</li>
+<li><p>主键约束：PRIMARY KEY、简称PK，是非空+唯一</p>
+<ul>
+<li>若一张表中有多个主键，复合主键，只有同时重复才能触发主键约束</li>
+</ul>
+</li>
+<li><p>检查约束：CHECK、简称CK，自己设置条件，满足条件才行</p>
+<ul>
+<li>可以用sql中的各种条件关键字</li>
+</ul>
+</li>
+<li><p>外键约束：FOREIGN KEY、简称FK，父子表之间的约束关系</p>
+<ul>
+<li><p>语法</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名 (</span><br><span class="line">2字段<span class="number">1</span> 数据类型,</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">CONSTRAINT</span> <span class="keyword">FOREIGN</span> <span class="keyword">KEY</span>(当前表中要关联的字段名) <span class="keyword">REFERENCES</span> 父表名(要关联的父表字段名) [<span class="keyword">ON</span> <span class="keyword">DELETE</span> <span class="keyword">CASCADE</span> | <span class="keyword">SET</span> <span class="literal">NULL</span>]</span><br><span class="line">    ...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>表删除：删除父表之前，必须先删除子表，否则无法删除</p>
+<ul>
+<li>若互为父表，则可以采用在删除表语句中追加<code>CASCADE CONSTRAINT</code>级联约束条件，可以强制删除，若有此条件<code>PURGE</code>就不能添加了，不能不进过回收站</li>
+</ul>
+</li>
+<li><p>数据删除：必须先删除父表中的记录，才能删除子表中的记录</p>
+<ul>
+<li>级联删除：<code>ON DELETE CASCADE</code>、父记录删除，子记录也会删除</li>
+<li>级联更新：<code>ON DELETE SET NULL</code>、父记录删除，子记录将外键关联字段置为null</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="修改约束条件"><a href="#修改约束条件" class="headerlink" title="修改约束条件"></a>修改约束条件</h3><p>语法</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 <span class="keyword">ADD</span> <span class="keyword">CONSTRAINT</span> 约束名称 约束类型（字段）;</span><br><span class="line"><span class="comment">--只能追加NOT NULL 以外的约束</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 <span class="keyword">MODIFY</span>(</span><br><span class="line">    字段名<span class="number">1</span> 数据类型<span class="number">2</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">2字段名<span class="number">1</span> 数据类型<span class="number">2</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    ...</span><br><span class="line">);</span><br><span class="line"><span class="comment">--若想添加NOT NULL 约束就必须通过修改表结构来进行</span></span><br><span class="line"><span class="comment">--若已经有违法约束条件的数据了，就不能添加此约束，必须先删除数据</span></span><br></pre></td></tr></table></figure>
+<h3 id="删除约束"><a href="#删除约束" class="headerlink" title="删除约束"></a>删除约束</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 <span class="keyword">DROP</span> <span class="keyword">CONSTRAINT</span> 约束名称;</span><br></pre></td></tr></table></figure>
+<h2 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h2><h3 id="Oracle中的语法"><a href="#Oracle中的语法" class="headerlink" title="Oracle中的语法"></a>Oracle中的语法</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">SEQUENCE</span> 序列名称</span><br><span class="line">[<span class="keyword">START</span> <span class="keyword">WITH</span> 开始值]</span><br><span class="line">[<span class="keyword">INCREMENT</span> <span class="keyword">BY</span> 步长]</span><br><span class="line">[MAXVALUE 最大值 | <span class="keyword">NOMAXVALUE</span>]</span><br><span class="line">[<span class="keyword">MINVALUE</span> 最小值 | <span class="keyword">NOMINVALUE</span>]</span><br><span class="line">[<span class="keyword">CYCLE</span> | <span class="keyword">NOCYCLE</span>]</span><br><span class="line">[<span class="keyword">CACHE</span> 缓冲个数 | NOCACHE]</span><br><span class="line"><span class="comment">--默认值:</span></span><br><span class="line"><span class="comment">--START WITH : 1</span></span><br><span class="line"><span class="comment">--INCREMENTY BY : 1</span></span><br><span class="line"><span class="comment">--最大值 ：NOMAXVALUE</span></span><br><span class="line"><span class="comment">--最小值 : 1</span></span><br><span class="line"><span class="comment">--非循环序列 : NOCYCLE</span></span><br><span class="line"><span class="comment">--缓冲个数为20个 : CACHE 20</span></span><br></pre></td></tr></table></figure>
+<h3 id="若想使用序列需要同数据伪列的形式"><a href="#若想使用序列需要同数据伪列的形式" class="headerlink" title="若想使用序列需要同数据伪列的形式"></a>若想使用序列需要同数据伪列的形式</h3><ul>
+<li>序列名称.nextval：获取下一个增长值</li>
+<li>序列名称.currval：获取当前值</li>
+<li>若想在输入插入是应用序列，则需要使用数据伪列的形式插入数据即可</li>
+<li>注意：使用时，一定要先调用nextval，后调用currval，否则会报错</li>
+<li>由于cache的缘故，可能出现跳号的现象</li>
+</ul>
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> [<span class="keyword">OR</span> <span class="keyword">REPLACE</span>] <span class="keyword">VIEW</span> 视图名称 <span class="keyword">AS</span> 子查询 [<span class="keyword">WITH</span> <span class="keyword">CHECK</span> <span class="keyword">OPTION</span>] [<span class="keyword">WITH</span> <span class="keyword">READ</span> <span class="keyword">ONLY</span>]</span><br><span class="line"><span class="comment">--WITH CHECK OPTION不允许修改视图创建条件字段</span></span><br><span class="line"><span class="comment">--WITH READ ONLY只读视图</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">VIEW</span> 视图名称;</span><br><span class="line"><span class="comment">--删除视图</span></span><br></pre></td></tr></table></figure>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>主键约束和唯一约束自动创建索引</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> 索引名 <span class="keyword">ON</span> 表名(字段名);</span><br></pre></td></tr></table></figure>
+<h2 id="DCL"><a href="#DCL" class="headerlink" title="DCL"></a>DCL</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> username,account_status <span class="keyword">from</span> dba_users;</span><br><span class="line"><span class="comment">--查询所用用户的账户状态</span></span><br><span class="line">conn 用户名/密码[@数据库实例] [as 身份]</span><br><span class="line"><span class="comment">--数据库实例如果只有一个默认可以不写</span></span><br><span class="line"><span class="comment">--sys用户必须指定身份为sysdba</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> 用户名 INDETIFIED <span class="keyword">BY</span> 密码;</span><br><span class="line"><span class="comment">--创建用户并指定密码</span></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">CREATE</span> <span class="keyword">SESSION</span> <span class="keyword">TO</span> 用户名;</span><br><span class="line"><span class="comment">--授权，创建会话权限欸用户</span></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">connect</span>,<span class="keyword">resource</span> <span class="keyword">TO</span> 用户名;</span><br><span class="line"><span class="comment">--授权，连接和资源角色给用户</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> 用户名 <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> 密码;</span><br><span class="line"><span class="comment">--修改用户密码</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> 用户名 <span class="keyword">PASSWORD</span> <span class="keyword">EXPIRE</span>;</span><br><span class="line"><span class="comment">--重置用户密码</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> 用户名 <span class="keyword">ACCOUNT</span> <span class="keyword">LOCK</span>;</span><br><span class="line"><span class="comment">--锁定用户</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> 用户名 <span class="keyword">ACCOUNT</span> <span class="keyword">UNLOCK</span>;</span><br><span class="line"><span class="comment">--解锁用户</span></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">SELECT</span>,<span class="keyword">INSERT</span> <span class="keyword">ON</span> 用户对象表 <span class="keyword">TO</span> 用户名;</span><br><span class="line"><span class="comment">--将别的用户的查询和插入权限赋予该用户</span></span><br><span class="line"><span class="keyword">REVOKE</span> <span class="keyword">SELECT</span>,<span class="keyword">INSERT</span> <span class="keyword">ON</span> 用户对象表 <span class="keyword">FROM</span> 用户名;</span><br><span class="line"><span class="comment">--回收赋予该用户的查询和插入别的用户的权限</span></span><br><span class="line"><span class="keyword">REVOKE</span> <span class="keyword">connect</span>,<span class="keyword">resource</span> <span class="keyword">FORM</span> 用户名;</span><br><span class="line"><span class="comment">--回收连接和资源角色权限</span></span><br><span class="line"><span class="keyword">REVOKE</span> <span class="keyword">CREATE</span> <span class="keyword">SESSION</span> <span class="keyword">FROM</span> 用户名;</span><br><span class="line"><span class="comment">--回收创建会话权限</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> 用户名 <span class="keyword">CASCADE</span>;</span><br><span class="line"><span class="comment">--删除用户及其关联</span></span><br></pre></td></tr></table></figure>
+<h2 id="数据库备份"><a href="#数据库备份" class="headerlink" title="数据库备份"></a>数据库备份</h2><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">exp//数据库导出</span><br><span class="line">imp//数据库导入</span><br><span class="line">SHUTDOWN IMMEDIATW//关闭数据库，现在</span><br><span class="line">strtup//启动数据库</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL</title>
+    <url>/2020/05/12/mysql/</url>
+    <content><![CDATA[<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>SQL、DB、DBSM关系</p>
+<ul>
+<li>DB-数据库</li>
+<li>DBSM-数据库管理系统</li>
+<li>SQL-结构化查询语言</li>
+<li>DBSM—&gt;(执行)—&gt;SQL—&gt;(操作)—&gt;DB</li>
+</ul>
+<h3 id="SQL语言分类"><a href="#SQL语言分类" class="headerlink" title="SQL语言分类"></a>SQL语言分类</h3><ul>
+<li>DQL-数据查询语言：select</li>
+<li>DML-数据操作语言：insert、dedlete、update 对表中数据增删改</li>
+<li>DDL-数据定义语言：create、drop、alter 对表增删改</li>
+<li>TCL-事务控制语言：commit、rollback</li>
+<li>DCL-数据控制语言：grant授权、revoke撤权</li>
+</ul>
+<h3 id="存储引擎（Oracle叫存储方式）"><a href="#存储引擎（Oracle叫存储方式）" class="headerlink" title="存储引擎（Oracle叫存储方式）"></a>存储引擎（Oracle叫存储方式）</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">engines</span> \G</span><br><span class="line"><span class="comment">-- 查看当前数据库系统支持的存储引擎</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>MyISAM<ul>
+<li>不支持事务</li>
+<li>三种文件存储表（frm结构，myd数据，myi索引）</li>
+<li>可被压缩，可以转换为只读表，提高检索效率</li>
+</ul>
+</li>
+<li>InnoDB<ul>
+<li>支持事务，行级锁，外键，级联删除和更新，数据更加安全</li>
+<li>frm结构，tablespace数据，log事务日志文件</li>
+<li>不可被压缩，不可转换为只读表</li>
+</ul>
+</li>
+<li>MEMORY（HEAP）<ul>
+<li>不支持事务</li>
+<li>内存数据库</li>
+<li>仅支持表级锁，不支持大文本数据</li>
+<li>查询速度快</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据库设计三范式"><a href="#数据库设计三范式" class="headerlink" title="数据库设计三范式"></a>数据库设计三范式</h3><p>目的：减少数据冗余，由于表连接越多执行效率越慢，所以有时可以牺牲冗余增加速度</p>
+<ol>
+<li>任何一张表都应该有主键，并且每个字段不可在分</li>
+<li>非主键字段完全依赖主键，不能产生部分依赖</li>
+<li>非主键字段直接依赖主键，不能产生传递依赖</li>
+</ol>
+<ul>
+<li>一对一：主键共享（主键就是外键），外键唯一（外键加唯一约束）</li>
+<li>一对多：两张表，多表加外键</li>
+<li>多对多：三张表，关系表俩外键</li>
+</ul>
+<h2 id="MySQL常用命令"><a href="#MySQL常用命令" class="headerlink" title="MySQL常用命令"></a>MySQL常用命令</h2><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">show databases;</span><br><span class="line"><span class="comment">#查看所有数据库</span></span><br><span class="line">show tables [<span class="type">from</span> <span class="type">test</span>];</span><br><span class="line"><span class="comment">#查看数据库中的所有表,或者指定表来源的数据库，默认是当前数据库</span></span><br><span class="line">create database test;</span><br><span class="line"><span class="comment">#创建数据库，名字是test</span></span><br><span class="line">use test;</span><br><span class="line"><span class="comment">#实用数据库，test</span></span><br><span class="line">describe test;</span><br><span class="line"><span class="comment">#查看表结构</span></span><br><span class="line">show create table test;</span><br><span class="line"><span class="comment">#查看test表的创建语句</span></span><br><span class="line">source test.sql;</span><br><span class="line"><span class="comment">#执行sql脚本</span></span><br><span class="line">select version();</span><br><span class="line"><span class="comment">#查看数据库版本号</span></span><br><span class="line">delimiter <span class="selector-tag">@</span><span class="selector-tag">@</span>;</span><br><span class="line"><span class="comment">#修改MySQL默认结束符为@@，修改完后记着改回来</span></span><br><span class="line">\c</span><br><span class="line"><span class="comment">#结束一条语句</span></span><br><span class="line"><span class="keyword">exit</span></span><br><span class="line"><span class="comment">#退出数据库</span></span><br></pre></td></tr></table></figure>
+<h2 id="DQL"><a href="#DQL" class="headerlink" title="DQL"></a>DQL</h2><h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><p>执行顺序：</p>
+<p>from（从那张表）—&gt;</p>
+<p>where（筛选有用的数据）—&gt;</p>
+<p>group by（进行分组）—&gt;</p>
+<p>having（再对分组后数据过滤）—&gt;</p>
+<p>select（查询出来）—&gt;</p>
+<p>order by（对查询结果排序）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 语句顺序不可以换，语法要求</span></span><br><span class="line">⑤ <span class="keyword">select</span> [<span class="keyword">distinct</span>] *|column_1[Math|<span class="keyword">function</span>] [<span class="keyword">as</span> alias_1],...</span><br><span class="line"><span class="comment">-- distinct 关键字 代表不出现重复数据，只能出现在所有字段的最前方，但是可以出现在function中</span></span><br><span class="line"><span class="comment">-- *映射全部列，也可以单独映射某些列</span></span><br><span class="line"><span class="comment">-- 列后可以跟数学表达式或用函数包装列</span></span><br><span class="line"><span class="comment">-- as 后可以为当前列起一个别名，注意英文不能加单引号非英文加单引号包裹</span></span><br><span class="line">① <span class="keyword">from</span> <span class="keyword">table</span> [<span class="keyword">as</span> alias_1],...</span><br><span class="line"><span class="comment">-- as 后可以为当前表起一个别名，注意英文不能加单引号非英文加单引号包裹</span></span><br><span class="line">② <span class="keyword">where</span> conditon</span><br><span class="line"><span class="comment">-- 条件可以是关系运算符，注意等于是单个等号，&lt;&gt;等价于!=</span></span><br><span class="line"><span class="comment">-- and or not 与或非 可多条件连接，优先级是not&gt;and&gt;or</span></span><br><span class="line"><span class="comment">-- between ... and ... 两者之间，是闭区间即包括两端（若是字符左闭右开），注意一定要左小右大，否则会返回空</span></span><br><span class="line"><span class="comment">-- not between ... and ... 不在俩这之间</span></span><br><span class="line"><span class="comment">-- is null 是空条件，不能用=null，否则返回空</span></span><br><span class="line"><span class="comment">-- is not null 是非空，不能用&lt;&gt;null，否则返回空</span></span><br><span class="line"><span class="comment">-- in 等于集合中任意元素</span></span><br><span class="line"><span class="comment">-- not in 不等于集合中的所有元素</span></span><br><span class="line"><span class="comment">-- like 只能查字符类型，%表示0-*个字符，_表示1个字符,[模糊字段1,模糊字段2,..]表示或的关系</span></span><br><span class="line"><span class="comment">-- not like</span></span><br><span class="line">③ <span class="keyword">group</span> <span class="keyword">by</span> column_1,...</span><br><span class="line"><span class="comment">-- 当sql语句中有group by的话，select后只能跟分组函数和参与分组的字段</span></span><br><span class="line"><span class="comment">-- 多个字段联合分组，就将多个字段看成一个字段</span></span><br><span class="line">④ <span class="keyword">having</span> conditon</span><br><span class="line"><span class="comment">-- 只有group by 后才能用having语句</span></span><br><span class="line"><span class="comment">-- 分组后过滤，一般都是对分组函数进行条件筛选，例sal(column)&gt;xxx</span></span><br><span class="line">⑥ <span class="keyword">order</span> <span class="keyword">by</span> column_1 [<span class="keyword">asc</span> | <span class="keyword">desc</span>],...</span><br><span class="line"><span class="comment">-- 默认升序，asc升序，desc降序</span></span><br><span class="line"><span class="comment">-- 多字段排序，越靠前的字段越起到主导作用</span></span><br><span class="line"><span class="comment">-- 列名也可以是数字，代表根据第几列字段排序</span></span><br></pre></td></tr></table></figure>
+<h3 id="function"><a href="#function" class="headerlink" title="function"></a>function</h3><h4 id="多行处理函数（分组函数-聚合函数）"><a href="#多行处理函数（分组函数-聚合函数）" class="headerlink" title="多行处理函数（分组函数/聚合函数）"></a>多行处理函数（分组函数/聚合函数）</h4><p>特点：</p>
+<ul>
+<li>分组函数输入多行，输出一行</li>
+<li>分组函数在group by后执行，所以where语句后无法使用分组函数</li>
+<li>对分组后的数据进行处理，若无group by 语句则默是一组</li>
+<li>分组函数自动忽略空，有null参与的数学运算结果也是null<ul>
+<li>例<code>count(*)</code>是统计数据条目数而<code>coubt(column)</code>会忽略为空的数据，固统计出的条目<code>&gt;=count(*)</code></li>
+</ul>
+</li>
+</ul>
+<p>类别：</p>
+<ul>
+<li>count 计数</li>
+<li>sum 求和</li>
+<li>avg 求平均</li>
+<li>max 最大值</li>
+<li>min 最小值</li>
+</ul>
+<h4 id="单行处理函数"><a href="#单行处理函数" class="headerlink" title="单行处理函数"></a>单行处理函数</h4><ul>
+<li>ifnull(column,default):若column是null当作default处理</li>
+<li>year(datetime):参数是date类型，返回年份</li>
+<li>now():返回当前日期和时间</li>
+<li>curdate():返回当前日期</li>
+<li>curtime():返回当前时间</li>
+</ul>
+<h3 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h3><p>注意；不管使用什么连接都不会消除产生笛卡尔积，不能减少其匹配次数</p>
+<p>以下是sql1999语法，sql92不建议用，因为结构不够清晰</p>
+<p>虽然on字句后括号可以省略不写，建议写上，层次更加清晰</p>
+<h4 id="交叉连接"><a href="#交叉连接" class="headerlink" title="交叉连接"></a>交叉连接</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_1 [<span class="keyword">cross</span>|<span class="keyword">inner</span>] <span class="keyword">join</span> table_2;</span><br><span class="line"><span class="comment">-- 在没有连接条件下inner也是交叉连接</span></span><br><span class="line"><span class="comment">-- cross或inner 可以省略不写，默认交叉连接</span></span><br><span class="line"><span class="comment">-- cross 和 inner 只可以写一个，否则语法错误</span></span><br></pre></td></tr></table></figure>
+<h4 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h4><ul>
+<li><p>等值连接</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_1 <span class="keyword">natural</span> <span class="keyword">join</span> table_2;</span><br><span class="line"><span class="comment">-- 自然连接，自动找到同名字段采用内连接消除显示的笛卡尔积</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_1 <span class="keyword">join</span> table_2 <span class="keyword">using</span>(<span class="keyword">column</span>);</span><br><span class="line"><span class="comment">-- 交叉连接后，使用column字段进行内连接关联</span></span><br><span class="line"><span class="comment">-- using会消除同名的列，也就是说关联字段只会留一个</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_1 <span class="keyword">join</span> table_2 <span class="keyword">on</span>(table_1.id = table_2.id);</span><br><span class="line"><span class="comment">-- 交叉连接后，使用on子句进行条件等值内连接</span></span><br><span class="line"><span class="comment">-- on子句不会去重同名列，两个关联字段会同时保留</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>非等值连接</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_1 <span class="keyword">join</span> table_2 <span class="keyword">on</span>(table_1.grade <span class="keyword">between</span> table_2.lograde <span class="keyword">and</span> table_2.higrade);</span><br><span class="line"><span class="comment">-- 非等值连接是连接条件非等条件</span></span><br><span class="line"><span class="comment">-- 非等值连接只能使用on来指定非等值条件</span></span><br><span class="line"><span class="comment">-- 一般用于对某个范围取某个值的这种连接</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自链接</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_1 <span class="keyword">join</span> <span class="keyword">table</span> <span class="keyword">on</span>(table_1.stu = table_1.staff);</span><br><span class="line"><span class="comment">-- 自连接就是将自己看成两张表，自身连接条件</span></span><br><span class="line"><span class="comment">-- 一般用于包含关系中，如学生包括班干部，员工包括领导...</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h4><ul>
+<li><p>左外连接</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_main <span class="keyword">left</span> [<span class="keyword">outer</span>] <span class="keyword">join</span> table_sub <span class="keyword">on</span>(table_main.id = table_sub.id)|<span class="keyword">using</span>(<span class="keyword">id</span>);</span><br><span class="line"><span class="comment">-- 左面的表为主表进行外连接</span></span><br><span class="line"><span class="comment">-- 外连接必须有管理条件，可以使用on子句，或using</span></span><br><span class="line"><span class="comment">-- outer 可以省略</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>右外连接</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_main <span class="keyword">right</span> [<span class="keyword">outer</span>] <span class="keyword">join</span> table_sub <span class="keyword">on</span>(table_main.id = table_sub.id)|<span class="keyword">using</span>(<span class="keyword">id</span>);</span><br><span class="line"><span class="comment">-- 右面的表为主表进行外连接</span></span><br><span class="line"><span class="comment">-- 外连接必须有管理条件，可以使用on子句，或using</span></span><br><span class="line"><span class="comment">-- outer 可以省略</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全外连接</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_main <span class="keyword">right</span> <span class="keyword">full</span> [<span class="keyword">outer</span>] <span class="keyword">join</span> table_sub <span class="keyword">on</span>(table_main.id = table_sub.id)|<span class="keyword">using</span>(<span class="keyword">id</span>);</span><br><span class="line"><span class="comment">-- 左右都为主表进行外连接</span></span><br><span class="line"><span class="comment">-- 外连接必须有管理条件，可以使用on子句，或using</span></span><br><span class="line"><span class="comment">-- outer 可以省略</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="多连接"><a href="#多连接" class="headerlink" title="多连接"></a>多连接</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * </span><br><span class="line"><span class="keyword">from</span> table_1 <span class="keyword">join</span> table_2 <span class="keyword">on</span>(condition) </span><br><span class="line"><span class="keyword">join</span> table_3 <span class="keyword">on</span>(condition)</span><br><span class="line">...</span><br><span class="line"><span class="comment">-- 可以是外连接也可以是内连接</span></span><br><span class="line"><span class="comment">-- 执行顺序是table_1连接table_2后的结果表再与table_3进行连接，依次类推</span></span><br></pre></td></tr></table></figure>
+<h3 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h3><h4 id="where子句中的子查询"><a href="#where子句中的子查询" class="headerlink" title="where子句中的子查询"></a>where子句中的子查询</h4><ul>
+<li><p>子查询返回单行单列，即一个单元格</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_1 <span class="keyword">where</span> <span class="keyword">column</span>&gt;(<span class="keyword">select</span> sal(<span class="keyword">column</span>) <span class="keyword">from</span> table_1);</span><br><span class="line"><span class="comment">-- 由于where后不能直接使用分组函数，所以将子查询中的结果当作查询条件</span></span><br><span class="line"><span class="comment">-- where后的子查询，将子查询的单个结果当作筛选条件，进行筛选</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子查询返回单行多列，即一行单元格</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_1 <span class="keyword">where</span> (column_1,column_2)=(<span class="keyword">select</span> sal(column_1),sal(column_2) <span class="keyword">from</span> table_1);</span><br><span class="line"><span class="comment">-- 由于where后不能直接使用分组函数，所以将子查询中的结果当作查询条件</span></span><br><span class="line"><span class="comment">-- where后的子查询，将子查询的多个结果当作筛选条件，条件用逗号分隔,进行筛选</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_1 <span class="keyword">where</span></span><br><span class="line">colum_1=(<span class="keyword">select</span> sal(column_1) <span class="keyword">from</span> table_1)</span><br><span class="line"><span class="keyword">and</span></span><br><span class="line">colum_2=(<span class="keyword">select</span> sal(column_2) <span class="keyword">from</span> table_1)</span><br><span class="line"><span class="comment">-- 上面写法是此写法的简写</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子查询返回多行单列，即一列单元格</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_1 <span class="keyword">where</span> <span class="keyword">column</span> <span class="keyword">in</span> (<span class="keyword">select</span> <span class="keyword">column</span> <span class="keyword">from</span> table_2);</span><br><span class="line"><span class="comment">-- 若返回结果是一个单列集合，则必须用集合筛选操作，in、not in、any、all，some与any功能相同</span></span><br><span class="line"><span class="comment">-- any:存在量词，存在一个，&lt;any小于其中一个元素就跳出</span></span><br><span class="line"><span class="comment">-- all:全称量词，任意一个，&lt;all小于其中所有元素，遍历所有元素</span></span><br><span class="line"><span class="comment">-- any 和 all 只能在子查询中出现</span></span><br><span class="line"><span class="comment">-- 注意not in返回null的情况</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="having子句中的子查询"><a href="#having子句中的子查询" class="headerlink" title="having子句中的子查询"></a>having子句中的子查询</h4><p>使用规则与where子句一样，由于where效率高于having所以，在有统计函数且是子查询结果是单行单例时才用</p>
+<h4 id="from子句中的子查询"><a href="#from子句中的子查询" class="headerlink" title="from子句中的子查询"></a>from子句中的子查询</h4><p>将子查询看作临时表即可，且必须指定别名</p>
+<p>注意：在连接查询中也是产生临时表</p>
+<h3 id="集合操作"><a href="#集合操作" class="headerlink" title="集合操作"></a>集合操作</h3><h4 id="union（交集）"><a href="#union（交集）" class="headerlink" title="union（交集）"></a>union（交集）</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> ...</span><br><span class="line"><span class="keyword">union</span> [<span class="keyword">all</span>]</span><br><span class="line"><span class="keyword">select</span> ...</span><br><span class="line"><span class="keyword">union</span></span><br><span class="line">...</span><br><span class="line"><span class="comment">-- 将两个查询结果并集</span></span><br><span class="line"><span class="comment">-- all省略情况下不会出现重复数据，若不省略会出现重复数据</span></span><br><span class="line"><span class="comment">-- 其中的查询语句字段数量必须一致</span></span><br></pre></td></tr></table></figure>
+<h2 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_1(</span><br><span class="line">2column_1 <span class="keyword">type</span> <span class="keyword">constraint</span>,</span><br><span class="line">  ...</span><br><span class="line">);</span><br><span class="line"><span class="comment">-- 列级约束</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_1(</span><br><span class="line">2column_1 <span class="keyword">type</span>,</span><br><span class="line">  ...</span><br><span class="line">  [<span class="keyword">constraint</span> <span class="keyword">name</span>] <span class="keyword">constraint</span>(column_1,...)</span><br><span class="line">)</span><br><span class="line"><span class="comment">-- 表级约束</span></span><br><span class="line"><span class="comment">-- not null 没有表级约束</span></span><br><span class="line"><span class="comment">-- 可以选择为约束起名</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_1 <span class="keyword">as</span> subquery;</span><br><span class="line"><span class="comment">-- 表的复制，将子查询结果当作表创建出来</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> table_1;</span><br><span class="line"><span class="comment">-- 表删除</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_1 <span class="keyword">add</span>|<span class="keyword">drop</span>|<span class="keyword">modify</span> (</span><br><span class="line">2column_1 <span class="keyword">type</span> <span class="keyword">constraint</span>,</span><br><span class="line">  ...</span><br><span class="line">);</span><br><span class="line"><span class="comment">-- 修改table_1表[添加或删除或修改]字段信息</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_1 <span class="keyword">add</span> [<span class="keyword">constraint</span> <span class="keyword">name</span>] primary <span class="keyword">key</span>(column_1,...);</span><br><span class="line"><span class="comment">-- 添加主键约束</span></span><br><span class="line"><span class="comment">-- 可以选择为约束起名</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_1 <span class="keyword">drop</span> primary <span class="keyword">key</span>;</span><br><span class="line"><span class="comment">-- 删除主键约束</span></span><br></pre></td></tr></table></figure>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><h4 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">tinyint</td>
+<td style="text-align:left">1 字节</td>
+</tr>
+<tr>
+<td style="text-align:left">smallint</td>
+<td style="text-align:left">2 字节</td>
+</tr>
+<tr>
+<td style="text-align:left">mediumint</td>
+<td style="text-align:left">3 字节</td>
+</tr>
+<tr>
+<td style="text-align:left">int或integer</td>
+<td style="text-align:left">4 字节</td>
+</tr>
+<tr>
+<td style="text-align:left">bigint</td>
+<td style="text-align:left">8 字节</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float</td>
+<td>4  字节</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8  字节</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="定点数"><a href="#定点数" class="headerlink" title="定点数"></a>定点数</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>decimal</td>
+<td>不定  decimal(length, precision)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小</th>
+<th>范围</th>
+<th>格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>date</td>
+<td>3  字节</td>
+<td>1000-01-01/9999-12-31</td>
+<td>YYYY-MM-DD</td>
+</tr>
+<tr>
+<td>time</td>
+<td>3  字节</td>
+<td>‘-838:59:59’/‘838:59:59’</td>
+<td>HH:MM:SS</td>
+</tr>
+<tr>
+<td>year</td>
+<td>1  字节</td>
+<td>1901/2155</td>
+<td>YYYY</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>8  字节</td>
+<td>1000-01-01  00:00:00/9999-12-31 23:59:59</td>
+<td>YYYY-MM-DD  HH:MM:SS</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>4  字节</td>
+<td>1970-01-01  00:00:00/2038  结束时间是第 2147483647 秒，北京时间 2038-1-19  11:14:07，格林尼治时间  2038年1月19日  凌晨 03:14:07</td>
+<td>YYYYMMDD  HHMMSS</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="字符"><a href="#字符" class="headerlink" title="字符"></a>字符</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>不定  char(length)</td>
+</tr>
+<tr>
+<td>varchar</td>
+<td>不定  varchar(max_length)</td>
+</tr>
+<tr>
+<td>text</td>
+<td>65,535 字节</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="极大数据"><a href="#极大数据" class="headerlink" title="极大数据"></a>极大数据</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blob</td>
+<td>65,535 字节</td>
+</tr>
+<tr>
+<td>clob</td>
+<td>65,535 字节</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>约束</th>
+<th>关键字</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>非空约束</td>
+<td>not null</td>
+<td>不能为null</td>
+</tr>
+<tr>
+<td>默认约束</td>
+<td>default</td>
+<td>未传入值，则采用默认值</td>
+</tr>
+<tr>
+<td>唯一约束</td>
+<td>unique</td>
+<td>不能重复，但是可以为null</td>
+</tr>
+<tr>
+<td>主键约束</td>
+<td>primary key</td>
+<td>既不能重复，也不能为null<br>auto_increment自然增长，Oracle不支持</td>
+</tr>
+<tr>
+<td>外键约束</td>
+<td>foreign key(t1_column_1)<br>references table_2(t2_column_1)</td>
+<td>参照外键字段数据信息，参考字段必须唯一，外键值可以为null</td>
+</tr>
+<tr>
+<td>检查约束</td>
+<td>check</td>
+<td>mysql不支持，oracle支持</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h2><h3 id="insert"><a href="#insert" class="headerlink" title="insert"></a>insert</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> table_1(column_1,...)</span><br><span class="line"><span class="keyword">values</span></span><br><span class="line">(value_1,...),</span><br><span class="line">(value_1,...),</span><br><span class="line">...;</span><br><span class="line"><span class="comment">-- table_1和values字段要一一对应</span></span><br><span class="line"><span class="comment">-- 若table_1后省略，values必须和表的字段顺序和数量一致</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> table_1 subquery;</span><br><span class="line"><span class="comment">-- 表的复制，将子查询结果插入到table_1中</span></span><br><span class="line"><span class="comment">-- 子查询必须和table_1的字段要一致</span></span><br></pre></td></tr></table></figure>
+<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">update</span> table_1</span><br><span class="line"><span class="keyword">set</span> column_1=value_1,...</span><br><span class="line"><span class="keyword">where</span> conditon;</span><br><span class="line"><span class="comment">-- 若where条件省略，则全表更新</span></span><br></pre></td></tr></table></figure>
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> table_1</span><br><span class="line"><span class="keyword">where</span> conditon;</span><br><span class="line"><span class="comment">-- 若where条件省略，则删除全部数据</span></span><br><span class="line"><span class="comment">-- delete删除后可以回滚，效率很低</span></span><br><span class="line"><span class="keyword">truncate</span> <span class="keyword">table</span> table_1;</span><br><span class="line"><span class="comment">-- 截断表，清空数据无法回滚，效率很高</span></span><br></pre></td></tr></table></figure>
+<h2 id="DCL"><a href="#DCL" class="headerlink" title="DCL"></a>DCL</h2><h3 id="用户创建"><a href="#用户创建" class="headerlink" title="用户创建"></a>用户创建</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> <span class="string">'用户名'</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'密码'</span>;</span><br><span class="line"><span class="comment">-- 创建用户并赋予密码，此时用户无任何权限</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">grants</span>;</span><br><span class="line"><span class="comment">-- 查看当前用户权限</span></span><br></pre></td></tr></table></figure>
+<h3 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h3><ul>
+<li>系统权限：维护数据库权限<ul>
+<li>create database</li>
+<li>create table</li>
+<li>create view</li>
+<li>…</li>
+</ul>
+</li>
+<li>对象权限：对数据库对象（表，视图）处理权限<ul>
+<li>insert</li>
+<li>update</li>
+<li>delete</li>
+<li>select</li>
+</ul>
+</li>
+<li>all privileges：全部权限</li>
+</ul>
+<h3 id="权限管理"><a href="#权限管理" class="headerlink" title="权限管理"></a>权限管理</h3><h4 id="授予权限"><a href="#授予权限" class="headerlink" title="授予权限"></a>授予权限</h4><ul>
+<li><p>授予系统权限</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grant</span> 对象权限<span class="number">1</span>,对象权限<span class="number">2</span>,... <span class="keyword">on</span> 数据库对象 <span class="keyword">to</span> 用户<span class="number">1</span>,用户<span class="number">2</span>,...;</span><br><span class="line"><span class="comment">-- 数据库对象是指：数据库名.表名形式，若数据库.*则为当前数据库下的所有表，*.*则是所有数据库下的所有表</span></span><br><span class="line"><span class="comment">-- 表级权限</span></span><br><span class="line"><span class="keyword">grant</span> 对象权限<span class="number">1</span>(列名称<span class="number">1</span>,列名称<span class="number">2</span>,...),对象权限<span class="number">2</span>(列名称<span class="number">1</span>,列名称<span class="number">2</span>,...),... <span class="keyword">on</span> 表名 <span class="keyword">to</span> 用户<span class="number">1</span>,用户<span class="number">2</span>,...;</span><br><span class="line"><span class="keyword">grant</span> 对象权限<span class="number">1</span>,对象权限<span class="number">2</span>,... <span class="keyword">on</span> 表名(列名称<span class="number">1</span>,列名称<span class="number">2</span>,...) <span class="keyword">to</span> 用户<span class="number">1</span>,用户<span class="number">2</span>,...;</span><br><span class="line"><span class="comment">-- 列级权限</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>授予用户对象权限</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grant</span> 系统权限<span class="number">1</span>,系统权限<span class="number">2</span>,... <span class="keyword">to</span> 用户<span class="number">1</span>,用户<span class="number">2</span>,...;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="回收权限"><a href="#回收权限" class="headerlink" title="回收权限"></a>回收权限</h4><ul>
+<li><p>回收系统权限</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">revoke</span> 对象权限<span class="number">1</span>,对象权限<span class="number">2</span>,... <span class="keyword">on</span> 数据库对象 <span class="keyword">from</span> 用户<span class="number">1</span>,用户<span class="number">2</span>,...;</span><br><span class="line"><span class="comment">-- 表级权限</span></span><br><span class="line"><span class="keyword">revoke</span> 对象权限<span class="number">1</span>(列名称<span class="number">1</span>,列名称<span class="number">2</span>,...),对象权限<span class="number">2</span>(列名称<span class="number">1</span>,列名称<span class="number">2</span>,...),... <span class="keyword">on</span> 表名 <span class="keyword">from</span> 用户<span class="number">1</span>,用户<span class="number">2</span>,...;</span><br><span class="line"><span class="comment">-- 列级权限</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>回收用户对象权限</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">revoke</span> 系统权限<span class="number">1</span>,系统权限<span class="number">2</span>,... <span class="keyword">from</span> 用户<span class="number">1</span>,用户<span class="number">2</span>,...;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="角色管理"><a href="#角色管理" class="headerlink" title="角色管理"></a>角色管理</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">role</span> <span class="string">'角色名1'</span>,<span class="string">'角色名2'</span>,...;</span><br><span class="line"><span class="comment">-- 创建角色</span></span><br><span class="line"><span class="keyword">grant</span> 对象权限<span class="number">1</span>,对象权限<span class="number">2</span>,... <span class="keyword">on</span> 数据库对象 <span class="keyword">to</span> 角色<span class="number">1</span>,角色<span class="number">2</span>,...;</span><br><span class="line"><span class="comment">-- 赋予角色权限</span></span><br><span class="line"><span class="keyword">grant</span> 角色 <span class="keyword">to</span> 用户<span class="number">1</span>,用户<span class="number">2</span>,...;</span><br><span class="line"><span class="comment">-- 赋予用户角色</span></span><br><span class="line"><span class="keyword">revoke</span> <span class="keyword">role</span> <span class="keyword">from</span> 用户;</span><br><span class="line"><span class="comment">-- 回收用户角色</span></span><br><span class="line"><span class="keyword">revoke</span> 对象权限<span class="number">1</span>,对象权限<span class="number">2</span>,... <span class="keyword">on</span> 数据库对象 <span class="keyword">to</span> 角色<span class="number">1</span>,角色<span class="number">2</span>,...;</span><br><span class="line"><span class="comment">-- 回收角色权限</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">role</span> <span class="string">'角色名1'</span>,<span class="string">'角色名2'</span>,...;</span><br><span class="line"><span class="comment">-- 删除角色</span></span><br></pre></td></tr></table></figure>
+<h2 id="TCL"><a href="#TCL" class="headerlink" title="TCL"></a>TCL</h2><h3 id="事务四大特性ACID（只有DML才有事务机制）"><a href="#事务四大特性ACID（只有DML才有事务机制）" class="headerlink" title="事务四大特性ACID（只有DML才有事务机制）"></a>事务四大特性ACID（只有DML才有事务机制）</h3><ul>
+<li>A：原子性：事务是最小的工作单元不可再分</li>
+<li>C：一致性：多条DML语句同时成功或失败</li>
+<li>I：隔离性：不同事务之间隔离<ol>
+<li>更新未提交：两个事务对同一数据更新操作，提交后，存在==丢失更新==现象</li>
+<li>读未提交（read uncommitted）：另一个事务未提交，当前事务可以读另一个未提交数据，存在==脏读（dirty read）==现象</li>
+<li>读已提交（read committed）：另一个事务提交后，当前事务就能读到，存在==不可重复读（）==</li>
+<li>可重复读（repeatable read）：存在==幻影读==</li>
+<li>序列化读（serializable）：事务排队执行，效率低</li>
+</ol>
+</li>
+<li>D：持久性：数据持久化到硬盘文件，事务结束</li>
+</ul>
+<h3 id="MySQL中的事务"><a href="#MySQL中的事务" class="headerlink" title="MySQL中的事务"></a>MySQL中的事务</h3><h4 id="事务的开启"><a href="#事务的开启" class="headerlink" title="事务的开启"></a>事务的开启</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">start</span> <span class="keyword">transaction</span>;</span><br><span class="line"><span class="keyword">begin</span> <span class="keyword">transaction</span>;</span><br><span class="line"><span class="comment">-- 开启事务</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">savepoint</span> <span class="keyword">name</span>;</span><br><span class="line"><span class="comment">-- 设置保存点，可回滚当前name保存点</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">rollback</span> [<span class="keyword">name</span>]| <span class="keyword">commit</span>;</span><br><span class="line"><span class="comment">-- 事务提交或回滚,可回滚到name保存点</span></span><br></pre></td></tr></table></figure>
+<h4 id="设置事务隔离级别"><a href="#设置事务隔离级别" class="headerlink" title="设置事务隔离级别"></a>设置事务隔离级别</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> [];</span><br><span class="line"><span class="comment">-- 设置全局事务隔离级别,[]可选一下参数</span></span><br><span class="line"><span class="comment">-- read uncommitted 读未提交</span></span><br><span class="line"><span class="comment">-- read committed 读已提交</span></span><br><span class="line"><span class="comment">-- repeatable read 可重复读</span></span><br><span class="line"><span class="comment">-- serializable 序列化读</span></span><br><span class="line"><span class="keyword">select</span> @@global.tx_isolation;</span><br><span class="line"><span class="comment">-- 查看全局事务隔离级别</span></span><br></pre></td></tr></table></figure>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="何时考虑添加索引"><a href="#何时考虑添加索引" class="headerlink" title="何时考虑添加索引"></a>何时考虑添加索引</h3><ul>
+<li>数据量庞大</li>
+<li>该字段很少DML操作</li>
+<li>经常出现在where字句中</li>
+</ul>
+<p>注意：有主键约束（主键索引）和唯一约束（唯一索引）的字段会自动添加索引</p>
+<h3 id="MySQL中的索引"><a href="#MySQL中的索引" class="headerlink" title="MySQL中的索引"></a>MySQL中的索引</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">explain</span> [<span class="keyword">sql</span>];</span><br><span class="line"><span class="comment">-- 查看该sql语句的执行计划</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> index_1 <span class="keyword">on</span> table_1(column_1[,...]);</span><br><span class="line"><span class="comment">-- 在table_1表的column_1字段上添加索引，索引名为index_1</span></span><br><span class="line"><span class="comment">-- 可以为多个字段添加索引</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_1 <span class="keyword">add</span> <span class="keyword">index</span> index_1(column_1[,...]);</span><br><span class="line"><span class="comment">-- 修改表结构方式添加索引</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">index</span> index_1 <span class="keyword">on</span> table_1;</span><br><span class="line"><span class="comment">-- 删除table_1表的index_1索引</span></span><br></pre></td></tr></table></figure>
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><h3 id="MySQL中的视图"><a href="#MySQL中的视图" class="headerlink" title="MySQL中的视图"></a>MySQL中的视图</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> [<span class="keyword">or</span> <span class="keyword">replace</span>] <span class="keyword">view</span> view_1 <span class="keyword">as</span> (querySQL);</span><br><span class="line"><span class="comment">-- 创建或修改视图</span></span><br><span class="line"><span class="comment">-- 只有DQL语句才能创建视图</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">view</span> view_1 <span class="keyword">as</span> (querySQL);</span><br><span class="line"><span class="comment">-- 修改视图</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> view_1;</span><br><span class="line"><span class="comment">-- 删除视图</span></span><br><span class="line">desc view view_1;</span><br><span class="line"><span class="comment">-- 查看视图定义</span></span><br></pre></td></tr></table></figure>
+<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><h3 id="MySQL中的触发器"><a href="#MySQL中的触发器" class="headerlink" title="MySQL中的触发器"></a>MySQL中的触发器</h3><p>触发器是一个特殊的存储过程</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> trigger_1</span><br><span class="line"><span class="keyword">before</span>|<span class="keyword">after</span> <span class="comment">-- 触发时机，事件之前或之后触发</span></span><br><span class="line"><span class="keyword">insert</span>|<span class="keyword">update</span>|<span class="keyword">delete</span>  <span class="comment">-- 触发事件，只有DML语句才能触发</span></span><br><span class="line"><span class="keyword">on</span> table_1 <span class="comment">-- 触发对象</span></span><br><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> <span class="keyword">row</span> <span class="comment">-- 行级触发器</span></span><br><span class="line"><span class="keyword">begin</span> <span class="comment">-- 包裹代码块，相当于&#123;</span></span><br><span class="line">SQL...</span><br><span class="line"><span class="comment">-- 有new(新值)和old(旧值)对象之分，其属性就是触发事件修改的属性值</span></span><br><span class="line"><span class="comment">-- inser事件只有有new对象</span></span><br><span class="line"><span class="comment">-- update事件有new对象也有old对象</span></span><br><span class="line"><span class="comment">-- delete事件只有有old对象</span></span><br><span class="line"><span class="keyword">end</span>; <span class="comment">-- 包裹代码块，相当于&#125;</span></span><br><span class="line"><span class="comment">-- 每个事件只允许有一个触发器，所以3个事件加两种触发时机</span></span><br><span class="line"><span class="comment">-- 所以一个表最多有6个触发器</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">trigger</span> trigger_1;</span><br><span class="line"><span class="comment">-- 删除触发器</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">trigger</span>;</span><br><span class="line"><span class="comment">-- 查看触发器</span></span><br></pre></td></tr></table></figure>
+<h2 id="存储过程与函数"><a href="#存储过程与函数" class="headerlink" title="存储过程与函数"></a>存储过程与函数</h2><h3 id="MySQL中的变量"><a href="#MySQL中的变量" class="headerlink" title="MySQL中的变量"></a>MySQL中的变量</h3><h4 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> column_1 <span class="keyword">into</span> <span class="keyword">from</span> table_1</span><br><span class="line"><span class="comment">-- into 关键字为变量赋值，只能存一个元素</span></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">name</span> <span class="keyword">type</span> [<span class="keyword">default</span> <span class="number">0</span>];</span><br><span class="line"><span class="comment">-- 只能用在代码块中使用declare声明局部变量name</span></span><br><span class="line"><span class="comment">-- 指定初始值是0;</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">name</span>=<span class="number">10</span>;</span><br><span class="line"><span class="comment">-- 修改局部变量为10</span></span><br></pre></td></tr></table></figure>
+<h4 id="用户变量"><a href="#用户变量" class="headerlink" title="用户变量"></a>用户变量</h4><p>客户端关闭用户变量清除</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> @<span class="keyword">name</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">set</span> @<span class="keyword">name</span> := <span class="number">0</span>;</span><br><span class="line"><span class="comment">-- 不需要指定变量类型</span></span><br><span class="line"><span class="keyword">select</span> @<span class="keyword">name</span> := <span class="number">0</span>;</span><br><span class="line"><span class="comment">-- 使用select语句定义用户变量必须使用:=</span></span><br><span class="line"><span class="comment">-- 若使用=的话，则会被当成等于关系运算符</span></span><br></pre></td></tr></table></figure>
+<h3 id="MySQL中存储过程"><a href="#MySQL中存储过程" class="headerlink" title="MySQL中存储过程"></a>MySQL中存储过程</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> procedure_1(</span><br><span class="line">  [<span class="keyword">in</span>|<span class="keyword">out</span>|inout] arguments <span class="keyword">type</span>,</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">-- in是输入参数,省略不写则默认是in</span></span><br><span class="line">  <span class="comment">-- out是输出参数</span></span><br><span class="line">  <span class="comment">-- inout即时输入参数又是输出参数</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">begin</span> <span class="comment">-- 包裹代码块，相当于&#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span>; <span class="comment">-- 包裹代码块，相当于&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">call</span> procedure_1(arguments);</span><br><span class="line"><span class="comment">-- 调用存储过程</span></span><br><span class="line"><span class="comment">-- 对于输出参数，无需定义，也可以使用</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">procedure</span> procedure_1;</span><br><span class="line"><span class="comment">-- 删除存储过程</span></span><br></pre></td></tr></table></figure>
+<h3 id="MySQL中的函数"><a href="#MySQL中的函数" class="headerlink" title="MySQL中的函数"></a>MySQL中的函数</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">function</span> function_1(</span><br><span class="line">2<span class="keyword">in</span>|<span class="keyword">out</span>|inout arguments <span class="keyword">type</span>,</span><br><span class="line">  ...</span><br><span class="line">)<span class="keyword">returns</span> <span class="keyword">type</span> <span class="comment">-- 定义返回值类型，return要加s</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">2<span class="keyword">return</span> <span class="number">0</span> <span class="comment">-- 函数必须要有返回值</span></span><br><span class="line"><span class="keyword">end</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> function_1(arguments);</span><br><span class="line"><span class="comment">-- 与mysql内置函数调用方法一致</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">function</span> function_1;</span><br><span class="line"><span class="comment">-- 删除函数</span></span><br></pre></td></tr></table></figure>
+<h2 id="数据库备份与恢复"><a href="#数据库备份与恢复" class="headerlink" title="数据库备份与恢复"></a>数据库备份与恢复</h2><h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><ul>
+<li><p>故障</p>
+<ul>
+<li>事务内部故障：数据库管理系统强行回滚事务</li>
+<li>系统故障（断电，操作系统崩溃等）：数据库管理系统重做提交事务，回滚未提交事务，将数据库恢复到一致状态</li>
+<li>介质故障（磁盘损坏）：无法恢复</li>
+<li>计算机病毒</li>
+</ul>
+</li>
+<li><p>备份：定期对数据库中数据转存成副本</p>
+<ul>
+<li>备份规模分类<ul>
+<li>完全备份：备份全部信息</li>
+<li>差异备份：完全备份后，对数据库修改操作备份</li>
+<li>部分备份：备份部分信息</li>
+</ul>
+</li>
+<li>备份状态分类<ul>
+<li>连接备份（在线备份）：数据库正常使用时对数据库备份</li>
+<li>脱机备份（离线备份）：没有用户连接时对数据库备份</li>
+</ul>
+</li>
+<li>备份方式分类<ul>
+<li>物理备份：直接拷贝数据库的物理文件</li>
+<li>逻辑备份：数据导出操作</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>恢复：数据库故障后，用副本恢复数据库<ul>
+<li>恢复程度分类<ul>
+<li>完全恢复：恢复到出现故障时刻</li>
+<li>不完全恢复：恢复到出现故障时刻之前</li>
+</ul>
+</li>
+<li>恢复方式分类<ul>
+<li>物理恢复：直接拷贝数据库的物理文件</li>
+<li>逻辑恢复：数据导入操作</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>日志文件（重做日志文件）<ul>
+<li>记录事务对数据库进行的更新操作</li>
+<li>数据库故障后根据日志文件可完全恢复数据库</li>
+<li>先写日志文件，后写数据文件</li>
+</ul>
+</li>
+</ul>
+<h3 id="MySQL中的备份和恢复"><a href="#MySQL中的备份和恢复" class="headerlink" title="MySQL中的备份和恢复"></a>MySQL中的备份和恢复</h3><h4 id="物理备份：将表结构以及表数据都保存在文件中"><a href="#物理备份：将表结构以及表数据都保存在文件中" class="headerlink" title="物理备份：将表结构以及表数据都保存在文件中"></a>物理备份：将表结构以及表数据都保存在文件中</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">mysqldump <span class="literal">-u</span> 用户名 <span class="literal">-p</span> 数据库 &gt; 要保存的文件路径</span><br><span class="line">//备份整个数据库</span><br><span class="line">mysqldump <span class="literal">-u</span> 用户名 <span class="literal">-p</span> 数据库 表名<span class="number">1</span> 表名<span class="number">2</span> ...&gt; 要保存的备份文件路径</span><br><span class="line">//备份数据库下的某张表</span><br><span class="line">mysqldump <span class="literal">-u</span> 用户名 <span class="literal">-p</span> 数据库 &lt; 数据库备份文件路径</span><br><span class="line">//恢复整个数据库</span><br><span class="line">//当然也可以手动创建数据库后使用source命令执行备份数据库脚本文件</span><br></pre></td></tr></table></figure>
+<h4 id="逻辑备份：只将数据备份"><a href="#逻辑备份：只将数据备份" class="headerlink" title="逻辑备份：只将数据备份"></a>逻辑备份：只将数据备份</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> 表名 <span class="keyword">into</span> outfilr <span class="string">'数据文件路径'</span>;</span><br><span class="line"><span class="comment">-- 将查询结果输出到文件中</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">infile</span> <span class="string">'数据文件路径'</span> <span class="keyword">into</span> <span class="keyword">table</span> 表名;</span><br><span class="line"><span class="comment">-- 装载数据文件到表中</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>人工智能</title>
+    <url>/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</url>
+    <content><![CDATA[<h3 id="人工智能的三大学派"><a href="#人工智能的三大学派" class="headerlink" title="人工智能的三大学派"></a>人工智能的三大学派</h3><p>符号学派：专家系统：智能行为</p>
+<p>连接学派：神经网络：仿生</p>
+<p>行为学派：遗传算法：低级生物智能</p>
+<h3 id="知识表示方法"><a href="#知识表示方法" class="headerlink" title="知识表示方法"></a>知识表示方法</h3><h4 id="状态空间"><a href="#状态空间" class="headerlink" title="状态空间"></a>状态空间</h4><p>三元组：初始状态集，操作集，目标状态集</p>
+<h4 id="谓词逻辑"><a href="#谓词逻辑" class="headerlink" title="谓词逻辑"></a>谓词逻辑</h4><h5 id="原子公式"><a href="#原子公式" class="headerlink" title="原子公式"></a>原子公式</h5><h6 id="基本组成"><a href="#基本组成" class="headerlink" title="基本组成"></a>基本组成</h6><ul>
+<li>谓词符号：关系（首字母大写）</li>
+<li>个体符号：常量（全大写）、变量（小写）、函数（函数名小写）</li>
+<li>注意：==谓词内可以嵌套函数，但是不能嵌套谓词==</li>
+</ul>
+<h6 id="n元谓词"><a href="#n元谓词" class="headerlink" title="n元谓词"></a>n元谓词</h6><ol>
+<li>一元谓词：性质、属性</li>
+<li>二元谓词：两个个体关系</li>
+<li>多元谓词：多个个体关系</li>
+</ol>
+<h5 id="分子公式"><a href="#分子公式" class="headerlink" title="分子公式"></a>分子公式</h5><h6 id="连词"><a href="#连词" class="headerlink" title="连词"></a>连词</h6><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\lor$</td>
+<td style="text-align:left">与（合取）</td>
+</tr>
+<tr>
+<td>$\land$</td>
+<td style="text-align:left">或（析取）</td>
+</tr>
+<tr>
+<td>$\lnot$、~</td>
+<td style="text-align:left">非</td>
+</tr>
+<tr>
+<td>$\longrightarrow$</td>
+<td style="text-align:left">蕴含（推理）关系，如果…那么…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="谓词公式"><a href="#谓词公式" class="headerlink" title="谓词公式"></a>谓词公式</h5><h6 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h6><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\forall$</td>
+<td style="text-align:left">全称量词（针对变量），所有</td>
+</tr>
+<tr>
+<td>$\exists$</td>
+<td style="text-align:left">存在量词（针对变量），至少有一个</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="置换与合一"><a href="#置换与合一" class="headerlink" title="置换与合一"></a>置换与合一</h5><h6 id="什么是置换合一？"><a href="#什么是置换合一？" class="headerlink" title="什么是置换合一？"></a>什么是置换合一？</h6><p>若F=P(x)</p>
+<p>置换：$\theta$={a/x}</p>
+<p>示例：G=F$\theta$ =P(a)</p>
+<p><strong>合一置换</strong>：一个置换使得两个不同谓词得到==相同示例==（不唯一）</p>
+<p><strong>最一般的合一</strong>：最简合一置换（唯一）</p>
+<h6 id="可以合一的条件"><a href="#可以合一的条件" class="headerlink" title="可以合一的条件"></a>可以合一的条件</h6><ol>
+<li>谓词一致</li>
+<li>项数一致</li>
+<li>常量置换变量，函数置换变量</li>
+</ol>
+<h4 id="语义网络"><a href="#语义网络" class="headerlink" title="语义网络"></a>语义网络</h4><h5 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h5><p>节点：实体、属性、状态、动作等</p>
+<p>有向弧：表示联系</p>
+<h5 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h5><p>匹配：问题构造语义网络片段，去匹配知识库中的片段</p>
+<p>继承：建立结点栈，讲继承关系结点入栈，逐个出栈，将出栈实体属性加入解中</p>
+<h3 id="搜索技术（状态空间）"><a href="#搜索技术（状态空间）" class="headerlink" title="搜索技术（状态空间）"></a>搜索技术（状态空间）</h3><h4 id="图搜索策略"><a href="#图搜索策略" class="headerlink" title="图搜索策略"></a>图搜索策略</h4><p>open表：当前未扩展结点</p>
+<p>close表：已扩展结点</p>
+<p><img src="/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/图搜索过程及数据结构-1590048943613.svg" alt="图搜索过程及数据结构"></p>
+<h4 id="盲目搜索"><a href="#盲目搜索" class="headerlink" title="盲目搜索"></a>盲目搜索</h4><p>==不重排open表==</p>
+<ol>
+<li>宽度优先：open表是队列</li>
+<li>深度优先：open表是栈</li>
+<li>等代价优先：根据代价决定加入队列的优先级，所有连接弧代价都相等即为宽度优先</li>
+</ol>
+<h4 id="启发式搜索"><a href="#启发式搜索" class="headerlink" title="启发式搜索"></a>启发式搜索</h4><p>==重排open表==，即决定先扩展那个结点，或放弃哪一个结点扩展</p>
+<ol>
+<li><p>A算法(有序搜索)：根据估计函数来重排open表</p>
+</li>
+<li><p>A*算法：理想的A算法最佳路径</p>
+<p>估价函数：已经付出的代价+估计还要付出的代价</p>
+</li>
+<li><p>博弈树（己方与max，对方或min的<strong>与或树</strong>）</p>
+<ol>
+<li>极大极小搜索：用宽度优先算法根据规定深度找出全部博弈树，为了使得自己利益最大化，从最底层结点倒推，就得使得己方max估价函数取值最大的节点，对方min估价函数取最小的节点</li>
+<li>$\alpha(max)-\beta(min)$剪枝搜索：深度优先，max确定下界，min确定上界，不同层的$\alpha(max)&gt;=\beta(min)$就剪枝<ol>
+<li>$\alpha$剪枝：先辈是$\alpha$</li>
+<li>$\beta$剪枝：先辈是$\beta$</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="推理技术（经典推理）"><a href="#推理技术（经典推理）" class="headerlink" title="推理技术（经典推理）"></a>推理技术（经典推理）</h3><h4 id="消解原理（谓词逻辑）"><a href="#消解原理（谓词逻辑）" class="headerlink" title="消解原理（谓词逻辑）"></a>消解原理（谓词逻辑）</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p>文字：一个原子公式及其否定，$P(x)、 \lnot P(x)$</p>
+<p>子句：文字的析取（或），$P(x) \lor Q(x)$</p>
+<p>空子句：不包含任何子句的文字，用$NIL$</p>
+<p>子句集：由子句或空子句构成的集合</p>
+<p>消解：对谓词演算公式进行分解和化简，消去一些符号，得到子句</p>
+<p>消解式：两个子句通过消解，得到的新子句</p>
+<p>重言式：互补文字的文字，例如：$P(x)\lor \lnot P(x)$、$P(x)\lor Q(y)  \lor \lnot P(x) \lor \lnot Q(y)$</p>
+<h5 id="求子句集的九个步骤"><a href="#求子句集的九个步骤" class="headerlink" title="求子句集的九个步骤"></a>求子句集的九个步骤</h5><ol>
+<li>消去蕴涵符号：$A \longrightarrow B &lt;=&gt; \lnot A \lor B$</li>
+<li><p>减少否定符号管辖范围；摩根定律和量词转换定律</p>
+<ul>
+<li>$\lnot (A \lor B) &lt;=&gt; \lnot A \land \lnot B$</li>
+<li>$\lnot (A \land B) &lt;=&gt; \lnot A \lor \lnot B$</li>
+<li>$\lnot (\exists x)P(x) &lt;=&gt; \forall x[\lnot P(x)]$</li>
+<li>$\lnot (\forall x)P(x) &lt;=&gt; \exists x[\lnot P(x)]$</li>
+</ul>
+</li>
+<li>对变量标准化（改名）：不同量词辖域变量，使用不同变量名</li>
+<li><p>消去存在量词</p>
+<ol>
+<li><p>是其他量词被包裹的：使用Skolem函数</p>
+<ul>
+<li><p>利用外层约束构造Skolem函数替换内层被约束变量</p>
+</li>
+<li><p>例：$\forall y [(\exists x)P(x,y)] &lt;=&gt; \forall y P(g(y),y)$</p>
+</li>
+</ul>
+</li>
+<li><p>没有被包裹：$(\exists x)P(x) &lt;=&gt; P(X)$ X是常量</p>
+</li>
+</ol>
+</li>
+<li>化为前束式：将全称量词都移到公式前面，量词部分称为前缀，后面称为母式</li>
+<li><p>将母式化为子句合取范式：使用分配律改为或的关系</p>
+<ul>
+<li>不使用$ A \lor(B \land C) &lt;=&gt; (A \lor B) \land (A \lor C)$</li>
+<li>==$ A \land (B \lor C) &lt;=&gt; (A \land B) \lor (A \land C)$==</li>
+</ul>
+</li>
+<li>消去全称量词：$(\forall x)P(x) &lt;=&gt; P(y)$</li>
+<li>消去连接符号$\land$：使用$\{A,B\}$代替$A \land B$</li>
+<li>对集合中每个子句的变量进行唯一变量名更改(改名)</li>
+</ol>
+<h5 id="消解"><a href="#消解" class="headerlink" title="消解"></a>消解</h5><p>不含变量的消解：两个子句，消去互补文字，剩下未消去的内容任然用子句连接符号$\lor$(或)进行连接</p>
+<p>含变量的消解：两个子句，将可能互补的一对，置换为合一式，消去，其他非互补谓词中也要使用该置换进行置换，剩下未消去的内容任然用子句连接符号$\lor$(或)进行连接</p>
+<h5 id="消解反演证明问题"><a href="#消解反演证明问题" class="headerlink" title="消解反演证明问题"></a>消解反演证明问题</h5><ol>
+<li>定义谓词</li>
+<li>使用定义谓词将已知的知识（问题和要证明的结论）表示出来</li>
+<li>将问题和要证明的结论的否定分别求取子句集</li>
+<li>合并两个求取的子句集</li>
+<li>对新子句集使用消解原理，推出空子句即可证明</li>
+</ol>
+<h5 id="消解反演求解问题"><a href="#消解反演求解问题" class="headerlink" title="消解反演求解问题"></a>消解反演求解问题</h5><ol>
+<li>定义谓词</li>
+<li>使用定义谓词将已知的知识（问题和问题目标）表示出来</li>
+<li>将问题和问题目标的否定分别求取子句集</li>
+<li>对问题目标子句集中每个子句，构造重言式，加入到问题子句集中</li>
+<li>对新子句集使用消解原理，该子句集的根子句为求解问题的答案</li>
+</ol>
+<h4 id="规则演绎系统（产生式规则）"><a href="#规则演绎系统（产生式规则）" class="headerlink" title="规则演绎系统（产生式规则）"></a>规则演绎系统（产生式规则）</h4><h5 id="正向规则演绎系统"><a href="#正向规则演绎系统" class="headerlink" title="正向规则演绎系统"></a>正向规则演绎系统</h5><ol>
+<li><p>将事实转换为与或形：只有文字的析取（或）和合取（与）</p>
+<ol>
+<li>减少否定符号管辖范围；摩根定律和量词转换定律</li>
+<li>对变量标准化（改名）：各项合取（与）变量名不同</li>
+<li>消去存在量词，常量消去</li>
+<li>化为前束式，后消除全称量词：将全称量词都移到公式前面，量词部分称为前缀，后面称为母式</li>
+</ol>
+</li>
+<li><p>用与或图表示与或表达式：与关系层1连接符，或关系层k连接符</p>
+</li>
+<li><p>与或图的F规则转换</p>
+<ol>
+<li><p>将规则转换为单文字蕴含与或形公式：例：</p>
+<ol>
+<li>左面是单文字，右面是与或形可转为与或图</li>
+</ol>
+<ul>
+<li>$S \longrightarrow A \land B \lor C$</li>
+<li>$A \lor B \longrightarrow C &lt;=&gt; A\longrightarrow C 、 B \longrightarrow C $ </li>
+<li>$A \land B \longrightarrow C 无效 $</li>
+</ul>
+</li>
+<li><p>规则蕴含式左面单文字配匹的已知与或图节点，用匹配符连接规则蕴含式右的新与或图</p>
+</li>
+</ol>
+</li>
+<li><p>得到作为终止条件的目标公式</p>
+<ol>
+<li>由与或树得到的子句集中出现就终止</li>
+<li>子句集是析取层（或）父节点不同的节点组合</li>
+</ol>
+</li>
+</ol>
+<h5 id="逆向规则演绎系统"><a href="#逆向规则演绎系统" class="headerlink" title="逆向规则演绎系统"></a>逆向规则演绎系统</h5><ol>
+<li><p>将事实转换为与或形：只有文字的析取（或）和合取（与）</p>
+<ol>
+<li>减少否定符号管辖范围；摩根定律和量词转换定律</li>
+<li>对变量标准化（改名）：与正向演绎相反，各项析取（或）变量名不同</li>
+<li>消去存在量词，skolem函数消</li>
+<li>化为前束式，后消除全称量词：将全称量词都移到公式前面，量词部分称为前缀，后面称为母式</li>
+</ol>
+</li>
+<li><p>用与或图表示与或表达式：连接符与正向演绎相反，与关系层k连接符，或关系层1连接符</p>
+</li>
+<li><p>与或图的B规则转换</p>
+<ol>
+<li><p>将规则转换为与或形蕴含单文字公式：例：</p>
+<ol>
+<li>右面是单文字，左面面是与或形可转为与或图</li>
+</ol>
+<ul>
+<li>$A \land B \lor C\longrightarrow S$</li>
+<li>$C \longrightarrow A \lor B &lt;=&gt; C\longrightarrow A 、 C \longrightarrow B $ </li>
+<li>$C \longrightarrow A \land B :无效 $</li>
+</ul>
+</li>
+<li><p>规则蕴含式右面单文字配匹的已知与或图节点，用匹配符连接规则蕴含式右的新与或图</p>
+</li>
+<li><p>置换后与已知事实一致则证明成功</p>
+</li>
+</ol>
+</li>
+</ol>
+<h5 id="双向规则演绎系统"><a href="#双向规则演绎系统" class="headerlink" title="双向规则演绎系统"></a>双向规则演绎系统</h5><p>使用正向和反向演绎同时进行推理，正向和逆向叶节点都匹配了，则证明成功</p>
+<h4 id="产生式系统（产生式规则）"><a href="#产生式系统（产生式规则）" class="headerlink" title="产生式系统（产生式规则）"></a>产生式系统（产生式规则）</h4><h5 id="总数据库"><a href="#总数据库" class="headerlink" title="总数据库"></a>总数据库</h5><ul>
+<li>存放初始证据</li>
+<li>原始证据（证据不足询问的新证据）</li>
+<li>中间结论</li>
+<li>结果</li>
+</ul>
+<h5 id="规则库"><a href="#规则库" class="headerlink" title="规则库"></a>规则库</h5><ul>
+<li>规则集（一条条IF…THEN…）</li>
+</ul>
+<h5 id="控制策略"><a href="#控制策略" class="headerlink" title="控制策略"></a>控制策略</h5><h6 id="推理策略"><a href="#推理策略" class="headerlink" title="推理策略"></a>推理策略</h6><ul>
+<li>推理方向<ul>
+<li>正向推理：由总数据库的初始证据一步步得到结果</li>
+<li>反向推理：假设成立，一步步搜索支持假设的证据是否存在总数据库中</li>
+<li>双向推理：先正向或反向推理，推理不下去了，回头询问用户原始证据再接着推理</li>
+</ul>
+</li>
+<li>冲突消解：解决满足多条规则都满足的情况选则那条结论</li>
+</ul>
+<h6 id="搜索策略"><a href="#搜索策略" class="headerlink" title="搜索策略"></a>搜索策略</h6><p>搜索路线决定效率</p>
+<h3 id="非经典推理"><a href="#非经典推理" class="headerlink" title="非经典推理"></a>非经典推理</h3><h4 id="不确定推理"><a href="#不确定推理" class="headerlink" title="不确定推理"></a>不确定推理</h4><h5 id="不确定的表示和度量"><a href="#不确定的表示和度量" class="headerlink" title="不确定的表示和度量"></a>不确定的表示和度量</h5><ul>
+<li>知识不确定：知识表示方法不确定</li>
+<li>证据不确定：对于可能有，不知道等词的证据，确定其可能值</li>
+<li>结论不确定：证据充足但结论不确定</li>
+<li>度量不确定：不确定的程度有多大</li>
+</ul>
+<h5 id="不确定匹配"><a href="#不确定匹配" class="headerlink" title="不确定匹配"></a>不确定匹配</h5><p>相似度匹配算法：设置阈值，在阈值内则认为匹配，否则该证据不可用</p>
+<h5 id="不确定性传递"><a href="#不确定性传递" class="headerlink" title="不确定性传递"></a>不确定性传递</h5><ul>
+<li>不确定更新算法：根据知识和规则不确定算出结论的不确定程度</li>
+<li>证据的合取不确定算法（与）</li>
+<li>证据的析取不确定算法（或）</li>
+</ul>
+<h5 id="不确定性合成"><a href="#不确定性合成" class="headerlink" title="不确定性合成"></a>不确定性合成</h5><ul>
+<li>并行规则算法：根据不同知识和不同规则，得到相同结论的不确定，==综合==两条不确定结论程度</li>
+<li>组合证据不确定算法（多条证据的与或）<ul>
+<li>最大最小法：与取最小，或取最大</li>
+<li>概率法：与取乘积，或取和减去乘积</li>
+<li>有界法：保证与大于0，或小于1，确定在0到1之间</li>
+</ul>
+</li>
+</ul>
+<h4 id="概率论"><a href="#概率论" class="headerlink" title="概率论"></a>概率论</h4><ul>
+<li>样本点：可能出现的单个结果</li>
+<li>样本空间：全部结果</li>
+<li>随机事件：样本点构成的集合<ul>
+<li>至少有一个发生：$A \cup B$</li>
+<li>同时发生：$A \cap B$</li>
+<li>互逆事件：不会同时发生，两个事件并集是整个样本空间</li>
+</ul>
+</li>
+<li>统计概率：大量重复实验，得到时间发生的概论<ul>
+<li>不可能事件：不可能发生的事件</li>
+<li>必然事件：必定发生的事件</li>
+<li>互不相容事件：不可能同时发生</li>
+</ul>
+</li>
+<li>条件概率<ul>
+<li>事件B发生的前提下（已经发生，也就是说样本空间发生了变化），A发生的概率</li>
+<li>$P(A|B)=\frac{P(A \cap B)}{P(B)}$</li>
+</ul>
+</li>
+<li>全概率公式<ul>
+<li>事件A：各个事件互不相容，并集是整个样本空间</li>
+<li>事件B则有：$P(B) = \sum\limits_{i=1}^{n}(P(A_i) * P(B|A_i))$</li>
+</ul>
+</li>
+<li>贝叶斯公式<ul>
+<li>事件A：各个事件互不相容，并集是整个样本空间</li>
+<li>事件B则有：$P(A_i|B)= \frac{P(A_i)<em>P(B|A_i)}{\sum\limits_{j=1}^{n} P(A_j)</em>P(B|A_j)}$</li>
+</ul>
+</li>
+</ul>
+<h4 id="可信度方法（C-F模型）"><a href="#可信度方法（C-F模型）" class="headerlink" title="可信度方法（C-F模型）"></a>可信度方法（C-F模型）</h4><ul>
+<li>知识不确定表示：<code>IF 证据 THEN 结论 CF(结论,证据)</code></li>
+<li>可信度的度量：$CF\in [-1,1]$，越大越真，越小越假，0则证据与结论无关</li>
+<li>证据可信度：<code>CF(证据)</code>，$CF\in [-1,1]$，越大越真，越小越假，0则是不知道该证据</li>
+<li>结论可信度和传递：$CF(结论)=CF(结论,证据)*max(0,CF(证据))$</li>
+<li>不确定合成<ul>
+<li>组合证据不确定合成：最大最小法（与取最小，或取最大）</li>
+<li>结论不确定合成：<script type="math/tex">CF_总(结论)=\begin{cases} 和减积 & 都大于0 \\ 和加积 & 都小于0\\ 1减去绝对值较小的那个CF值分之和 & 其他  \end{cases}</script></li>
+</ul>
+</li>
+</ul>
+<h4 id="带加权因子的可信度推理方法"><a href="#带加权因子的可信度推理方法" class="headerlink" title="带加权因子的可信度推理方法"></a>带加权因子的可信度推理方法</h4><ul>
+<li>知识的不确定：<code>IF 证据1(加权因子值1) AND 证据2(加权因子值2)... THEN 结论 CF(结论,证据)</code><ul>
+<li>加权因子：该证据对结论的影响程度，取值范围[0,1]之间</li>
+<li>所有加权因子之和是1，若不是1则转换为1</li>
+</ul>
+</li>
+<li>不确定合成：各个CF值与各个加权因子值的乘积之和</li>
+</ul>
+<h4 id="贝叶斯方法"><a href="#贝叶斯方法" class="headerlink" title="贝叶斯方法"></a>贝叶斯方法</h4><h5 id="几率函数"><a href="#几率函数" class="headerlink" title="几率函数"></a>几率函数</h5><p>几率=发生的概率÷不发生的概率，$几率 \in [0,+\infty ] $</p>
+<script type="math/tex; mode=display">O(x)＝\frac{P(x)}{(1-P(x))}</script><h5 id="知识的不确定表示"><a href="#知识的不确定表示" class="headerlink" title="知识的不确定表示"></a>知识的不确定表示</h5><ul>
+<li>表示方法：<code>IF 证据 THEN 结论 (LS,LN)</code>$LS,LN\in [0,+\infty ]$</li>
+<li>LS（充分性度量：此证据出现LS越大结论越真）<ul>
+<li>此证据==出现==对结论为真的影响程度</li>
+<li>根据贝叶斯公式推出的几率公式：$O(H|E)＝LS×O(H),其中H=结论,E=证据$</li>
+<li>结论发生的前提下是有此证据概率÷结论不发生的前提下有此证据的概率</li>
+<li>$LS=\frac {P(E|H)}{P(E| \lnot H)} H=结论,E=证据$</li>
+</ul>
+</li>
+<li>LN（必要性度量：此证据不出现LN越大结论越真）<ul>
+<li>此证据==不出现==对结论为真的影响程度</li>
+<li>根据贝叶斯公式推出的几率公式：$O(H|\lnot E)＝LN×O(H),其中H=结论,E=证据$</li>
+<li>结论发生的前提下不是没有此证据的概率÷结论不发生的前提下没有此证据的概率</li>
+<li>$LN=\frac{P(E|\lnot H)}{P(\lnot E|\lnot H)}H=结论,E=证据$</li>
+</ul>
+</li>
+<li>LS、LN的关系<ul>
+<li>LS&gt;LN：越出现越支持</li>
+<li>LS&lt;LN：越不出现越支持</li>
+<li>LS=LN=1：此证据与结论无关</li>
+</ul>
+</li>
+</ul>
+<h5 id="证据不确定描述"><a href="#证据不确定描述" class="headerlink" title="证据不确定描述"></a>证据不确定描述</h5><p>使用该证据出现的先验概率转换成几率（$几率\in [0,+\infty ]$）来表示，越大越真</p>
+<h5 id="不确定性合成-1"><a href="#不确定性合成-1" class="headerlink" title="不确定性合成"></a>不确定性合成</h5><p>在某个观察到的条件下对各个证据的条件概率使用：最大最小法（与取最小，或取最大）</p>
+<h5 id="不确定的更新（证据不确定转换为概率模式）"><a href="#不确定的更新（证据不确定转换为概率模式）" class="headerlink" title="不确定的更新（证据不确定转换为概率模式）"></a>不确定的更新（证据不确定转换为概率模式）</h5><ol>
+<li>证据为真：$P(E)＝1时,O(H|E)＝LS×O(H),其中H=结论,E=证据$</li>
+<li>证据为假：$P(\lnot E)＝1时,O(H|\lnot E)＝LN×O(H),其中H=结论,E=证据$</li>
+<li>证据不确定：设S是对证据的所有观察<ol>
+<li>当P(E|S)＝1时：$P(H|S)＝P(H|E)＝\frac{ LS×P(H)}{(LS-1)×P(H)+1}$</li>
+<li>当P(E|S)＝0时：$P(H|S)＝P(H|\lnot E)＝\frac{ LN×P(H)}{(LN-1)×P(H)+1}$</li>
+<li>当P(E|S)＝P(E)时：$P(H|S)=P(H|E) ×P(E)+P(H|\lnot E) ×P(\lnot E)=P(H)$</li>
+<li>当P(E|S)为其他值时：<script type="math/tex">P(H|S)=\begin{cases} P(H|\lnot E)+\frac {(P(H)-P(H|\lnot E))}{P(E)}*P(E|S) & 若0≤P(E|S)＜P(E) \\ P(H)+\frac {P(H|E)-P(H)}{1-P(E)}*[P(E|S)-P(E)] & 若P(E)≤P(E|S)≤1  \end{cases}</script></li>
+</ol>
+</li>
+</ol>
+<h5 id="结论不确定合成"><a href="#结论不确定合成" class="headerlink" title="结论不确定合成"></a>结论不确定合成</h5><p>一组证据E1,E2…，对应一组观察S1,S2…，这组证据推出同一结论</p>
+<script type="math/tex; mode=display">O(H|S1,S2…)=O(H)*\frac{O(H|S1)}{O(H)}*\frac{O(H|S1)}{O(H)}...</script><h3 id="专家系统"><a href="#专家系统" class="headerlink" title="专家系统"></a>专家系统</h3><h4 id="专家系统的特点"><a href="#专家系统的特点" class="headerlink" title="专家系统的特点"></a>专家系统的特点</h4><ol>
+<li>启发性：运用知识和经验进行推理</li>
+<li>透明性：自然语言交互</li>
+<li>灵活性：知识可扩展，可修改</li>
+</ol>
+<h4 id="专家系统的优点"><a href="#专家系统的优点" class="headerlink" title="专家系统的优点"></a>专家系统的优点</h4><ol>
+<li>高效，准确，不知疲倦</li>
+<li>不受环境影响</li>
+<li>不受时间地点限制</li>
+<li>易传播</li>
+<li>可集成多个领域专家</li>
+</ol>
+<h4 id="专家系统的分类"><a href="#专家系统的分类" class="headerlink" title="专家系统的分类"></a>专家系统的分类</h4><ul>
+<li>解释专家系统：语音理解、图象分析</li>
+<li>预测专家系统：气象预报</li>
+<li>诊断专家系统：医疗诊断</li>
+<li>设计专家系统：VAX计算机结构设计专家系统</li>
+<li>规划专家系统：军事指挥调度系统、机器人规划系统，火车汽车运行调度系统</li>
+<li>监视专家系统：粘虫测报专家系统</li>
+<li>控制专家系统：具有解释、预报、诊断、规划 和执行等多功能系统，自主机器人控制</li>
+<li>调试专家系统：具有规划、设计、预报和诊断等专家系统的功能</li>
+<li>教学专家系统：计算机辅助教学系统</li>
+<li>修理专家系统：有诊断、调试、计划和执行等功能</li>
+</ul>
+<h3 id="计算智能"><a href="#计算智能" class="headerlink" title="计算智能"></a>计算智能</h3><h4 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h4><h5 id="人工神经元模型"><a href="#人工神经元模型" class="headerlink" title="人工神经元模型"></a>人工神经元模型</h5><p><img src="/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/人工神经元模型-1590048943614.svg" alt="人工神经元模型"></p>
+<h5 id="神经网络连接形式"><a href="#神经网络连接形式" class="headerlink" title="神经网络连接形式"></a>神经网络连接形式</h5><ol>
+<li>前向网络：第一层输入层、中间层隐含层、最后一层输出，输入层与输出层神经元个数可以不一致</li>
+<li>从输入到输出有反馈的前向网络：输入层与输出层神经元个数必须不一致</li>
+<li>同层的层内互连前向网络</li>
+<li>相互结合型网络（全连接）</li>
+</ol>
+<h5 id="神经网络的学习算法"><a href="#神经网络的学习算法" class="headerlink" title="神经网络的学习算法"></a>神经网络的学习算法</h5><ol>
+<li>有监督学习：输出与期望输出作比较（即监督），调整连接权重，将差异变小</li>
+<li>无监督学习</li>
+<li>再励学习</li>
+</ol>
+<h5 id="学习规则（调整权重规则）"><a href="#学习规则（调整权重规则）" class="headerlink" title="学习规则（调整权重规则）"></a>学习规则（调整权重规则）</h5><ol>
+<li>hebb学习规则：该权重的改变值是两个连接神经元的输出，以及学习速率（给定的常量）的乘积</li>
+<li>delta学习规则：该权重的改变值是前一个神经元的输出，和后一个神经元的期望输出和实际输出的差值函数值的乘积，以及学习速率（给定的常量）的乘积</li>
+</ol>
+<h5 id="单层感知器网络"><a href="#单层感知器网络" class="headerlink" title="单层感知器网络"></a>单层感知器网络</h5><p>响应函数：阈值函数$ F(x)=\begin{cases} 0  \\ 1   \end{cases}$</p>
+<p>解决：分类问题</p>
+<h5 id="线性神经网络"><a href="#线性神经网络" class="headerlink" title="线性神经网络"></a>线性神经网络</h5><p>响应函数：线性函数$F(x)=x$</p>
+<p>解决：线性拟合问题</p>
+<h5 id="W-H学习算法"><a href="#W-H学习算法" class="headerlink" title="W-H学习算法"></a>W-H学习算法</h5><p>误差：$E=|Y-Y_真|^2$</p>
+<p>响应函数类型：$Y=WX+B$</p>
+<p>梯度下降思想：用误差对响应函数求导，将WB将向导数反方向进行调整</p>
+<h5 id="BP神经网络（反向传播）"><a href="#BP神经网络（反向传播）" class="headerlink" title="BP神经网络（反向传播）"></a>BP神经网络（反向传播）</h5><p>模型：至少三层前向网络模型（输入层、隐含层、输出层）</p>
+<p>误差效能：$误差*输出层响应函数的求导$</p>
+<p>隐含层权重的修正量：$学习率<em>后一个神经元的误差效能</em>前一个神经元的输入$</p>
+<p>解决：非线性问题</p>
+<h4 id="进化计算"><a href="#进化计算" class="headerlink" title="进化计算"></a>进化计算</h4><h5 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h5><ul>
+<li>自然选择、优胜略汰</li>
+<li>生物遗传学</li>
+<li>随机自适应的全局搜索算法</li>
+</ul>
+<h5 id="遗传算法"><a href="#遗传算法" class="headerlink" title="遗传算法"></a>遗传算法</h5><ol>
+<li><p>编码与译码：问题的解转换为位串形式，反正为译码</p>
+<ul>
+<li>基因型（染色体）：位串<ul>
+<li>染色体长度：位串长度</li>
+<li>基因位：位串的一位</li>
+</ul>
+</li>
+<li>表现型：解码后的位串</li>
+<li>解空间：表现型的空间</li>
+<li>编码空间：基因型空间，搜索空间</li>
+<li>编码：位串与解空间的映射</li>
+<li>种群：个体集合（遗传算法中种群规模不变）</li>
+</ul>
+</li>
+<li><p>适应度函数</p>
+<ul>
+<li>评价个体的优秀程度</li>
+<li>越优秀函数值越大</li>
+<li>函数值都大于等于零</li>
+</ul>
+</li>
+<li><p>遗传操作</p>
+<ol>
+<li><p>选择：轮盘赌、转轮法</p>
+<ol>
+<li>染色体的选择概率：$\frac{该个体适应度函数值} {所有个体适应度函数值之和}$</li>
+<li>每个个体的累计概率：$当前选择概率+之前所有个体选择概率$</li>
+<li>产生随机数，根据随机数大小在累计概率那个区间，选择出个体，放入交配池</li>
+</ol>
+</li>
+<li><p>交叉</p>
+<ul>
+<li><p>交叉概率：根据交叉概率，选取交叉多少对个体</p>
+</li>
+<li><p>随机选择交配池中的两条染色体，随机指定一点或多点交叉位置，进行交换，得到两条新染色体</p>
+</li>
+</ul>
+</li>
+<li><p>变异</p>
+<ul>
+<li>根据变异概率在交叉后的新个体中选择个体变异</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="模糊计算"><a href="#模糊计算" class="headerlink" title="模糊计算"></a>模糊计算</h4>]]></content>
+      <categories>
+        <category>人工智能</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>笔记规范</title>
+    <url>/2020/03/27/%E7%AC%94%E8%AE%B0%E8%A7%84%E8%8C%83/</url>
+    <content><![CDATA[<h2 id="command"><a href="#command" class="headerlink" title="command"></a>command</h2><h3 id="format"><a href="#format" class="headerlink" title="format"></a>format</h3><p><code>command [option] [object] [...]</code></p>
+<p>detailed description</p>
+<h3 id="option"><a href="#option" class="headerlink" title="option"></a>option</h3><ul>
+<li>-n or—number <ul>
+<li>description</li>
+</ul>
+</li>
+<li>-n or—number <ul>
+<li>description</li>
+</ul>
+</li>
+<li>…</li>
+</ul>
+<h3 id="correlation-config-file"><a href="#correlation-config-file" class="headerlink" title="correlation config file"></a>correlation config file</h3><h4 id="filename"><a href="#filename" class="headerlink" title="filename"></a>filename</h4><ul>
+<li><p>path</p>
+</li>
+<li><p>description</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#detailed description</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="className"><a href="#className" class="headerlink" title="className"></a>className</h2><p>detailed description</p>
+<p>UMLdescriptionImage</p>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><ul>
+<li>new</li>
+<li><code>className()</code></li>
+<li><code>className.createObject()</code></li>
+<li>…</li>
+</ul>
+<h3 id="properties"><a href="#properties" class="headerlink" title="properties"></a>properties</h3><ul>
+<li>propertie=value</li>
+<li>…</li>
+</ul>
+<h3 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h3><h4 id="functionName-gt-A-brief-description"><a href="#functionName-gt-A-brief-description" class="headerlink" title="functionName[=&gt;A brief description]"></a>functionName[=&gt;A brief description]</h4><p><code>[static permission] functionName([arguments])[:returnTypes]</code></p>
+<ul>
+<li>detailed description</li>
+<li><p><code>arguments[0]    &lt;type=default&gt;</code> :describe</p>
+</li>
+<li><p><code>arguments[1]    &lt;Object&gt;</code> :describe</p>
+<ul>
+<li><p><code>property    &lt;type&gt;</code> :describe</p>
+</li>
+<li><p>…</p>
+</li>
+<li><p>jsno-describe</p>
+</li>
+</ul>
+</li>
+<li><p>…</p>
+</li>
+<li><p><code>callback([cArguments])    &lt;function&gt;</code> :describe</p>
+<ul>
+<li><code>cArguments[0]    &lt;type=default&gt;</code> :describe</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*returnTypes describe or examples*/</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>规范</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+</search>

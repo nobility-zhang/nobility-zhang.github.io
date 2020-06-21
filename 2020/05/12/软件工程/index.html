@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uW8bwgMGUwIA01nPfItoty1rmtmmuVkOVTeS9O0nAUg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nobility-zhang.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="软件工程笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件工程">
+<meta property="og:url" content="nobility-zhang.github.io/2020/05/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/index.html">
+<meta property="og:site_name" content="nobility-zhang">
+<meta property="og:description" content="软件工程笔记">
+<meta property="article:published_time" content="2020-05-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-21T08:12:05.570Z">
+<meta property="article:author" content="nobility-zhang">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="nobility-zhang.github.io/2020/05/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>软件工程 | nobility-zhang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">nobility-zhang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">怀揣梦想，践行远方</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="nobility-zhang.github.io/2020/05/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="nobility-zhang">
+      <meta itemprop="description" content="想像螃蟹一样">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="nobility-zhang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件工程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-12T00:00:00+08:00">2020-05-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-21 16:12:05" itemprop="dateModified" datetime="2020-05-21T16:12:05+08:00">2020-05-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">软件工程</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+            <div class="post-description">软件工程笔记</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="软件与软件工程"><a href="#软件与软件工程" class="headerlink" title="软件与软件工程"></a>软件与软件工程</h2><ul>
+<li>软件含义：程序+数据+文档</li>
+<li>软件分类：系统软件、应用软件、工具软件、可重用软件</li>
+<li>软件危机：软件开发和维护过程中遇到的一系列严重问题</li>
+<li>什么是软件危机？<ul>
+<li><strong>进度拖延、成本超标</strong></li>
+<li>没有文档资料，<strong>生产力低</strong></li>
+<li>软件<strong>质量无法保证</strong></li>
+<li>软件<strong>难以维护</strong></li>
+</ul>
+</li>
+<li>软件危机产生的原因<ul>
+<li>需求不明确</li>
+<li>缺乏正确理论指导</li>
+<li>主要：规模越来越大，越来越复杂</li>
+</ul>
+</li>
+<li>软件工程定义<ul>
+<li>是用工程、科学和数学的原则与方法开发、维护计算机软件的有关技术及管理方法。</li>
+</ul>
+</li>
+</ul>
+<h2 id="软件工程模式"><a href="#软件工程模式" class="headerlink" title="软件工程模式"></a>软件工程模式</h2><ul>
+<li>瀑布模型（无重大变化的软件系统的开发）：按照软件生命周期线性方式，以文档驱动<ul>
+<li>可行性分析阶段 </li>
+<li>系统需求分析阶段</li>
+<li>系统设计阶段</li>
+<li>系统实施阶段 </li>
+<li>系统测试阶段</li>
+<li>使用和维护阶段</li>
+</ul>
+</li>
+<li>增量模型（需求不明确的软件项目）：将需求分解为若干分量，排序后，每个分量都经过瀑布模型的阶段<ul>
+<li>快速原型模型</li>
+<li>渐增模型</li>
+</ul>
+</li>
+<li>螺旋模型：将风险管理融入到原型模型</li>
+</ul>
+<h2 id="软件的生命周期"><a href="#软件的生命周期" class="headerlink" title="软件的生命周期"></a>软件的生命周期</h2><ul>
+<li>软件定义阶段<ul>
+<li>可行性研究和项目开发计划阶段：系统解决的问题，是否可行</li>
+<li>需求分析：确定功能和性能</li>
+</ul>
+</li>
+<li>软件开发阶段<ul>
+<li>概要设计（模块划分）：数据设计、体系结构设计、接口设计、过程设计</li>
+<li>详细设计（数据结构与算法）：各个模块的实现细节和局部数据结构</li>
+<li>编码</li>
+<li>测试：单元测试、综合测试</li>
+</ul>
+</li>
+<li>软件使用和维护阶段<ul>
+<li>使用和维护</li>
+</ul>
+</li>
+</ul>
+<h2 id="软件的可行性分析"><a href="#软件的可行性分析" class="headerlink" title="软件的可行性分析"></a>软件的可行性分析</h2><ul>
+<li>任务<ul>
+<li>经济可行性</li>
+<li>技术可行性</li>
+<li>操作可行性</li>
+<li>法律可行性</li>
+</ul>
+</li>
+<li>步骤：（立即开始，推迟，不可行三种结果）<ol>
+<li>确定项目规模和目标</li>
+<li>研究正在运行的系统</li>
+<li>建立新系统的高层逻辑模型</li>
+<li>导出和评价各种方案</li>
+<li>推荐可行性方案</li>
+<li>编写可行性分析报告</li>
+</ol>
+</li>
+<li>成本/效益<ul>
+<li>成本：购买软硬件费用、系统安装运行维护费用、人员培训费</li>
+<li>效益<ul>
+<li>经济效益：可增加的收入、可节省的费用、工资、物资、时间等</li>
+<li>社会效益：定性估计对社会影响</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>分析报告</li>
+</ul>
+<h2 id="软件的需求分析"><a href="#软件的需求分析" class="headerlink" title="软件的需求分析"></a>软件的需求分析</h2><p>对系统描述=&gt;构建分析模型=&gt;构建设计模型</p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
+<li>起始：客户和开发人员初步的交流和合作</li>
+<li>导出：范围问题、理解问题、易变问题</li>
+<li>精化：形成分析模型，信息域、功能域、行为域</li>
+<li>协商：需求工程师通过协商调解冲突</li>
+<li>规格说明：描述功能和性能，以及系统开发约束</li>
+<li>确认：正式的技术评审机制</li>
+<li>管理：在项目迚展中标示、控制和跟踪需求以及变更。</li>
+</ul>
+<h3 id="功能和非功能需求"><a href="#功能和非功能需求" class="headerlink" title="功能和非功能需求"></a>功能和非功能需求</h3><ul>
+<li>功能需求：对外提供的服务，为人们能做些什么</li>
+<li>非功能需求<ul>
+<li>过程需求：交付方式、实现方式、验收标准</li>
+<li>产品需求：性能、可移植性、安全性、存储空间</li>
+<li>外部需求 ：互操作性、道德、法律、成本</li>
+</ul>
+</li>
+</ul>
+<h3 id="需求的描述"><a href="#需求的描述" class="headerlink" title="需求的描述"></a>需求的描述</h3><h4 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h4><ul>
+<li><p>无二义性：使用自然语言描述避免二义性</p>
+</li>
+<li><p>完整性：不遗漏需求</p>
+</li>
+<li><p>正确性：正确的反应用户需求</p>
+</li>
+<li><p>可行性：技术、经济、操作可行性</p>
+</li>
+<li><p>必要性：不自作主张添加需求</p>
+</li>
+<li><p>可验证性：对非功能性的度量</p>
+<p>划分优先级：对所有需求进行排序，制定执行计划</p>
+</li>
+</ul>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><ul>
+<li>自然语言</li>
+<li>图形化符号<ul>
+<li>数据流图</li>
+<li>UML语言</li>
+<li>实体关系图</li>
+</ul>
+</li>
+<li>数学描述</li>
+</ul>
+<h3 id="需求分析方法"><a href="#需求分析方法" class="headerlink" title="需求分析方法"></a>需求分析方法</h3><p>域分析：对领域知识进行分析，构建域分析模型</p>
+<h3 id="结构化分析方法（SA）"><a href="#结构化分析方法（SA）" class="headerlink" title="结构化分析方法（SA）"></a>结构化分析方法（SA）</h3><ul>
+<li>数据流图（DFD图）：功能建模<ul>
+<li>包括<ul>
+<li>外部项</li>
+<li>加工</li>
+<li>数据存储</li>
+<li>数据流</li>
+</ul>
+</li>
+<li>分为<ul>
+<li>关联图（系统边界）</li>
+<li>=&gt;TOP图（系统与外部实体的交互）</li>
+<li>=&gt;第一层图（细化数据输入输出关系）</li>
+</ul>
+</li>
+<li>数据字典<ul>
+<li>外部项的定义描述</li>
+<li>加工的定义描述：策略树（面向编程）、策略表方式（面向测试，因果图）</li>
+<li>数据存储的定义描述</li>
+<li>数据流的定义描述</li>
+<li>数据元素的定义描述</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>业务流图（TFD图）：业务处理过程</li>
+<li>实体关系图（ER图）：数据建模</li>
+<li>状态迁移图：行为建模</li>
+</ul>
+<h3 id="面向对象方法（OO方法）"><a href="#面向对象方法（OO方法）" class="headerlink" title="面向对象方法（OO方法）"></a>面向对象方法（OO方法）</h3><h2 id="软件的设计工程"><a href="#软件的设计工程" class="headerlink" title="软件的设计工程"></a>软件的设计工程</h2><h3 id="概要设计"><a href="#概要设计" class="headerlink" title="概要设计"></a>概要设计</h3><h4 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h4><ul>
+<li>抽象、逐步求精</li>
+<li>模块化</li>
+<li>信息隐蔽与局部化</li>
+<li>复用性</li>
+</ul>
+<h4 id="模块独立性衡量标准"><a href="#模块独立性衡量标准" class="headerlink" title="模块独立性衡量标准"></a>模块独立性衡量标准</h4><h5 id="耦合：模块之间相对独立性"><a href="#耦合：模块之间相对独立性" class="headerlink" title="耦合：模块之间相对独立性"></a>耦合：模块之间相对独立性</h5><ol>
+<li>非直接耦合：模块之间没有联系</li>
+<li>数据耦合：不同模块之间传递简单参数（数值型）</li>
+<li>标记耦合：不同模块之间穿的的参数是某个复杂数据结构的一部分</li>
+<li>控制耦合：不同模块之间传递的参数包含的控制信息</li>
+<li>外部耦合：不同模块能访问简单的全局变量（数值型）</li>
+<li>公共耦合：不同模块能访问复杂的公共的区域（数组、结构体、类…）<ol>
+<li>紧密公共耦合：不同模块对公共区域，同时具有读写权限</li>
+<li>松散公共耦合：不同模块对公共区域，只有读或写权限</li>
+</ol>
+</li>
+<li>内容耦合：访问其他模块内部数据，非正常入口进入模块内部，模块间有代码重叠，模块有多个入口</li>
+</ol>
+<h5 id="内聚：模块内部元素的紧密成度"><a href="#内聚：模块内部元素的紧密成度" class="headerlink" title="内聚：模块内部元素的紧密成度"></a>内聚：模块内部元素的紧密成度</h5><ol>
+<li>功能内聚：一个模块完成一个功能</li>
+<li>信息内聚：多个功能，对同一个操作对象进行操作，且入口唯一</li>
+<li>通信内聚：内部多个功能使用相同输入数据，产生不同的输出结果；或使用不同的输入数据，产生相同的输出结果</li>
+<li>过程内聚：模块内部多个功能都要执行，时间上串行执行按照一定顺序要求，且无数据传递（同一操作对象）</li>
+<li>时间内聚：模块内部多个功能都要执行，时间上串行执行无顺序要求，（同一操作对象）</li>
+<li>逻辑内聚：根据参数的控制信息反应出不同的功能，（同一操作对象）</li>
+<li>巧合（偶然）内聚：模块内部元素没有联系，（不同操作对象）</li>
+</ol>
+<h4 id="软件体系结构图"><a href="#软件体系结构图" class="headerlink" title="软件体系结构图"></a>软件体系结构图</h4><h5 id="模块调用"><a href="#模块调用" class="headerlink" title="模块调用"></a>模块调用</h5><ul>
+<li>一般调用：调用模块箭头指向被调用模块</li>
+<li>条件调用：菱形</li>
+<li>循环调用：弧形</li>
+</ul>
+<h5 id="数据通信"><a href="#数据通信" class="headerlink" title="数据通信"></a>数据通信</h5><ul>
+<li>数据信息：尾部空心箭头</li>
+<li>控制信息：尾部实心箭头</li>
+</ul>
+<h5 id="结构图的相关概念"><a href="#结构图的相关概念" class="headerlink" title="结构图的相关概念"></a>结构图的相关概念</h5><p>好的体系结构：顶层高扇出，中层和底层高扇入</p>
+<ul>
+<li>结构的深度：层数</li>
+<li>结构的宽度：最大宽度层的宽度</li>
+<li>扇出：一个模块直接调用的模块数量</li>
+<li>扇入：一个模块直接被调用的模块数量</li>
+</ul>
+<h3 id="体系结构设计方法"><a href="#体系结构设计方法" class="headerlink" title="体系结构设计方法"></a>体系结构设计方法</h3><h4 id="结构化设计方法（SD数据流图转换为体系结构图）"><a href="#结构化设计方法（SD数据流图转换为体系结构图）" class="headerlink" title="结构化设计方法（SD数据流图转换为体系结构图）"></a>结构化设计方法（SD数据流图转换为体系结构图）</h4><h5 id="变换分析策略"><a href="#变换分析策略" class="headerlink" title="变换分析策略"></a>变换分析策略</h5><p>多条输入经过变换中心输出一条输出</p>
+<h5 id="事务分析策略"><a href="#事务分析策略" class="headerlink" title="事务分析策略"></a>事务分析策略</h5><p>一条输入经过事务中心输出多条输出</p>
+<h4 id="面向对象设计方法"><a href="#面向对象设计方法" class="headerlink" title="面向对象设计方法"></a>面向对象设计方法</h4><h3 id="详细设计"><a href="#详细设计" class="headerlink" title="详细设计"></a>详细设计</h3><h4 id="代码设计（编号）"><a href="#代码设计（编号）" class="headerlink" title="代码设计（编号）"></a>代码设计（编号）</h4><ul>
+<li>顺序码</li>
+<li>分段码</li>
+<li>字母码：首字母缩写</li>
+<li>组合码：顺序、分段、字母编码方式组合</li>
+<li>混合码：字符、数字混合</li>
+<li>特征组合码：人为规定的标记码</li>
+</ul>
+<h4 id="数据库设计（物理数据库）"><a href="#数据库设计（物理数据库）" class="headerlink" title="数据库设计（物理数据库）"></a>数据库设计（物理数据库）</h4><h5 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h5><ol>
+<li>数据需求分析：在系统分析阶段以数据流图和数据字典为依据</li>
+<li>数据概念模型设计：ER图</li>
+<li>将概念模型转换为数据模型</li>
+<li>结构规范化</li>
+<li>物理设计</li>
+</ol>
+<h5 id="ER图"><a href="#ER图" class="headerlink" title="ER图"></a>ER图</h5><ul>
+<li>实体：矩形</li>
+<li>关系：菱形<ul>
+<li>关系的类型<ul>
+<li>一对一：实体各自对应一张表，任意一段存外键，该外键是另一端的主键</li>
+<li>一对多：实体各自对应一张表，多的一端存外键，该外键是少的一端的主键</li>
+<li>多对多：实体各对应一张表，将实体中的主键拿到关系表中充当联合主键</li>
+</ul>
+</li>
+<li>关系的元或度<ul>
+<li>自关联：一张表，增加一个自关联外键参照该表主键</li>
+<li>二元关系</li>
+<li>多元关系：每个实体对应一张表，将每个实体中的主键拿到关系表中充当联合主键</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>属性：椭圆<ul>
+<li>主键属性：下划线</li>
+<li>外码属性：波浪线</li>
+<li>域：属性的取值范围</li>
+</ul>
+</li>
+</ul>
+<h3 id="人机界面设计"><a href="#人机界面设计" class="headerlink" title="人机界面设计"></a>人机界面设计</h3><ul>
+<li>置用户于控制之下</li>
+<li>减少用户的记忆负担</li>
+<li>保持界面一致</li>
+</ul>
+<h3 id="交互设计"><a href="#交互设计" class="headerlink" title="交互设计"></a>交互设计</h3><p>菜单方式：合理分类，合理分级</p>
+<p>会话方式：提示和警告确认</p>
+<p>错误消息：简洁，礼貌，明了</p>
+<h3 id="输入输出设计"><a href="#输入输出设计" class="headerlink" title="输入输出设计"></a>输入输出设计</h3><p>输出类型：外部输出，内部输出</p>
+<p>输入类型：外部输入、计算机输入</p>
+<p>输入格式注意顺序</p>
+<h3 id="处理过程设计"><a href="#处理过程设计" class="headerlink" title="处理过程设计"></a>处理过程设计</h3><p>目的：为编程和测试提供依据</p>
+<p>方式：</p>
+<ul>
+<li>程序流程图</li>
+<li>盒图</li>
+<li>问题分析图（PAD图）</li>
+</ul>
+<h3 id="系统设计说明书"><a href="#系统设计说明书" class="headerlink" title="系统设计说明书"></a>系统设计说明书</h3><h2 id="软件的编码与测试"><a href="#软件的编码与测试" class="headerlink" title="软件的编码与测试"></a>软件的编码与测试</h2><h3 id="编码风格"><a href="#编码风格" class="headerlink" title="编码风格"></a>编码风格</h3><h4 id="程序的内部文档"><a href="#程序的内部文档" class="headerlink" title="程序的内部文档"></a>程序的内部文档</h4><ul>
+<li>命名：见名知意、精简、缩写一致。一个变量一种用途<ul>
+<li>用Pascal命名法：每个单词首字母大写，其他小写</li>
+<li>用Camel（驼峰）命名法：首单词小写，之后的单词首字母大写</li>
+<li>匈牙利命名法：标注作用域和类型下划线隔开再写意义</li>
+</ul>
+</li>
+<li>注释<ul>
+<li>序言注释：整体说明</li>
+<li>功能注释：描述程序语句作用</li>
+</ul>
+</li>
+</ul>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>需求分析阶段指定过的测试计划，为了发现程序中错误而产生的</p>
+<h4 id="衡量软件质量因素的标准"><a href="#衡量软件质量因素的标准" class="headerlink" title="衡量软件质量因素的标准"></a>衡量软件质量因素的标准</h4><ul>
+<li>MCC77</li>
+<li>ISO9126</li>
+</ul>
+<h4 id="软件测试的过程"><a href="#软件测试的过程" class="headerlink" title="软件测试的过程"></a>软件测试的过程</h4><ol>
+<li>单元测试：程序员对单个模块检查是否完成预期功能-&gt;编码与详细设计（算法）的错误</li>
+<li>集成测试：测试人员对通过了单元测试的模块，集成的系统进行测试-&gt;全局数据结构、接口（概要设计）的错误<ul>
+<li>渐增式集成：有回归测试集产生回归测试问题<ul>
+<li>自顶向下（宽度、广度）</li>
+<li>自定向上</li>
+<li>三明治</li>
+</ul>
+</li>
+<li>非渐增式集成<ul>
+<li>一次性集成</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>确认测试：测试人员依据软件需求说明书检查软件功能是否符合用户要求-&gt;系统说明书中的错误</li>
+<li>系统测试：测试人员对软硬件、网络环境等运行测试和性能测试-&gt;运行平台中的错误</li>
+<li>验收测试：软件使用者或第三方软件监理机构完成<ul>
+<li>alpha测试：开发环境，由开发者指导用户完成</li>
+<li>beta测试：生产环境，用户独立完成</li>
+</ul>
+</li>
+</ol>
+<h4 id="软件测试技术"><a href="#软件测试技术" class="headerlink" title="软件测试技术"></a>软件测试技术</h4><p>白盒测试：利用程序内部的逻辑结构选择测试用例</p>
+<ul>
+<li>逻辑覆盖<ul>
+<li>语句覆盖、点覆盖：程序中的每个可执行语句都至少执行一次</li>
+<li>判定覆盖、边覆盖：程序中的分支分别取真或假值一次</li>
+<li>条件覆盖：程序中的分支中的条件（单个条件，非组合条件）的可能取值至少执行一次</li>
+<li>判定/条件覆盖：既要满足判断条件的准则，也要满足条件覆盖的准则</li>
+<li>条件组合覆盖：程序中的分支中的条件（组合条件）的可能取值至少执行一次</li>
+<li>路径覆盖：可达路径和非可达路径都要走一遍</li>
+</ul>
+</li>
+<li>控制结构测试</li>
+</ul>
+<p>黑盒测试：只依据软件规格说明书检查程序是否符合功能或遗漏说明</p>
+<ul>
+<li>等价划分<ul>
+<li>有效等价类：有意义的输入数据，通过性测试</li>
+<li>无效等价类：无意义的输入数据，非通过性测试</li>
+</ul>
+</li>
+<li>边界值分析：针对各种边界情况设计测试用例</li>
+<li>错误推测：靠经验和直觉推测程序中可能存在的各种错误</li>
+<li>因果图：根据规格说明书描述，对原因和结果分类标识，写出判定（决策）表，根据判定表测试</li>
+</ul>
+<h3 id="软件调试技术"><a href="#软件调试技术" class="headerlink" title="软件调试技术"></a>软件调试技术</h3><p>对错误进行定位，对错误进行修改</p>
+<h4 id="调试方法"><a href="#调试方法" class="headerlink" title="调试方法"></a>调试方法</h4><ul>
+<li>蛮干法</li>
+<li>回溯法</li>
+<li>对分查找法</li>
+<li>归纳法</li>
+<li>演绎法</li>
+</ul>
+<h2 id="软件的维护"><a href="#软件的维护" class="headerlink" title="软件的维护"></a>软件的维护</h2><h3 id="软件维护定义"><a href="#软件维护定义" class="headerlink" title="软件维护定义"></a>软件维护定义</h3><p>软件交付之后，为了纠正错误和满足新需求而修改软件的过程</p>
+<p>软件再工程过程：软件重构和逆向工程</p>
+<p>维护的副作用：软件修改产生的错误</p>
+<ul>
+<li>代码副作用</li>
+<li>数据副作用</li>
+<li>文档副作用</li>
+</ul>
+<h3 id="软件维护类型的分类"><a href="#软件维护类型的分类" class="headerlink" title="软件维护类型的分类"></a>软件维护类型的分类</h3><ul>
+<li>改正性维护：对软件错误进行修正</li>
+<li>适应性维护：对软硬件平台变化，对软件做的升级修改</li>
+<li>完善性维护：增加新需求</li>
+<li>预防性维护（占比最小）</li>
+</ul>
+<h3 id="软件维护特点"><a href="#软件维护特点" class="headerlink" title="软件维护特点"></a>软件维护特点</h3><ul>
+<li>结构化的维护：有文档</li>
+<li>非结构化的维护：没文档</li>
+<li>维护的代价高</li>
+</ul>
+<h4 id="软件的可维护性因素：维护难易程度"><a href="#软件的可维护性因素：维护难易程度" class="headerlink" title="软件的可维护性因素：维护难易程度"></a>软件的可维护性因素：维护难易程度</h4><ul>
+<li>可理解性、可测试性（相辅相成）</li>
+<li>可修改性</li>
+<li>可移指性</li>
+<li>可重用性</li>
+</ul>
+<h2 id="软件项目管理"><a href="#软件项目管理" class="headerlink" title="软件项目管理"></a>软件项目管理</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>项目：独特的，暂时性的，至少满足干系人的期望</p>
+<p>制约项目的条件：工作范围、时间、成本、质量、资源</p>
+<h3 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h3><ul>
+<li>成本管理：估算项目成本</li>
+<li>质量管理：制定软件质量保证计划，评审-验证-确认</li>
+<li>软件配置管理：制定配置管理计划，对程序、文档和数据版本控制</li>
+<li><strong>风险管理</strong>：软件开发过程中预算和进度等问题，这些问题对软件项目的影响，辨别风险后评估发生概率和影响，建立规划，来预防风险</li>
+<li>计划管理：项目开发计划文档</li>
+<li>资源管理：人力资源，软硬件资源</li>
+</ul>
+<h2 id="进度安排与跟踪"><a href="#进度安排与跟踪" class="headerlink" title="进度安排与跟踪"></a>进度安排与跟踪</h2><p>工作分解阶段性任务（明确起始时间），交付阶段性成果</p>
+<ul>
+<li>甘特图：任务之间的串并形关系</li>
+<li>工程计划网络图</li>
+<li>里程碑图：表现关键任务</li>
+</ul>
+<h2 id="项目的质量与成本估算"><a href="#项目的质量与成本估算" class="headerlink" title="项目的质量与成本估算"></a>项目的质量与成本估算</h2><ul>
+<li>面向规模的度量</li>
+<li>面向功能的度量</li>
+<li>COCOMO模型：利用专家经验估算</li>
+</ul>
+<h2 id="风险分析与管理"><a href="#风险分析与管理" class="headerlink" title="风险分析与管理"></a>风险分析与管理</h2><h3 id="风险"><a href="#风险" class="headerlink" title="风险"></a>风险</h3><p>使软件项目可能（发生会带来损失）受到影响、损失、失败，可能发生（未发生，不确定）的事件</p>
+<p>风险与机遇机会并存的</p>
+<h3 id="危机管理"><a href="#危机管理" class="headerlink" title="危机管理"></a>危机管理</h3><ul>
+<li>救火模式：风险出现后</li>
+<li>失败处理：风险察觉后</li>
+<li>风险缓解：识别风险后</li>
+<li>风险预防：对未发生风险制定措施</li>
+<li>消灭根源：防止风险发生</li>
+</ul>
+<h3 id="风险识别"><a href="#风险识别" class="headerlink" title="风险识别"></a>风险识别</h3><ul>
+<li>计划编制</li>
+<li>组织和管理</li>
+<li>开发环境</li>
+<li>最终用户</li>
+<li>客户</li>
+<li>承包商</li>
+<li>需求</li>
+<li>产品外部环境</li>
+<li>人员</li>
+<li>设计和实现</li>
+<li>过程</li>
+</ul>
+<h3 id="风险分析"><a href="#风险分析" class="headerlink" title="风险分析"></a>风险分析</h3><ol>
+<li>估计风险发生概率</li>
+<li>估算风险造成的损失</li>
+<li>计算风险度</li>
+</ol>
+<h3 id="风险控制"><a href="#风险控制" class="headerlink" title="风险控制"></a>风险控制</h3><ol>
+<li>制定风险管理计划</li>
+<li>化解风险</li>
+<li>监控风险</li>
+</ol>
+<h2 id="软件配置管理（SCM）"><a href="#软件配置管理（SCM）" class="headerlink" title="软件配置管理（SCM）"></a>软件配置管理（SCM）</h2><p>对软件配置项的（SCI）管理：配置项包括程序文档和数据</p>
+<h3 id="任务-1"><a href="#任务-1" class="headerlink" title="任务"></a>任务</h3><ul>
+<li>SCI的标识</li>
+<li>版本控制</li>
+<li>变化控制</li>
+<li>配置审计</li>
+<li>状态报告</li>
+</ul>
+<h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><ul>
+<li>管理型文档<ul>
+<li>软件开发计划</li>
+<li>软件测试计划</li>
+</ul>
+</li>
+<li>开发类文档<ul>
+<li>需求规格说明书（SRS）</li>
+<li>概要设计说明书</li>
+<li>详细设计说明书</li>
+<li>接口设计说明书</li>
+<li>数据库设计说明书</li>
+<li>程序设计文档</li>
+</ul>
+</li>
+<li>应用类文档<ul>
+<li>用户使用说明书</li>
+<li>用户手册</li>
+<li>安装手册</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\数据库系统原理\" rel="bookmark">关系型数据库理论</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\计算机图形学\" rel="bookmark">计算机图形学</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\面向对象系统设计与分析\" rel="bookmark">面向对象系统分析与设计</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\Oracle\" rel="bookmark">Oracle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\mysql\" rel="bookmark">MySQL</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>nobility-zhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/nobility-zhang.github.io/2020/05/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">nobility-zhang.github.io/2020/05/12/软件工程/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="prev" title="计算机图形学">
+      <i class="fa fa-chevron-left"></i> 计算机图形学
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" rel="next" title="关系型数据库理论">
+      关系型数据库理论 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#软件与软件工程"><span class="nav-text">软件与软件工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件工程模式"><span class="nav-text">软件工程模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件的生命周期"><span class="nav-text">软件的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件的可行性分析"><span class="nav-text">软件的可行性分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件的需求分析"><span class="nav-text">软件的需求分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能和非功能需求"><span class="nav-text">功能和非功能需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需求的描述"><span class="nav-text">需求的描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#要求"><span class="nav-text">要求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需求分析方法"><span class="nav-text">需求分析方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构化分析方法（SA）"><span class="nav-text">结构化分析方法（SA）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向对象方法（OO方法）"><span class="nav-text">面向对象方法（OO方法）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件的设计工程"><span class="nav-text">软件的设计工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概要设计"><span class="nav-text">概要设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设计原则"><span class="nav-text">设计原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模块独立性衡量标准"><span class="nav-text">模块独立性衡量标准</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#耦合：模块之间相对独立性"><span class="nav-text">耦合：模块之间相对独立性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#内聚：模块内部元素的紧密成度"><span class="nav-text">内聚：模块内部元素的紧密成度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件体系结构图"><span class="nav-text">软件体系结构图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#模块调用"><span class="nav-text">模块调用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数据通信"><span class="nav-text">数据通信</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#结构图的相关概念"><span class="nav-text">结构图的相关概念</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#体系结构设计方法"><span class="nav-text">体系结构设计方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#结构化设计方法（SD数据流图转换为体系结构图）"><span class="nav-text">结构化设计方法（SD数据流图转换为体系结构图）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#变换分析策略"><span class="nav-text">变换分析策略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#事务分析策略"><span class="nav-text">事务分析策略</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#面向对象设计方法"><span class="nav-text">面向对象设计方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#详细设计"><span class="nav-text">详细设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码设计（编号）"><span class="nav-text">代码设计（编号）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库设计（物理数据库）"><span class="nav-text">数据库设计（物理数据库）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#步骤"><span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ER图"><span class="nav-text">ER图</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#人机界面设计"><span class="nav-text">人机界面设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交互设计"><span class="nav-text">交互设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入输出设计"><span class="nav-text">输入输出设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理过程设计"><span class="nav-text">处理过程设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统设计说明书"><span class="nav-text">系统设计说明书</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件的编码与测试"><span class="nav-text">软件的编码与测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编码风格"><span class="nav-text">编码风格</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#程序的内部文档"><span class="nav-text">程序的内部文档</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#衡量软件质量因素的标准"><span class="nav-text">衡量软件质量因素的标准</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件测试的过程"><span class="nav-text">软件测试的过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件测试技术"><span class="nav-text">软件测试技术</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件调试技术"><span class="nav-text">软件调试技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调试方法"><span class="nav-text">调试方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件的维护"><span class="nav-text">软件的维护</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#软件维护定义"><span class="nav-text">软件维护定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件维护类型的分类"><span class="nav-text">软件维护类型的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件维护特点"><span class="nav-text">软件维护特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#软件的可维护性因素：维护难易程度"><span class="nav-text">软件的可维护性因素：维护难易程度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件项目管理"><span class="nav-text">软件项目管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#任务"><span class="nav-text">任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进度安排与跟踪"><span class="nav-text">进度安排与跟踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目的质量与成本估算"><span class="nav-text">项目的质量与成本估算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#风险分析与管理"><span class="nav-text">风险分析与管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#风险"><span class="nav-text">风险</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#危机管理"><span class="nav-text">危机管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#风险识别"><span class="nav-text">风险识别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#风险分析"><span class="nav-text">风险分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#风险控制"><span class="nav-text">风险控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件配置管理（SCM）"><span class="nav-text">软件配置管理（SCM）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#任务-1"><span class="nav-text">任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文档"><span class="nav-text">文档</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nobility-zhang"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">nobility-zhang</p>
+  <div class="site-description" itemprop="description">想像螃蟹一样</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/nobility-zhang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;nobility-zhang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:424419078@qq.com" title="E-Mail → mailto:424419078@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">nobility-zhang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">46k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">41 分钟</span>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      script.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+  
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

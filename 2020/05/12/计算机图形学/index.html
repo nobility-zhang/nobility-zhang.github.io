@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uW8bwgMGUwIA01nPfItoty1rmtmmuVkOVTeS9O0nAUg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nobility-zhang.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="计算机图形学笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机图形学">
+<meta property="og:url" content="nobility-zhang.github.io/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/index.html">
+<meta property="og:site_name" content="nobility-zhang">
+<meta property="og:description" content="计算机图形学笔记">
+<meta property="og:image" content="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/DDA%E6%95%B0%E5%80%BC%E5%BE%AE%E5%88%86%E6%B3%95.svg">
+<meta property="og:image" content="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E4%B8%AD%E7%82%B9%E7%94%BB%E7%BA%BF%E7%AE%97%E6%B3%95.svg">
+<meta property="og:image" content="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E6%94%B9%E8%BF%9BBresenham%E7%AE%97%E6%B3%95.svg">
+<meta property="og:image" content="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E4%B8%AD%E7%82%B9Bresenham%E7%94%BB%E5%9C%86.svg">
+<meta property="og:image" content="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E5%8C%BA%E5%9F%9F%E5%A1%AB%E5%85%85%E7%AE%97%E6%B3%95.svg">
+<meta property="og:image" content="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E7%BC%96%E7%A0%81%E8%A3%81%E5%89%AA%E7%AE%97%E6%B3%95.svg">
+<meta property="og:image" content="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/Sutherland-Hodgeman%E7%AE%97%E6%B3%95.svg">
+<meta property="og:image" content="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/Weiler-Atherton%E7%AE%97%E6%B3%95.svg">
+<meta property="article:published_time" content="2020-05-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-31T09:39:45.192Z">
+<meta property="article:author" content="nobility-zhang">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/DDA%E6%95%B0%E5%80%BC%E5%BE%AE%E5%88%86%E6%B3%95.svg">
+
+<link rel="canonical" href="nobility-zhang.github.io/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>计算机图形学 | nobility-zhang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">nobility-zhang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">怀揣梦想，践行远方</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="nobility-zhang.github.io/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="nobility-zhang">
+      <meta itemprop="description" content="想像螃蟹一样">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="nobility-zhang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机图形学
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-12T00:00:00+08:00">2020-05-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-31 17:39:45" itemprop="dateModified" datetime="2020-05-31T17:39:45+08:00">2020-05-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算机图形学</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+            <div class="post-description">计算机图形学笔记</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><ul>
+<li>构成图形的要素：点线面体等几何要素，物体材质颜色非几何要素</li>
+<li>参数法描述的图叫图形，点阵法描述的图叫图像</li>
+<li>专业词汇<ul>
+<li>计算机图形核心系统：GKS</li>
+<li>三维图形核心系统：GKS-3D</li>
+<li>交互式图形系统：PHIGS</li>
+<li>计算机图形元文件：CGM</li>
+<li>计算机图形接口：CGI</li>
+<li>基本图形转换规范：IGES</li>
+<li>产品数据转换规范：STEP</li>
+<li>计算机辅助设计：CAD</li>
+<li>计算机辅助制造：CAM</li>
+<li>计算机辅助教学：CAI</li>
+<li>计算机辅助手术：CAS（Computer-Aided Surgery）</li>
+<li>人机界面：HCI（Human Computer Interface）</li>
+<li>图形用户界面：GUI（Graphical User Interface）</li>
+<li>地理信息系统：GIS（Geographic Information System）</li>
+<li>虚拟现实：Virtual-reality</li>
+<li>科学计算可视化：Visualization in Scientific Computing</li>
+<li>工作站网络：NOW（Network of Workstation）</li>
+<li>工作站集群：Workstation Cluster</li>
+<li>可升级连接界面：Scalable Link Interface</li>
+<li>图形/视觉处理单元：Graphics/Visual Process Unit</li>
+</ul>
+</li>
+</ul>
+<h2 id="计算机图形系统及图形硬件"><a href="#计算机图形系统及图形硬件" class="headerlink" title="计算机图形系统及图形硬件"></a>计算机图形系统及图形硬件</h2><ul>
+<li>交互式计算机图形系统应该具备：计算、存储、交互、输入、输出五种功能</li>
+<li>CRT的成像原理：利用电磁场产生高速的、经过聚焦的电子束，偏转到屏幕的不同位置，轰击屏幕表面的荧光材料，从而产生课件图形</li>
+<li>CRT基本组成：电子枪、偏转系统、荧光屏</li>
+<li>CRT显示器：优点颜色视觉效果好，视角宽，可靠性高，便宜；缺点体积大耗电多<ul>
+<li>随机扫描图形显示器：电子束的扫描轨迹随显示内容而变化，只在需要的地方扫描</li>
+<li>直视存储管图形显示器：将图像信息存储在CRT内，不刷新屏幕，通过紧贴在屏幕荧光屏层后的电荷分布来存储图像信息</li>
+<li>光栅扫描图形显示器：电子束横向扫描屏幕，一次一行，从上到下顺次进行</li>
+</ul>
+</li>
+<li>LCD显示器：优点屏幕尺寸不受限，亮度高；缺点颜色视觉效果略差，对比度略差<ul>
+<li>利用液晶的电光效应，通过施加电压改变液晶的光学特性，从而造成入射光的调制，使通过液晶的透射光或反射光受所加电压的控制，达到显示的目的</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本图形生成算法"><a href="#基本图形生成算法" class="headerlink" title="基本图形生成算法"></a>基本图形生成算法</h2><h3 id="直线"><a href="#直线" class="headerlink" title="直线"></a>直线</h3><h4 id="DDA数值微分法"><a href="#DDA数值微分法" class="headerlink" title="DDA数值微分法"></a>DDA数值微分法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/DDA数值微分法.svg" alt="DDA数值微分法"></p>
+<h4 id="中点Bresenham算法"><a href="#中点Bresenham算法" class="headerlink" title="中点Bresenham算法"></a>中点Bresenham算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/中点画线算法.svg" alt="中点画线算法"></p>
+<h4 id="Bresenham算法"><a href="#Bresenham算法" class="headerlink" title="Bresenham算法"></a>Bresenham算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/改进Bresenham算法.svg" alt="改进Bresenham算法"></p>
+<h3 id="圆"><a href="#圆" class="headerlink" title="圆"></a>圆</h3><h4 id="八分法画圆"><a href="#八分法画圆" class="headerlink" title="八分法画圆"></a>八分法画圆</h4><p>由于圆的对称性，只要画出圆的八分之一即可</p>
+<h4 id="中点Bresenham画圆"><a href="#中点Bresenham画圆" class="headerlink" title="中点Bresenham画圆"></a>中点Bresenham画圆</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/中点Bresenham画圆.svg" alt="中点Bresenham画圆"></p>
+<h4 id="椭圆的特征"><a href="#椭圆的特征" class="headerlink" title="椭圆的特征"></a>椭圆的特征</h4><p>椭圆是四分象限中对称的，需要进一步对一象限内分为上(-1&lt;=k&lt;=0)下(-1&lt;=1/k&lt;=0)两部分，即二分量相等的法向量</p>
+<h3 id="多边形"><a href="#多边形" class="headerlink" title="多边形"></a>多边形</h3><p>多边形的表示方法：顶点表示（顶点坐标表示边），点阵表示（内部像素表示形）</p>
+<h4 id="x扫描线的特点"><a href="#x扫描线的特点" class="headerlink" title="x扫描线的特点"></a>x扫描线的特点</h4><p>判定顶点交点取舍问题：共享顶点的另外两个端点的y值，大于交点的个数决定0，1，2</p>
+<h4 id="改进的有效边表算法"><a href="#改进的有效边表算法" class="headerlink" title="改进的有效边表算法"></a>改进的有效边表算法</h4><ul>
+<li>某扫描线的ATE表（活性边表）：（当前==交点==的x值，x的增量即斜率倒数，该条边的顶点y最大值，指向下一个==点==的指针）</li>
+<li>NET（新边表）<ul>
+<li>一个纵向的链表，长度为最大扫描线数，横向指向吊桶链表（只有顶点交点指向，若包括全部边后不再向后循环）</li>
+<li>吊桶：线段链表(当前==线段==的最大y值，当前==线段==的最小x值，x的增量即斜率倒数，指向下一条==边==的指针）</li>
+<li>水平线无需管</li>
+</ul>
+</li>
+</ul>
+<h4 id="区域填充"><a href="#区域填充" class="headerlink" title="区域填充"></a>区域填充</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/区域填充算法.svg" alt="区域填充算法"></p>
+<h5 id="边界填充算法"><a href="#边界填充算法" class="headerlink" title="边界填充算法"></a>边界填充算法</h5><p>用户勾划出轮廓后，填充颜色</p>
+<h5 id="泛填充算法"><a href="#泛填充算法" class="headerlink" title="泛填充算法"></a>泛填充算法</h5><p>给区域重新着色</p>
+<h4 id="内外测试"><a href="#内外测试" class="headerlink" title="内外测试"></a>内外测试</h4><p>奇偶规则：做射线，与多边形交点是奇数则是内部，否则是外部</p>
+<p>非零环绕数规则：做射线，多边形边为方向矢量，穿过正向向量环绕数+1,反之-1，最后环绕数0在外部，否则在外部</p>
+<h4 id="字符存储"><a href="#字符存储" class="headerlink" title="字符存储"></a>字符存储</h4><p>点阵字符：每个字符由点阵位图表示，存储空间大，缩放失真</p>
+<p>矢量字符：记录笔画信息，需要时间进行笔画扫描转换</p>
+<h3 id="反走样"><a href="#反走样" class="headerlink" title="反走样"></a>反走样</h3><p>走样：离散量表示连续量引起的失真</p>
+<p>非加权区域采样方法：根据物体覆盖像素的覆盖率，来给像素填充不同亮度的颜色</p>
+<p>加权区域采样方法：将一个像素分隔成为九宫格，每个宫格的权值不同，权值如此<script type="math/tex">\left[
+ \begin{matrix}
+   1 & 2 & 1\\
+   2 & 4 & 2\\
+   1 & 2 & 1
+  \end{matrix} 
+\right]</script>，根据覆盖权值之和来给像素填充不同颜色</p>
+<h2 id="二维变换和二维观察"><a href="#二维变换和二维观察" class="headerlink" title="二维变换和二维观察"></a>二维变换和二维观察</h2><h3 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h3><p>用n+1维向量表示n维向量</p>
+<p>规范化齐次坐标：n+1维向量的最后一维是1</p>
+<h3 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h3><h4 id="平移变换"><a href="#平移变换" class="headerlink" title="平移变换"></a>平移变换</h4><script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   0 & 1 & 0\\
+   x变化量 & y变化量 & 1
+  \end{matrix} 
+\right]</script><h4 id="比例变换"><a href="#比例变换" class="headerlink" title="比例变换"></a>比例变换</h4><ul>
+<li><p>缩放系数不相等</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   x缩放系数 & 0 & 0\\
+   0 & y缩放系数 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>等比例缩放</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   0 & 1 & 0\\
+   0& 0 & 缩放系数
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="对称变换"><a href="#对称变换" class="headerlink" title="对称变换"></a>对称变换</h4><ul>
+<li><p>关于x轴对称</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   0 & -1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>关于y轴对称</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0\\
+   0 & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="旋转变换"><a href="#旋转变换" class="headerlink" title="旋转变换"></a>旋转变换</h4><ul>
+<li><p>绕原点逆时针旋转θ度</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & sin\theta & 0\\
+   -sin\theta & cos\theta & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>绕原点顺时针旋转θ度</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & -sin\theta & 0\\
+   sin\theta & cos\theta & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="错切变换"><a href="#错切变换" class="headerlink" title="错切变换"></a>错切变换</h4><ul>
+<li><p>沿x方向错切</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   x错切量 & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>沿y方向错切</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & y错切量 & 0\\
+   0 & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>沿xy方向错切</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & b & 0\\
+   c & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="复合变换"><a href="#复合变换" class="headerlink" title="复合变换"></a>复合变换</h4><p>即变换矩阵相乘（注意顺序，因为矩阵乘法不满足交换律）</p>
+<h4 id="多点变换齐次坐标"><a href="#多点变换齐次坐标" class="headerlink" title="多点变换齐次坐标"></a>多点变换齐次坐标</h4><script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   x_1 & y_1 & 1\\
+   x_2 & y_2 & 1\\
+   ... & ... & 1
+  \end{matrix} 
+\right]</script><h4 id="相对任意参考点的二维几何变换"><a href="#相对任意参考点的二维几何变换" class="headerlink" title="相对任意参考点的二维几何变换"></a>相对任意参考点的二维几何变换</h4><ol>
+<li>将参考点移到原点</li>
+<li>对原点进行二维变换</li>
+<li>将参考点反平移回原来位置</li>
+</ol>
+<h3 id="窗口和视区"><a href="#窗口和视区" class="headerlink" title="窗口和视区"></a>窗口和视区</h3><p>世界坐标系的窗口与屏幕坐标系中的视区的映射</p>
+<h3 id="直线裁剪"><a href="#直线裁剪" class="headerlink" title="直线裁剪"></a>直线裁剪</h3><h4 id="Cohen-Sutherland裁剪算法"><a href="#Cohen-Sutherland裁剪算法" class="headerlink" title="Cohen-Sutherland裁剪算法"></a>Cohen-Sutherland裁剪算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/编码裁剪算法.svg" alt="编码裁剪算法"></p>
+<h4 id="Liang-Barsky算法"><a href="#Liang-Barsky算法" class="headerlink" title="Liang-Barsky算法"></a>Liang-Barsky算法</h4><ol>
+<li><p>计算p和q值的值</p>
+<p>$p_1=x_1-x_2$  $q_1=x_1-x_{left}$</p>
+<p>$p_2=x_2-x_1$  $q_2=x_{right}-x_1$</p>
+<p>$p_3=y_1-y_2$  $q_3=y_1-y_{bottom}$</p>
+<p>$p_4=y_2-y_1$  $q_4=y_{top}-y_1$</p>
+</li>
+<li><p>计算使用公式$u_k=\frac{q_k}{p_k}$，计算出各个u值</p>
+</li>
+<li><p>根据$p_k$的符号将$u_k$两两分组</p>
+<ol>
+<li>$p_k&lt;0$组与0取最大</li>
+<li>$p_k&gt;0$组与1取最小</li>
+</ol>
+</li>
+<li><p>得到两个u值分别带入直线参数方程即可得到裁剪后的结果</p>
+<script type="math/tex; mode=display">\begin{cases}  x=x_1+u(x_2-x_1)  \\ y=y_1+u(y_2-y_1) \end{cases}</script></li>
+</ol>
+<h3 id="多边形裁剪"><a href="#多边形裁剪" class="headerlink" title="多边形裁剪"></a>多边形裁剪</h3><h4 id="Sutherland-Hodgeman算法"><a href="#Sutherland-Hodgeman算法" class="headerlink" title="Sutherland-Hodgeman算法"></a>Sutherland-Hodgeman算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/Sutherland-Hodgeman算法.svg" alt="Sutherland-Hodgeman算法"></p>
+<h4 id="Weiler-Atherton算法"><a href="#Weiler-Atherton算法" class="headerlink" title="Weiler-Atherton算法"></a>Weiler-Atherton算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/Weiler-Atherton算法.svg" alt="Weiler-Atherton算法"></p>
+<h3 id="二维观察流程"><a href="#二维观察流程" class="headerlink" title="二维观察流程"></a>二维观察流程</h3><ol>
+<li>用户坐标系生成图形</li>
+<li>将用户坐标系下的图形描述变换到观察坐标系</li>
+<li>在观察坐标系下对窗口进行裁剪</li>
+<li>裁剪后进行窗口到视区的变换</li>
+<li>将视区中图形内容变换到设备坐标系中</li>
+</ol>
+<h2 id="三维变换和三违观察"><a href="#三维变换和三违观察" class="headerlink" title="三维变换和三违观察"></a>三维变换和三违观察</h2><h3 id="变换-1"><a href="#变换-1" class="headerlink" title="变换"></a>变换</h3><h4 id="平移变换-1"><a href="#平移变换-1" class="headerlink" title="平移变换"></a>平移变换</h4><script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   x变化量 & y变化量 & z变化量 & 0
+  \end{matrix} 
+\right]</script><h4 id="比例变换-1"><a href="#比例变换-1" class="headerlink" title="比例变换"></a>比例变换</h4><ul>
+<li><p>局部</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   x缩放系数 & 0 & 0 & 0\\
+   0 & y缩放系数 & 0 & 0\\
+   0 & 0 & z缩放系数 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>整体</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 缩放系数
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="旋转变换-1"><a href="#旋转变换-1" class="headerlink" title="旋转变换"></a>旋转变换</h4><ul>
+<li><p>z轴旋转变换</p>
+<p>顺时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & sin\theta & 0 & 0\\
+   -sin\theta & cos\theta & 0 & 0\\
+   0& 0 & 1 & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script><p>逆时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & -sin\theta & 0 & 0\\
+   sin\theta & cos\theta & 0 & 0\\
+   0& 0 & 1 & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script></li>
+<li><p>x轴旋转变换</p>
+<p>顺时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & cos\theta & sin\theta & 0\\
+   0& -sin\theta & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script><p>逆时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & cos\theta & -sin\theta & 0\\
+   0& sin\theta & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script></li>
+<li><p>y轴旋转变换</p>
+<p>顺时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+    cos\theta & 0 & -sin\theta & 0\\
+   0 & 1 & 0 & 0\\
+   sin\theta& 0 & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script><p>逆时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+    cos\theta & 0 & sin\theta & 0\\
+   0 & 1 & 0 & 0\\
+   -sin\theta& 0 & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="对称变换-1"><a href="#对称变换-1" class="headerlink" title="对称变换"></a>对称变换</h4><ul>
+<li><p>xoy平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>yoz平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>zox平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>x轴</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>y轴</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>z轴</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>原点</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="相对任意参考点的三维变换"><a href="#相对任意参考点的三维变换" class="headerlink" title="相对任意参考点的三维变换"></a>相对任意参考点的三维变换</h4><ol>
+<li>将参考点移到原点</li>
+<li>针对原点进行变换</li>
+<li>参考点反平移到原来位置</li>
+</ol>
+<h4 id="参考任意轴的三维旋转变换"><a href="#参考任意轴的三维旋转变换" class="headerlink" title="参考任意轴的三维旋转变换"></a>参考任意轴的三维旋转变换</h4><ol>
+<li>将轴线段的一端移动到坐标原点</li>
+<li>将轴线段先旋转到坐标系平面上，再旋转到轴上</li>
+<li>进行绕轴旋转变换</li>
+<li>在将轴线段移动到原来位置</li>
+</ol>
+<h3 id="投影"><a href="#投影" class="headerlink" title="投影"></a>投影</h3><h4 id="三视图"><a href="#三视图" class="headerlink" title="三视图"></a>三视图</h4><ul>
+<li><p>主视图（xoz）</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 0 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>俯视图(xoy)：再绕x轴旋转负九十度，再z轴方向平移$z_0$距离</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & -z_0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>侧视图（yoz）：再绕z轴旋转负九十度，再x轴方向平移$x_0$距离</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   0 & 0 & 0 & 0\\
+   -1 & 0 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   -x_0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h4><ul>
+<li><p>一点透视:将三维物体平移到适当位置（l,m,n）,进行透视变换（d是视距），为了方便绘制，向xoy平面做正投影变换，将结果变换到xoy平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 0 & \frac{1}{d}\\
+   l & m & 0 & 1+\frac{n}{d}
+  \end{matrix} 
+\right]</script></li>
+<li><p>两点透视</p>
+</li>
+<li><p>三点透视</p>
+</li>
+</ul>
+<h3 id="观察变换"><a href="#观察变换" class="headerlink" title="观察变换"></a>观察变换</h3><h4 id="观察坐标系"><a href="#观察坐标系" class="headerlink" title="观察坐标系"></a>观察坐标系</h4><p>$z_v$：视点（观察坐标系原点）与物体焦点的连线</p>
+<p>$y_v$：向上方向</p>
+<p>$x_v$：已知y和z轴后，根据右手定则得出</p>
+<h4 id="变换-2"><a href="#变换-2" class="headerlink" title="变换"></a>变换</h4><p>即求世界坐标系中点在观察坐标系中的坐标值</p>
+<ol>
+<li>将观察坐标系原点（视点）与世界坐标系移动重合，再经过旋转，使得两坐标系重合</li>
+<li>无需逆过程移回去，此变换矩阵就是点在观察坐标系的坐标的变换矩阵</li>
+</ol>
+<h3 id="三维观察流程"><a href="#三维观察流程" class="headerlink" title="三维观察流程"></a>三维观察流程</h3><ol>
+<li>在用户坐标系生成图形</li>
+<li>将用户坐标系下的图形描述变换到观察坐标系</li>
+<li>根据要求在观察坐标系下进行规范化投影变换</li>
+<li>进行三维裁剪</li>
+<li>进行正投影，投影到观察平面</li>
+<li>将矩形窗口图形依据二维坐标重构二维图形，经过窗口到视区的变换</li>
+</ol>
+<h2 id="简单光照模型"><a href="#简单光照模型" class="headerlink" title="简单光照模型"></a>简单光照模型</h2><ul>
+<li>环境光：$I_{环境光}=I_{环境光强度}K_{环境光反射系数}$</li>
+<li>理想漫反射光：$I_{漫反射光}=I_{点光源强度}K_{漫反射系数}(L_{点光源向量}·N_{物体表面法向量})$</li>
+<li>镜面反射光：$I_{镜面反射光}=I_{点光源强度}K_{镜面反射系数}(R_{镜面反射方向向量}·V_{视线方向向量})^{n_{镜面反射指数}}$</li>
+<li>向量点积：$\overrightarrow{a}·\overrightarrow{b}=x_1x_2+y_1y_2+z_1z_2$</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\数据库系统原理\" rel="bookmark">关系型数据库理论</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\软件工程\" rel="bookmark">软件工程</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\面向对象系统设计与分析\" rel="bookmark">面向对象系统分析与设计</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\Oracle\" rel="bookmark">Oracle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\mysql\" rel="bookmark">MySQL</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>nobility-zhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/nobility-zhang.github.io/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">nobility-zhang.github.io/2020/05/12/计算机图形学/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/" rel="prev" title="面向对象系统分析与设计">
+      <i class="fa fa-chevron-left"></i> 面向对象系统分析与设计
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="next" title="软件工程">
+      软件工程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#绪论"><span class="nav-text">绪论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机图形系统及图形硬件"><span class="nav-text">计算机图形系统及图形硬件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本图形生成算法"><span class="nav-text">基本图形生成算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直线"><span class="nav-text">直线</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DDA数值微分法"><span class="nav-text">DDA数值微分法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中点Bresenham算法"><span class="nav-text">中点Bresenham算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bresenham算法"><span class="nav-text">Bresenham算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#圆"><span class="nav-text">圆</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#八分法画圆"><span class="nav-text">八分法画圆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中点Bresenham画圆"><span class="nav-text">中点Bresenham画圆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#椭圆的特征"><span class="nav-text">椭圆的特征</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多边形"><span class="nav-text">多边形</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#x扫描线的特点"><span class="nav-text">x扫描线的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改进的有效边表算法"><span class="nav-text">改进的有效边表算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区域填充"><span class="nav-text">区域填充</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#边界填充算法"><span class="nav-text">边界填充算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#泛填充算法"><span class="nav-text">泛填充算法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内外测试"><span class="nav-text">内外测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符存储"><span class="nav-text">字符存储</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反走样"><span class="nav-text">反走样</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二维变换和二维观察"><span class="nav-text">二维变换和二维观察</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#齐次坐标"><span class="nav-text">齐次坐标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变换"><span class="nav-text">变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#平移变换"><span class="nav-text">平移变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比例变换"><span class="nav-text">比例变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对称变换"><span class="nav-text">对称变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#旋转变换"><span class="nav-text">旋转变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#错切变换"><span class="nav-text">错切变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复合变换"><span class="nav-text">复合变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多点变换齐次坐标"><span class="nav-text">多点变换齐次坐标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相对任意参考点的二维几何变换"><span class="nav-text">相对任意参考点的二维几何变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#窗口和视区"><span class="nav-text">窗口和视区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直线裁剪"><span class="nav-text">直线裁剪</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cohen-Sutherland裁剪算法"><span class="nav-text">Cohen-Sutherland裁剪算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Liang-Barsky算法"><span class="nav-text">Liang-Barsky算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多边形裁剪"><span class="nav-text">多边形裁剪</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sutherland-Hodgeman算法"><span class="nav-text">Sutherland-Hodgeman算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Weiler-Atherton算法"><span class="nav-text">Weiler-Atherton算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二维观察流程"><span class="nav-text">二维观察流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三维变换和三违观察"><span class="nav-text">三维变换和三违观察</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变换-1"><span class="nav-text">变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#平移变换-1"><span class="nav-text">平移变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比例变换-1"><span class="nav-text">比例变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#旋转变换-1"><span class="nav-text">旋转变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对称变换-1"><span class="nav-text">对称变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相对任意参考点的三维变换"><span class="nav-text">相对任意参考点的三维变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考任意轴的三维旋转变换"><span class="nav-text">参考任意轴的三维旋转变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#投影"><span class="nav-text">投影</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#三视图"><span class="nav-text">三视图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#透视投影"><span class="nav-text">透视投影</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察变换"><span class="nav-text">观察变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#观察坐标系"><span class="nav-text">观察坐标系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变换-2"><span class="nav-text">变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三维观察流程"><span class="nav-text">三维观察流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单光照模型"><span class="nav-text">简单光照模型</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nobility-zhang"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">nobility-zhang</p>
+  <div class="site-description" itemprop="description">想像螃蟹一样</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/nobility-zhang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;nobility-zhang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:424419078@qq.com" title="E-Mail → mailto:424419078@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">nobility-zhang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">46k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">41 分钟</span>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      script.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

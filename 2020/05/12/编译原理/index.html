@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uW8bwgMGUwIA01nPfItoty1rmtmmuVkOVTeS9O0nAUg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nobility-zhang.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="编译原理笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理">
+<meta property="og:url" content="nobility-zhang.github.io/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="nobility-zhang">
+<meta property="og:description" content="编译原理笔记">
+<meta property="og:image" content="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E6%AD%A3%E8%A7%84%E5%BC%8F%E8%BD%AC%E6%8D%A2NFA%E7%9A%84%E8%BD%AC%E6%8D%A2%E8%A7%84%E5%88%99.svg">
+<meta property="og:image" content="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/NFA%E8%BD%AC%E6%8D%A2%E6%AD%A3%E8%A7%84%E5%BC%8F%E7%9A%84%E8%BD%AC%E6%8D%A2%E8%A7%84%E5%88%99.svg">
+<meta property="og:image" content="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/LL%EF%BC%881%EF%BC%89%E5%88%A4%E7%A9%BA.svg">
+<meta property="og:image" content="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E6%B1%82%E5%85%A8%E9%83%A8%E9%9D%9E%E7%BB%88%E7%BB%93%E7%AC%A6%E7%9A%84first%E9%9B%86.svg">
+<meta property="og:image" content="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E6%B1%82%E5%85%A8%E9%83%A8%E9%9D%9E%E7%BB%88%E7%BB%93%E7%AC%A6%E7%9A%84follow%E9%9B%86.svg">
+<meta property="og:image" content="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E6%B1%82%E5%87%BA%E5%85%A8%E9%83%A8%E4%BA%A7%E7%94%9F%E5%BC%8F%E7%9A%84select%E9%9B%86.svg">
+<meta property="og:image" content="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E8%80%83%E8%AF%95.svg">
+<meta property="article:published_time" content="2020-05-12T03:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-12T02:56:59.011Z">
+<meta property="article:author" content="nobility-zhang">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E6%AD%A3%E8%A7%84%E5%BC%8F%E8%BD%AC%E6%8D%A2NFA%E7%9A%84%E8%BD%AC%E6%8D%A2%E8%A7%84%E5%88%99.svg">
+
+<link rel="canonical" href="nobility-zhang.github.io/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>编译原理 | nobility-zhang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">nobility-zhang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">怀揣梦想，践行远方</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="nobility-zhang.github.io/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="nobility-zhang">
+      <meta itemprop="description" content="想像螃蟹一样">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="nobility-zhang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          编译原理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-12 11:00:00" itemprop="dateCreated datePublished" datetime="2020-05-12T11:00:00+08:00">2020-05-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-12 10:56:59" itemprop="dateModified" datetime="2020-06-12T10:56:59+08:00">2020-06-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">编译原理</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+            <div class="post-description">编译原理笔记</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="概论"><a href="#概论" class="headerlink" title="概论"></a>概论</h2><ul>
+<li>编译程序是指：将高级语言翻译成<strong>汇编语言</strong>或者<strong>机器语言</strong></li>
+<li>编译过程<ol>
+<li>词法分析：<strong>拼写</strong>，识别出一个个单词（保留字、运算符、分界符、标识符、常量）</li>
+<li>语法分析：<strong>语句结构、表达式结构</strong>括号匹配，赋值和运算符两端必须有值</li>
+<li>语义分析：<strong>类型匹配</strong>数据类型不对是否要强制转换，赋值给常量</li>
+<li>中间代码产生（非必须产生）伪汇编代码，四元式（运算符，运算对象1，运算对象2，结果）</li>
+<li>代码优化：为了产生更高效的目标代码，更加省时间和空间</li>
+<li>目标代码生成</li>
+</ol>
+</li>
+<li>表格管理：编译过程中源程序的各种信息，保留在不同的表中，最重要的是符号表（变量信息表）</li>
+<li>出错处理：能处理的错误处理，不能处理的错误可以继续编译，也可以终止编译<ul>
+<li>编译时错误：词法、语法错误</li>
+<li>运行时错误：编译程序不管</li>
+</ul>
+</li>
+<li><strong>以中间代码产生分隔前端和后端</strong>：前端依赖与源程序，后端依赖目标计算机</li>
+<li>遍<ul>
+<li>一遍扫描：一遍扫描将前端工作全部干完，即一个单词一个单词的进行词法分析，语法分析，语义分析，废空间省时间</li>
+<li>多遍扫描：每一遍扫描都将全部单词进行词法分析，语法分析，语义分析，省空间废时间</li>
+</ul>
+</li>
+<li>解释程序效率低，编译程序效率高</li>
+</ul>
+<h2 id="文法和语言"><a href="#文法和语言" class="headerlink" title="文法和语言"></a>文法和语言</h2><p>掌握：已知上下文无关文法和句型，构造推导，最左推导，最右推导，语法树，找出语法树的短语，直接短语，句柄</p>
+<h3 id="直观概念"><a href="#直观概念" class="headerlink" title="直观概念"></a>直观概念</h3><h4 id="语言"><a href="#语言" class="headerlink" title="语言"></a>语言</h4><ul>
+<li>语法<ul>
+<li>字母表：可以在程序中出现的字符</li>
+<li>词法规则：字符的排列组合组成词的规则（标识符，关键字等）</li>
+<li>语法规则：词的排列组合组成句子（表达式、函数等）</li>
+</ul>
+</li>
+<li>语义：指定程序意义的规则</li>
+</ul>
+<h4 id="文法"><a href="#文法" class="headerlink" title="文法"></a>文法</h4><p>描述语言的语法结构的规则，即语法规则</p>
+<h4 id="符号和符号串"><a href="#符号和符号串" class="headerlink" title="符号和符号串"></a>符号和符号串</h4><ul>
+<li>字母表：符号的<strong>非空有穷</strong>集合</li>
+<li>符号：可以互相区别的记号</li>
+<li><p>符号串（字、句子）：由符号组成的<strong>有穷序列</strong></p>
+<ul>
+<li>由字母表零个或多个字母（字母可重复）构成</li>
+</ul>
+</li>
+<li>基本术语</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>表示</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>空串</td>
+<td>$\epsilon$</td>
+<td>没有任何符号的符号串</td>
+</tr>
+<tr>
+<td>长度</td>
+<td>$\vert{a}\vert=1、\vert{\epsilon}\vert=0$</td>
+<td>串的长度</td>
+</tr>
+<tr>
+<td>前缀（头） 后缀（尾）</td>
+<td>ab中的a、ab、$\epsilon$都是前缀 ab中的b、ab、$\epsilon$都是后缀</td>
+<td>删除头、尾若干个字母的符号串 (包括删0个和全部个）</td>
+</tr>
+<tr>
+<td>真前缀（固有头） 真后缀（固有尾）</td>
+<td>ab中的a、$\epsilon$都是前缀 ab中的b、$\epsilon$都是后缀</td>
+<td>删除头、尾至少删除一个字母的符号串 (不包括不删，但包括全删）</td>
+</tr>
+<tr>
+<td>子串</td>
+<td>abc中a、b、c、ab、bc都是子串</td>
+<td>删除前缀后缀的符号串 （包括本身和空串）</td>
+</tr>
+<tr>
+<td>逆转</td>
+<td>ab逆转ba</td>
+<td>将符号串逆序</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="符号串的运算"><a href="#符号串的运算" class="headerlink" title="符号串的运算"></a>符号串的运算</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">连接</td>
+<td>相乘</td>
+</tr>
+<tr>
+<td style="text-align:left">方幂</td>
+<td>n次幂就是n个符号串连接（0个连接是$\epsilon$）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="符号串集合运算"><a href="#符号串集合运算" class="headerlink" title="符号串集合运算"></a>符号串集合运算</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>乘积</td>
+<td>笛卡尔积的符号串连接（空集乘任何集合都是空）</td>
+</tr>
+<tr>
+<td>合并</td>
+<td>非重复并集</td>
+</tr>
+<tr>
+<td>方幂</td>
+<td>n个集合的乘积（0个是{ $\epsilon$ }）</td>
+</tr>
+<tr>
+<td>闭包</td>
+<td>$A^*$，字符串的任意长度连接（包括$\epsilon$）</td>
+</tr>
+<tr>
+<td>正闭包</td>
+<td>$A^+$，字符串的任意长度连接（不包括$\epsilon$的闭包）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="形式定义"><a href="#形式定义" class="headerlink" title="形式定义"></a>形式定义</h3><h5 id="四部分"><a href="#四部分" class="headerlink" title="四部分"></a>四部分</h5><ul>
+<li><p>终结符号集：$V_T$，一组字母表</p>
+</li>
+<li><p>非终结符号集（语法变量）：$V_N$，语法范畴</p>
+</li>
+<li><p>语法规则集合（产生式集合）：P，语法规则</p>
+</li>
+<li><p>开始符号：S，特殊的非终结符，一个文法的起始符只有一个</p>
+<p>写法</p>
+<ul>
+<li>习惯大写字母是非终结符，小写字母是终结符</li>
+<li>-&gt;(推)、::=（推）、|（或）、&lt;&gt;（非终结符）</li>
+<li>起始符写法：显式G:[S]，隐式默认G：第一个符号是起始符</li>
+</ul>
+</li>
+</ul>
+<h5 id="其他概念"><a href="#其他概念" class="headerlink" title="其他概念"></a>其他概念</h5><p>产生式：文法的一条规则</p>
+<p>推导：由规则推出句子</p>
+<p>归约：由句子推出规则</p>
+<ul>
+<li>$=&gt;$一步</li>
+<li>$=^+&gt;$一步或多步</li>
+<li>$=^*&gt;$零步或多步（这就有可能左面等于右面）</li>
+</ul>
+<p>句型：文法通过星步推到出来的（包括起始符号本身）</p>
+<p>句子：终结符的组合（包括$\epsilon$），是特殊的句型</p>
+<p>语言：文法的句子集合</p>
+<h3 id="文法类型"><a href="#文法类型" class="headerlink" title="文法类型"></a>文法类型</h3><ul>
+<li>0型文法（短语文法）：$\alpha\longrightarrow \beta$，$\alpha$不允许是$\epsilon$，$\beta$允许是$\epsilon$</li>
+<li>1型文法（上下文有关文法）：$\alpha\longrightarrow \beta$，$\alpha$的长度大于等于$\beta$的长度，但是除外$\alpha\longrightarrow \epsilon$</li>
+<li>2型文法（上下文无关文法）：$\alpha\longrightarrow \beta$，$\alpha$是一个非终结符，$\beta$随意（语法分析）</li>
+<li>3型文法（正规文法）：$\alpha\longrightarrow \beta$，$\alpha$是一个非终结符，$\beta$最多只能有一个非终结符并且非终结符还得在最右（左）面出现（词法分析）</li>
+</ul>
+<h3 id="2型文法（上下文无关文法）"><a href="#2型文法（上下文无关文法）" class="headerlink" title="2型文法（上下文无关文法）"></a>2型文法（上下文无关文法）</h3><h4 id="语法树"><a href="#语法树" class="headerlink" title="语法树"></a>语法树</h4><h5 id="语法树与推导的区别"><a href="#语法树与推导的区别" class="headerlink" title="语法树与推导的区别"></a>语法树与推导的区别</h5><p>一颗语法树对应多个推导过程，因为树的生长过程只表明了非终结符被谁替换了，未表明顺序</p>
+<h5 id="最左推导和最右推导"><a href="#最左推导和最右推导" class="headerlink" title="最左推导和最右推导"></a>最左推导和最右推导</h5><p>当有多个非终结符时，总紧着最左（最右）的非终结符推导</p>
+<p>若文法没有二义性，则语法树唯一，最左推导和最有推到唯一</p>
+<p>规范推导：最右推导</p>
+<p>规范规约（最左规约）：最右推掉的逆过程</p>
+<p>规范句型：由规范推导推导出的句型</p>
+<h4 id="句型分析"><a href="#句型分析" class="headerlink" title="句型分析"></a>句型分析</h4><p>自上而下分析方法：推导</p>
+<p>自下而上分析方法：规约</p>
+<p>短语：多次规约成非终结符，即非叶节点为根的子树，叶节点序列</p>
+<p>直接短语：一次规约成非终结符，即简单子树，只有两层的子树的叶子节点</p>
+<p>句柄：最左直接短语</p>
+<h4 id="文法化简"><a href="#文法化简" class="headerlink" title="文法化简"></a>文法化简</h4><ul>
+<li>有害规则：$\alpha\longrightarrow \alpha$，左右都一样，会引起二义性</li>
+<li>多余规则<ul>
+<li>不可到达：含有（除拉起始符号）非终结符未在右部出现过规则</li>
+<li>不可终止：含有不能推出终止符号的非终结符规则</li>
+</ul>
+</li>
+</ul>
+<h2 id="词法分析（字符串-gt-单词序列）"><a href="#词法分析（字符串-gt-单词序列）" class="headerlink" title="词法分析（字符串-&gt;单词序列）"></a>词法分析（字符串-&gt;单词序列）</h2><p>掌握：给出正规式，能描述出正规集。NFA确定化，DFA最小化，正规式、正规文法、有穷自动机之间的互相转换</p>
+<h3 id="单词的描述工具"><a href="#单词的描述工具" class="headerlink" title="单词的描述工具"></a>单词的描述工具</h3><h4 id="3型文法（正规文法）"><a href="#3型文法（正规文法）" class="headerlink" title="3型文法（正规文法）"></a>3型文法（正规文法）</h4><p>右线性：右部唯一非终结符在最右面</p>
+<p>左线性：左部唯一非终结符在最左面</p>
+<p>不允许既有右线性又有左线性的文法</p>
+<p>正规集：正规文法对应的句子集合，即语言</p>
+<h4 id="正规式（正则表达式）"><a href="#正规式（正则表达式）" class="headerlink" title="正规式（正则表达式）"></a>正规式（正则表达式）</h4><p>正规集描述的数学工具，正规式描述的集合就是正规集</p>
+<ul>
+<li>优先级（高-低）：$*&gt;·&gt;|$，且左结合，闭包看作方幂，连接看作乘，或看作加</li>
+<li>（）只是改变运算优先级</li>
+</ul>
+<h4 id="正规式与正规文法的互相转换"><a href="#正规式与正规文法的互相转换" class="headerlink" title="正规式与正规文法的互相转换"></a>正规式与正规文法的互相转换</h4><h5 id="正规式转换为正规文法"><a href="#正规式转换为正规文法" class="headerlink" title="正规式转换为正规文法"></a>正规式转换为正规文法</h5><p>直到产生式右部最多有一个终结符</p>
+<ul>
+<li>$xy$     $A\longrightarrow xB$、$B\longrightarrow y$</li>
+<li>$x*y$      $A\longrightarrow xA$、$A\longrightarrow y$</li>
+<li>$x|y$     $A\longrightarrow x$、$A\longrightarrow y$</li>
+</ul>
+<h5 id="正规文法转换伟正规式"><a href="#正规文法转换伟正规式" class="headerlink" title="正规文法转换伟正规式"></a>正规文法转换伟正规式</h5><p>先将左部一样的写到一起，消除终结符，直到只剩下一个起始符号（注意带入时并不是可以消除产生式，若带入后的产生式是不可到达的才能删除）</p>
+<ul>
+<li>$A\longrightarrow xB$、$B\longrightarrow y$    $A=xy$</li>
+<li>$A\longrightarrow xA|y$   $ A=x*y$</li>
+<li>$A\longrightarrow x$、$A\longrightarrow y$    $A=x|y$</li>
+</ul>
+<h3 id="有穷自动机"><a href="#有穷自动机" class="headerlink" title="有穷自动机"></a>有穷自动机</h3><h4 id="DFA（确定有穷自动机）"><a href="#DFA（确定有穷自动机）" class="headerlink" title="DFA（确定有穷自动机）"></a>DFA（确定有穷自动机）</h4><p>确定：一个状态面临同一输入符号，有确定的下一个状态，即相同输入符号弧只有一条</p>
+<ul>
+<li>五元组<ul>
+<li>状态集：所有状态</li>
+<li>输入符号表：弧上</li>
+<li>转换函数集：有向弧，合并时是逗号分隔，并非竖线<ul>
+<li>$f(当前状态，输入符号)=变换后状态$</li>
+<li>不允许输入符号是$\epsilon$</li>
+<li>一个输入符号只有一种状态</li>
+</ul>
+</li>
+<li>唯一初态：箭头指向的状态</li>
+<li>终态集：双圈状态</li>
+</ul>
+</li>
+<li>矩阵表示<ul>
+<li>行是输入符号</li>
+<li>列是状态<ul>
+<li>起始状态一般第一行</li>
+<li>最后一列是区别终态和非终态用的标记位</li>
+</ul>
+</li>
+<li>表内是当前状态对应输入符号转换后的状态</li>
+</ul>
+</li>
+</ul>
+<h4 id="NFA（不确定有穷自动机）"><a href="#NFA（不确定有穷自动机）" class="headerlink" title="NFA（不确定有穷自动机）"></a>NFA（不确定有穷自动机）</h4><p>不确定：一个状态面临同一输入符号，有多个下一个状态，即相同输入符号弧只有多条</p>
+<ul>
+<li><p>五元组</p>
+<ul>
+<li>状态集：所有状态</li>
+<li>输入符号表：弧上</li>
+<li>转换函数集：有向弧，合并时是逗号分隔，并非竖线<ul>
+<li>$f(当前状态，输入符号)=变换后状态集$，若变换后状态集是空集，表示没有射出该输入符号的弧</li>
+<li><strong>允许输入符号是$\epsilon$</strong></li>
+<li><strong>同一输入符号可以到达多个状态</strong></li>
+</ul>
+</li>
+<li>初态集：箭头指向的状态<ul>
+<li><strong>允许有多个起始状态</strong></li>
+</ul>
+</li>
+<li>终态集：双圈状态</li>
+</ul>
+</li>
+<li><p>矩阵表示</p>
+<ul>
+<li>行是输入符号</li>
+<li>列是状态<ul>
+<li>起始状态一般第一行</li>
+<li>最后一列是区别终态和非终态用的标记位</li>
+<li><strong>表内是当前状态对应输入符号转换后的状态</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="NFA确定化"><a href="#NFA确定化" class="headerlink" title="NFA确定化"></a>NFA确定化</h4><h5 id="运算规则"><a href="#运算规则" class="headerlink" title="运算规则"></a>运算规则</h5><ul>
+<li>$\epsilon$闭包：$\epsilon -closure(状态集)$=状态集中的每个元素经过任意$\epsilon$弧到达的状态集合（注意默认自己到自己有一条$\epsilon$弧，所以当前状态集也会在到达状态集中）</li>
+<li>a弧转换：$moce(状态集,输入符号)$=从状态集出发经过一条输入符号弧到达的状态集</li>
+</ul>
+<h5 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h5><ol>
+<li>唯一初态：将NFA的初始状态集，做$\epsilon$闭包运算得到的集合，作为DFA的初始状态</li>
+<li>转换函数和其他状态：构造NFA矩阵，反复对已经出现的状态集合，先做a弧转换得到集合后，再对该集合做$\epsilon$闭包，得到新状态集合（集合中有NFA终止状态则该集合是DFA终止状态），直到不出现新状态为止</li>
+<li>根据矩阵画出转换图</li>
+</ol>
+<h4 id="DFA最小化"><a href="#DFA最小化" class="headerlink" title="DFA最小化"></a>DFA最小化</h4><h5 id="理论支持"><a href="#理论支持" class="headerlink" title="理论支持"></a>理论支持</h5><p><strong>同一语言的DFA可能不同，但最小DFA是唯一的</strong></p>
+<ol>
+<li>删除多余状态：不可到达状态、不可终止状态</li>
+<li>合并等价状态（不能删除转换函数）<ul>
+<li>一致性条件：同是非终态或同是终态</li>
+<li>蔓延性条件：对每一个相同的输入符号，到达的状态是一样的</li>
+</ul>
+</li>
+</ol>
+<h5 id="分割法（找不等价状态）"><a href="#分割法（找不等价状态）" class="headerlink" title="分割法（找不等价状态）"></a>分割法（找不等价状态）</h5><ol>
+<li>根据一致性条件对所有状态进行分组：终态和非终态分组</li>
+<li>对同一组的状态使用蔓延性条件检查：当到达状态集中出现不等价状态，逆推这组状态部分不等价，就分隔，反复分隔，直到不能分隔，若还有非单个元素的集合，则该集合中的状态等价<ul>
+<li>当某些状态没有射出要检查的弧时<ul>
+<li>增加弧射到死状态</li>
+<li>死状态面临任何输入符号时都到自己</li>
+<li>死状态属于非终态</li>
+<li>算法结束后将死状态删除</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="正规式与NFA互相转换"><a href="#正规式与NFA互相转换" class="headerlink" title="正规式与NFA互相转换"></a>正规式与NFA互相转换</h3><h4 id="正规式转换NFA"><a href="#正规式转换NFA" class="headerlink" title="正规式转换NFA"></a>正规式转换NFA</h4><ol>
+<li>引入两个状态，x起始状态，y终止状态</li>
+<li>弧上是正规式</li>
+<li>根据三条规则将规则分解，直到每条弧上只有一个输入符号</li>
+</ol>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/正规式转换NFA的转换规则.svg" alt="正规式转换NFA的转换规则"></p>
+<h4 id="NFA转换正规式"><a href="#NFA转换正规式" class="headerlink" title="NFA转换正规式"></a>NFA转换正规式</h4><ol>
+<li>增加一个状态x射出$\epsilon$所有的起始状态</li>
+<li>增加一个状态y被所有的终止状态射入$\epsilon$弧</li>
+<li>根据这三条规则将原来的所有状态消除，只剩下x和y，弧上的就是正规式</li>
+</ol>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/NFA转换正规式的转换规则.svg" alt="NFA转换正规式的转换规则"></p>
+<h3 id="正规文法与NFA互相转换"><a href="#正规文法与NFA互相转换" class="headerlink" title="正规文法与NFA互相转换"></a>正规文法与NFA互相转换</h3><h4 id="正规文法转换NFA"><a href="#正规文法转换NFA" class="headerlink" title="正规文法转换NFA"></a>正规文法转换NFA</h4><ol>
+<li>文法每个非终结符都对应NFA的一个状态（起始符号就是起始状态）</li>
+<li>文法终结符对应NFA输入符号</li>
+<li>新增加一个终止状态Z</li>
+<li>NFA转换函数由这两条规则转换<ul>
+<li>$A\longrightarrow a$：$f(A,a)=Z$，即A状态射出a弧到终态</li>
+<li>$A\longrightarrow aB$：$f(A,a)=B$，即A状态射出a弧到B</li>
+</ul>
+</li>
+</ol>
+<h4 id="DFA转换正规文法"><a href="#DFA转换正规文法" class="headerlink" title="DFA转换正规文法"></a>DFA转换正规文法</h4><ol>
+<li>自动机的状态对应文法的非终结符</li>
+<li>自动机起始状态对应文法起始符号</li>
+<li>自动机的输入符号（字母表）对应文法的终结符</li>
+<li>文法转换函数由这两条规则转换<ul>
+<li>$f(A,a)=B$：$A\longrightarrow aB$，即A状态射出a弧到B</li>
+<li>对于终态Z，增加$Z \longrightarrow\epsilon$</li>
+</ul>
+</li>
+</ol>
+<h2 id="语法分析（单词序列-gt-语法单位）"><a href="#语法分析（单词序列-gt-语法单位）" class="headerlink" title="语法分析（单词序列-&gt;语法单位）"></a>语法分析（单词序列-&gt;语法单位）</h2><h3 id="自顶向下语法分析方法"><a href="#自顶向下语法分析方法" class="headerlink" title="自顶向下语法分析方法"></a>自顶向下语法分析方法</h3><h4 id="确定的自顶向下语法分析"><a href="#确定的自顶向下语法分析" class="headerlink" title="确定的自顶向下语法分析"></a>确定的自顶向下语法分析</h4><p>确定：根据输入符号能唯一确定选择那个产生式向下推导</p>
+<ul>
+<li>first集：产生式右部能推出的首个终结符集合（若右部是$\epsilon$，则$\epsilon$属于first集）</li>
+<li><p>follow集：产生式左部非终结符，在全部产生式中紧跟在该非终结符后面的终结符集合（若该非终结符是起始符，则#属于follow集）</p>
+</li>
+<li><p>select集</p>
+<ul>
+<li>若产生式右部能推出是$\epsilon$：select集就是该产生式的first集合刨去$\epsilon$，并上follow集</li>
+<li>若产生式右部能推出不是$\epsilon$：select集就是该产生式的first集</li>
+</ul>
+</li>
+</ul>
+<h4 id="不确定的自顶向下语法分析"><a href="#不确定的自顶向下语法分析" class="headerlink" title="不确定的自顶向下语法分析"></a>不确定的自顶向下语法分析</h4><p>不确定：带回溯的分析方法，穷举试探方法</p>
+<h4 id="LL（1）文法"><a href="#LL（1）文法" class="headerlink" title="LL（1）文法"></a>LL（1）文法</h4><h5 id="LL（1）文法判别步骤"><a href="#LL（1）文法判别步骤" class="headerlink" title="LL（1）文法判别步骤"></a>LL（1）文法判别步骤</h5><ol>
+<li><p>求出能推出空的非终结符</p>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/LL（1）判空.svg" alt="LL（1）判空"></p>
+</li>
+<li><p>求出每个非终结符的first集</p>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/求全部非终结符的first集.svg" alt="求全部非终结符的first集"></p>
+</li>
+<li><p>求出每个非终结符的follow集</p>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/求全部非终结符的follow集.svg" alt="求全部非终结符的follow集"></p>
+</li>
+<li><p>求出每个产生式的select集</p>
+<p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/求出全部产生式的select集.svg" alt="求出全部产生式的select集"></p>
+</li>
+<li><p>判定文法是否是LL（1）文法：左部相同的产生式的select集是若没有相同的元素则是LL（1）文法</p>
+</li>
+</ol>
+<h5 id="LL（1）预测分析分析"><a href="#LL（1）预测分析分析" class="headerlink" title="LL（1）预测分析分析"></a>LL（1）预测分析分析</h5><ol>
+<li>构造预测分析表</li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>终结符1</th>
+<th>终结符2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>非终结符1</td>
+<td>以非终结符1为左部<br>select集有终结符1的产生式</td>
+<td></td>
+</tr>
+<tr>
+<td>非终结符2</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li>分析过程表</li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>步骤号</th>
+<th>分析栈</th>
+<th>剩余匹配串</th>
+<th>使用的产生式或匹配</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>分析栈：倒着入栈，以保证栈顶是要替换的非终结符</p>
+<p>匹配：分析栈栈顶与剩余串首部一样则匹配</p>
+<p>查表：分析栈栈顶非终结符与剩余串首部终结符查表</p>
+<p>接受：若最后的“#”匹配则说明接收</p>
+<p>当前句型：分析栈与已匹配串的正确拼接，当前句型发生改变输出</p>
+<h4 id="某些非LL（1）文法转换到LL（1）文法"><a href="#某些非LL（1）文法转换到LL（1）文法" class="headerlink" title="某些非LL（1）文法转换到LL（1）文法"></a>某些非LL（1）文法转换到LL（1）文法</h4><ul>
+<li><p>消除左公因子：右部相同的产生式，左部前缀相同</p>
+<ol>
+<li>若有间接左公因子，转变为直接左公因子<ul>
+<li>以非终结符打头的就有可能是间接作公因子</li>
+<li>将所有以该非终结符为左部的都替换到该产生式，等价替换，不能丢失信息（可以去除多余非终结符的所有产生式）</li>
+</ul>
+</li>
+<li>将有左公因子的产生式合并到一起</li>
+<li>将公因子提取出来</li>
+<li>新引入非终结符代替不是公因子部分</li>
+<li>新产生式是该新引入的非终结符推出不是公因子部分</li>
+</ol>
+</li>
+<li><p>消除左递归：产生式右部非终结符与左部首个非终结符相同</p>
+<ol>
+<li>若有间接左递归，转变为直接左公递归<ol>
+<li>将所有非终结符排序（起始符排最后）</li>
+<li>先消除第一个的直接左递归</li>
+<li>找以第二个为左部，右部有第一个的产生式进行替换，并检查当前有没有直接左递归，以此类推</li>
+</ol>
+</li>
+<li>将有左公递归的非终结符的所有并到一起</li>
+<li>根据$A\longrightarrow A \alpha |\beta$ 改为有递归$A\longrightarrow \beta A’$、$A’\longrightarrow \alpha A’|\epsilon$</li>
+</ol>
+</li>
+</ul>
+<h3 id="自底向上语法分析方法"><a href="#自底向上语法分析方法" class="headerlink" title="自底向上语法分析方法"></a>自底向上语法分析方法</h3><p>可规约前缀：采取规约动作前符号栈的内容，即含有一个句柄的前缀</p>
+<p>活前缀：可规约前缀的前缀，可规前缀是特殊的活前缀</p>
+<h4 id="LR（0）分析步骤"><a href="#LR（0）分析步骤" class="headerlink" title="LR（0）分析步骤"></a>LR（0）分析步骤</h4><h5 id="对已有文法进行拓广"><a href="#对已有文法进行拓广" class="headerlink" title="对已有文法进行拓广"></a>对已有文法进行拓广</h5><p>引入新的起始符号推出旧的起始符号，$S’\longrightarrow S$，为了解决起始符号再其他产生式的右部出现引起的规约结束标准不明确现象</p>
+<h5 id="构造识别可规约前缀的DFA：项目规范族的构造自动机"><a href="#构造识别可规约前缀的DFA：项目规范族的构造自动机" class="headerlink" title="构造识别可规约前缀的DFA：项目规范族的构造自动机"></a>构造识别可规约前缀的DFA：项目规范族的构造自动机</h5><h6 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h6><p>项目：产生式右部加点，表示圆点左部是符号栈中已经出现的部分，右部是没出现的部分，特殊的$A\longrightarrow\epsilon$ $A\longrightarrow·$</p>
+<p>移进项目：点后面是终结符的项目</p>
+<p>待约项目：点后是非终结符的项目</p>
+<p>规约项目：点在最后的项目</p>
+<p>接受项目：特殊的规约项目$S’\longrightarrow S·$</p>
+<p>项目集：项目的集合</p>
+<p>族：多个项目集</p>
+<p>项目集的闭包运算：将原项目集中的待约项目，将以点后非终结符为左部的右部以点开始的项目加进来，直到没有待约项目</p>
+<p>GO运算：将项目集针对某个符号进行点的右移，然后再对项目集进行闭包运算</p>
+<h6 id="LR（0）的项目集规范族构建"><a href="#LR（0）的项目集规范族构建" class="headerlink" title="LR（0）的项目集规范族构建"></a>LR（0）的项目集规范族构建</h6><ol>
+<li>以拓广后的产生式，点在最前面的项目为核做闭包运算</li>
+<li>对点后有符号的项目做GO运算</li>
+<li>直到没有新的项目集出现</li>
+</ol>
+<h6 id="SLR（1）"><a href="#SLR（1）" class="headerlink" title="SLR（1）"></a>SLR（1）</h6><p>移进规约冲突：项目集中既有移进项目又有规约项目，移进项目点后非终结符和规约项目左部follow集没有重复元素，若下一个符号是移进项目点后非终结符，则移进，若下一个符号是规约项目左部follow集的元素，则规约</p>
+<p>规约规约冲突：项目集中有多个不同的规约项目，解决方法规约项目左部的follow集没有重复元素，若下一个符号是规约项目左部follow集的元素，则规约</p>
+<p>改进的SLR（1）：对所有的规约项目都求左部的follow集</p>
+<h6 id="LALR（1）"><a href="#LALR（1）" class="headerlink" title="LALR（1）"></a>LALR（1）</h6><p>同心集：项目集一样，只是向前搜索符不一样</p>
+<p>有同心集能合并的项目集进行合并后没有冲突的文法是LALR（1）否则是LR（1），LALR（1）是特殊的LR（1）</p>
+<p>合并冲突只能是规约规约冲突</p>
+<h6 id="LR（1）"><a href="#LR（1）" class="headerlink" title="LR（1）"></a>LR（1）</h6><p>多个向前搜索符用斜杠隔开</p>
+<p>新的项目集的闭包运算：将原项目集中的待约项目，将以点后非终结符为左部的右部以点开始的项目加进来，并且求<strong>核的点后符号的符号</strong>的向前搜索符，即点后符号的后面与向前搜索符的连接的first集，直到没有待约项目</p>
+<p>新GO运算：将项目集针对某个符号进行点的右移，并且将向前搜索符带过来，然后再对项目集进行新闭包运算</p>
+<p>对于移进规约冲突解决方法：移进项目点后非终结符和规约项目左部follow集有重复元素，规约项目遇到向前搜索符才规约</p>
+<ol>
+<li>以拓广后的产生式，点在最前面的项目为核做闭包运算，向前搜索符是#</li>
+<li>对点后有符号的项目做GO运算</li>
+<li>直到没有新的项目集出现</li>
+</ol>
+<h5 id="根据DFA构造分析表"><a href="#根据DFA构造分析表" class="headerlink" title="根据DFA构造分析表"></a>根据DFA构造分析表</h5><p>ACTTON部分：非终结符和#</p>
+<p>$S_n$：移进，转化到n状态</p>
+<p>$r_n$：规约，用n号产生式规约</p>
+<p>acc：接受状态</p>
+<p>GOTO部分：终结符</p>
+<h5 id="进行LR分析"><a href="#进行LR分析" class="headerlink" title="进行LR分析"></a>进行LR分析</h5><ol>
+<li>0状态（初始状态）入状态栈，#入符号栈，符号栈和状态栈共享栈顶</li>
+<li>根据状态栈顶状态和剩余串的最左面符号进行查表</li>
+<li>出现规约项目，先将出栈，再进栈，goto部分填写转移到的状态，为出现规约项目则接着从剩余串中入栈</li>
+</ol>
+<h2 id="考试题型"><a href="#考试题型" class="headerlink" title="考试题型"></a>考试题型</h2><p><img src="/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/编译原理考试.svg" alt="编译原理考试"></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\数据库系统原理\" rel="bookmark">关系型数据库理论</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\软件工程\" rel="bookmark">软件工程</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\计算机图形学\" rel="bookmark">计算机图形学</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\面向对象系统设计与分析\" rel="bookmark">面向对象系统分析与设计</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020\05\12\Oracle\" rel="bookmark">Oracle</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>nobility-zhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="/nobility-zhang.github.io/2020/05/12/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">nobility-zhang.github.io/2020/05/12/编译原理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/12/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" rel="prev" title="关系型数据库理论">
+      <i class="fa fa-chevron-left"></i> 关系型数据库理论
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概论"><span class="nav-text">概论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文法和语言"><span class="nav-text">文法和语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直观概念"><span class="nav-text">直观概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语言"><span class="nav-text">语言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文法"><span class="nav-text">文法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号和符号串"><span class="nav-text">符号和符号串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号串的运算"><span class="nav-text">符号串的运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#符号串集合运算"><span class="nav-text">符号串集合运算</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#形式定义"><span class="nav-text">形式定义</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#四部分"><span class="nav-text">四部分</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他概念"><span class="nav-text">其他概念</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文法类型"><span class="nav-text">文法类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2型文法（上下文无关文法）"><span class="nav-text">2型文法（上下文无关文法）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法树"><span class="nav-text">语法树</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#语法树与推导的区别"><span class="nav-text">语法树与推导的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最左推导和最右推导"><span class="nav-text">最左推导和最右推导</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#句型分析"><span class="nav-text">句型分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文法化简"><span class="nav-text">文法化简</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词法分析（字符串-gt-单词序列）"><span class="nav-text">词法分析（字符串-&gt;单词序列）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单词的描述工具"><span class="nav-text">单词的描述工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3型文法（正规文法）"><span class="nav-text">3型文法（正规文法）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正规式（正则表达式）"><span class="nav-text">正规式（正则表达式）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正规式与正规文法的互相转换"><span class="nav-text">正规式与正规文法的互相转换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#正规式转换为正规文法"><span class="nav-text">正规式转换为正规文法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#正规文法转换伟正规式"><span class="nav-text">正规文法转换伟正规式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有穷自动机"><span class="nav-text">有穷自动机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DFA（确定有穷自动机）"><span class="nav-text">DFA（确定有穷自动机）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NFA（不确定有穷自动机）"><span class="nav-text">NFA（不确定有穷自动机）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NFA确定化"><span class="nav-text">NFA确定化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#运算规则"><span class="nav-text">运算规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#步骤"><span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DFA最小化"><span class="nav-text">DFA最小化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#理论支持"><span class="nav-text">理论支持</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分割法（找不等价状态）"><span class="nav-text">分割法（找不等价状态）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正规式与NFA互相转换"><span class="nav-text">正规式与NFA互相转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正规式转换NFA"><span class="nav-text">正规式转换NFA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NFA转换正规式"><span class="nav-text">NFA转换正规式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正规文法与NFA互相转换"><span class="nav-text">正规文法与NFA互相转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正规文法转换NFA"><span class="nav-text">正规文法转换NFA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DFA转换正规文法"><span class="nav-text">DFA转换正规文法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法分析（单词序列-gt-语法单位）"><span class="nav-text">语法分析（单词序列-&gt;语法单位）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自顶向下语法分析方法"><span class="nav-text">自顶向下语法分析方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#确定的自顶向下语法分析"><span class="nav-text">确定的自顶向下语法分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不确定的自顶向下语法分析"><span class="nav-text">不确定的自顶向下语法分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LL（1）文法"><span class="nav-text">LL（1）文法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#LL（1）文法判别步骤"><span class="nav-text">LL（1）文法判别步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LL（1）预测分析分析"><span class="nav-text">LL（1）预测分析分析</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#某些非LL（1）文法转换到LL（1）文法"><span class="nav-text">某些非LL（1）文法转换到LL（1）文法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自底向上语法分析方法"><span class="nav-text">自底向上语法分析方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LR（0）分析步骤"><span class="nav-text">LR（0）分析步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#对已有文法进行拓广"><span class="nav-text">对已有文法进行拓广</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#构造识别可规约前缀的DFA：项目规范族的构造自动机"><span class="nav-text">构造识别可规约前缀的DFA：项目规范族的构造自动机</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#概念"><span class="nav-text">概念</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#LR（0）的项目集规范族构建"><span class="nav-text">LR（0）的项目集规范族构建</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#SLR（1）"><span class="nav-text">SLR（1）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#LALR（1）"><span class="nav-text">LALR（1）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#LR（1）"><span class="nav-text">LR（1）</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#根据DFA构造分析表"><span class="nav-text">根据DFA构造分析表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进行LR分析"><span class="nav-text">进行LR分析</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#考试题型"><span class="nav-text">考试题型</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nobility-zhang"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">nobility-zhang</p>
+  <div class="site-description" itemprop="description">想像螃蟹一样</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/nobility-zhang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;nobility-zhang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:424419078@qq.com" title="E-Mail → mailto:424419078@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">nobility-zhang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">46k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">41 分钟</span>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      script.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
