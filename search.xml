@@ -590,6 +590,440 @@
       </tags>
   </entry>
   <entry>
+    <title>计算机图形学</title>
+    <url>/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/</url>
+    <content><![CDATA[<h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><ul>
+<li>构成图形的要素：点线面体等几何要素，物体材质颜色非几何要素</li>
+<li>参数法描述的图叫图形，点阵法描述的图叫图像</li>
+<li>专业词汇<ul>
+<li>计算机图形核心系统：GKS</li>
+<li>三维图形核心系统：GKS-3D</li>
+<li>交互式图形系统：PHIGS</li>
+<li>计算机图形元文件：CGM</li>
+<li>计算机图形接口：CGI</li>
+<li>基本图形转换规范：IGES</li>
+<li>产品数据转换规范：STEP</li>
+<li>计算机辅助设计：CAD</li>
+<li>计算机辅助制造：CAM</li>
+<li>计算机辅助教学：CAI</li>
+<li>计算机辅助手术：CAS（Computer-Aided Surgery）</li>
+<li>人机界面：HCI（Human Computer Interface）</li>
+<li>图形用户界面：GUI（Graphical User Interface）</li>
+<li>地理信息系统：GIS（Geographic Information System）</li>
+<li>虚拟现实：Virtual-reality</li>
+<li>科学计算可视化：Visualization in Scientific Computing</li>
+<li>工作站网络：NOW（Network of Workstation）</li>
+<li>工作站集群：Workstation Cluster</li>
+<li>可升级连接界面：Scalable Link Interface</li>
+<li>图形/视觉处理单元：Graphics/Visual Process Unit</li>
+</ul>
+</li>
+</ul>
+<h2 id="计算机图形系统及图形硬件"><a href="#计算机图形系统及图形硬件" class="headerlink" title="计算机图形系统及图形硬件"></a>计算机图形系统及图形硬件</h2><ul>
+<li>交互式计算机图形系统应该具备：计算、存储、交互、输入、输出五种功能</li>
+<li>CRT的成像原理：利用电磁场产生高速的、经过聚焦的电子束，偏转到屏幕的不同位置，轰击屏幕表面的荧光材料，从而产生课件图形</li>
+<li>CRT基本组成：电子枪、偏转系统、荧光屏</li>
+<li>CRT显示器：优点颜色视觉效果好，视角宽，可靠性高，便宜；缺点体积大耗电多<ul>
+<li>随机扫描图形显示器：电子束的扫描轨迹随显示内容而变化，只在需要的地方扫描</li>
+<li>直视存储管图形显示器：将图像信息存储在CRT内，不刷新屏幕，通过紧贴在屏幕荧光屏层后的电荷分布来存储图像信息</li>
+<li>光栅扫描图形显示器：电子束横向扫描屏幕，一次一行，从上到下顺次进行</li>
+</ul>
+</li>
+<li>LCD显示器：优点屏幕尺寸不受限，亮度高；缺点颜色视觉效果略差，对比度略差<ul>
+<li>利用液晶的电光效应，通过施加电压改变液晶的光学特性，从而造成入射光的调制，使通过液晶的透射光或反射光受所加电压的控制，达到显示的目的</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本图形生成算法"><a href="#基本图形生成算法" class="headerlink" title="基本图形生成算法"></a>基本图形生成算法</h2><h3 id="直线"><a href="#直线" class="headerlink" title="直线"></a>直线</h3><h4 id="DDA数值微分法"><a href="#DDA数值微分法" class="headerlink" title="DDA数值微分法"></a>DDA数值微分法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/DDA数值微分法.svg" alt="DDA数值微分法"></p>
+<h4 id="中点Bresenham算法"><a href="#中点Bresenham算法" class="headerlink" title="中点Bresenham算法"></a>中点Bresenham算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/中点画线算法.svg" alt="中点画线算法"></p>
+<h4 id="Bresenham算法"><a href="#Bresenham算法" class="headerlink" title="Bresenham算法"></a>Bresenham算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/改进Bresenham算法.svg" alt="改进Bresenham算法"></p>
+<h3 id="圆"><a href="#圆" class="headerlink" title="圆"></a>圆</h3><h4 id="八分法画圆"><a href="#八分法画圆" class="headerlink" title="八分法画圆"></a>八分法画圆</h4><p>由于圆的对称性，只要画出圆的八分之一即可</p>
+<h4 id="中点Bresenham画圆"><a href="#中点Bresenham画圆" class="headerlink" title="中点Bresenham画圆"></a>中点Bresenham画圆</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/中点Bresenham画圆.svg" alt="中点Bresenham画圆"></p>
+<h4 id="椭圆的特征"><a href="#椭圆的特征" class="headerlink" title="椭圆的特征"></a>椭圆的特征</h4><p>椭圆是四分象限中对称的，需要进一步对一象限内分为上(-1&lt;=k&lt;=0)下(-1&lt;=1/k&lt;=0)两部分，即二分量相等的法向量</p>
+<h3 id="多边形"><a href="#多边形" class="headerlink" title="多边形"></a>多边形</h3><p>多边形的表示方法：顶点表示（顶点坐标表示边），点阵表示（内部像素表示形）</p>
+<h4 id="x扫描线的特点"><a href="#x扫描线的特点" class="headerlink" title="x扫描线的特点"></a>x扫描线的特点</h4><p>判定顶点交点取舍问题：共享顶点的另外两个端点的y值，大于交点的个数决定0，1，2</p>
+<h4 id="改进的有效边表算法"><a href="#改进的有效边表算法" class="headerlink" title="改进的有效边表算法"></a>改进的有效边表算法</h4><ul>
+<li>某扫描线的ATE表（活性边表）：（当前==交点==的x值，x的增量即斜率倒数，该条边的顶点y最大值，指向下一个==点==的指针）</li>
+<li>NET（新边表）<ul>
+<li>一个纵向的链表，长度为最大扫描线数，横向指向吊桶链表（只有顶点交点指向，若包括全部边后不再向后循环）</li>
+<li>吊桶：线段链表(当前==线段==的最大y值，当前==线段==的最小x值，x的增量即斜率倒数，指向下一条==边==的指针）</li>
+<li>水平线无需管</li>
+</ul>
+</li>
+</ul>
+<h4 id="区域填充"><a href="#区域填充" class="headerlink" title="区域填充"></a>区域填充</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/区域填充算法.svg" alt="区域填充算法"></p>
+<h5 id="边界填充算法"><a href="#边界填充算法" class="headerlink" title="边界填充算法"></a>边界填充算法</h5><p>用户勾划出轮廓后，填充颜色</p>
+<h5 id="泛填充算法"><a href="#泛填充算法" class="headerlink" title="泛填充算法"></a>泛填充算法</h5><p>给区域重新着色</p>
+<h4 id="内外测试"><a href="#内外测试" class="headerlink" title="内外测试"></a>内外测试</h4><p>奇偶规则：做射线，与多边形交点是奇数则是内部，否则是外部</p>
+<p>非零环绕数规则：做射线，多边形边为方向矢量，穿过正向向量环绕数+1,反之-1，最后环绕数0在外部，否则在外部</p>
+<h4 id="字符存储"><a href="#字符存储" class="headerlink" title="字符存储"></a>字符存储</h4><p>点阵字符：每个字符由点阵位图表示，存储空间大，缩放失真</p>
+<p>矢量字符：记录笔画信息，需要时间进行笔画扫描转换</p>
+<h3 id="反走样"><a href="#反走样" class="headerlink" title="反走样"></a>反走样</h3><p>走样：离散量表示连续量引起的失真</p>
+<p>非加权区域采样方法：根据物体覆盖像素的覆盖率，来给像素填充不同亮度的颜色</p>
+<p>加权区域采样方法：将一个像素分隔成为九宫格，每个宫格的权值不同，权值如此<script type="math/tex">\left[
+ \begin{matrix}
+   1 & 2 & 1\\
+   2 & 4 & 2\\
+   1 & 2 & 1
+  \end{matrix} 
+\right]</script>，根据覆盖权值之和来给像素填充不同颜色</p>
+<h2 id="二维变换和二维观察"><a href="#二维变换和二维观察" class="headerlink" title="二维变换和二维观察"></a>二维变换和二维观察</h2><h3 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h3><p>用n+1维向量表示n维向量</p>
+<p>规范化齐次坐标：n+1维向量的最后一维是1</p>
+<h3 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h3><h4 id="平移变换"><a href="#平移变换" class="headerlink" title="平移变换"></a>平移变换</h4><script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   0 & 1 & 0\\
+   x变化量 & y变化量 & 1
+  \end{matrix} 
+\right]</script><h4 id="比例变换"><a href="#比例变换" class="headerlink" title="比例变换"></a>比例变换</h4><ul>
+<li><p>缩放系数不相等</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   x缩放系数 & 0 & 0\\
+   0 & y缩放系数 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>等比例缩放</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   0 & 1 & 0\\
+   0& 0 & 缩放系数
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="对称变换"><a href="#对称变换" class="headerlink" title="对称变换"></a>对称变换</h4><ul>
+<li><p>关于x轴对称</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   0 & -1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>关于y轴对称</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0\\
+   0 & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="旋转变换"><a href="#旋转变换" class="headerlink" title="旋转变换"></a>旋转变换</h4><ul>
+<li><p>绕原点逆时针旋转θ度</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & sin\theta & 0\\
+   -sin\theta & cos\theta & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>绕原点顺时针旋转θ度</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & -sin\theta & 0\\
+   sin\theta & cos\theta & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="错切变换"><a href="#错切变换" class="headerlink" title="错切变换"></a>错切变换</h4><ul>
+<li><p>沿x方向错切</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0\\
+   x错切量 & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>沿y方向错切</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & y错切量 & 0\\
+   0 & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>沿xy方向错切</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & b & 0\\
+   c & 1 & 0\\
+   0& 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="复合变换"><a href="#复合变换" class="headerlink" title="复合变换"></a>复合变换</h4><p>即变换矩阵相乘（注意顺序，因为矩阵乘法不满足交换律）</p>
+<h4 id="多点变换齐次坐标"><a href="#多点变换齐次坐标" class="headerlink" title="多点变换齐次坐标"></a>多点变换齐次坐标</h4><script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   x_1 & y_1 & 1\\
+   x_2 & y_2 & 1\\
+   ... & ... & 1
+  \end{matrix} 
+\right]</script><h4 id="相对任意参考点的二维几何变换"><a href="#相对任意参考点的二维几何变换" class="headerlink" title="相对任意参考点的二维几何变换"></a>相对任意参考点的二维几何变换</h4><ol>
+<li>将参考点移到原点</li>
+<li>对原点进行二维变换</li>
+<li>将参考点反平移回原来位置</li>
+</ol>
+<h3 id="窗口和视区"><a href="#窗口和视区" class="headerlink" title="窗口和视区"></a>窗口和视区</h3><p>世界坐标系的窗口与屏幕坐标系中的视区的映射</p>
+<h3 id="直线裁剪"><a href="#直线裁剪" class="headerlink" title="直线裁剪"></a>直线裁剪</h3><h4 id="Cohen-Sutherland裁剪算法"><a href="#Cohen-Sutherland裁剪算法" class="headerlink" title="Cohen-Sutherland裁剪算法"></a>Cohen-Sutherland裁剪算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/编码裁剪算法.svg" alt="编码裁剪算法"></p>
+<h4 id="Liang-Barsky算法"><a href="#Liang-Barsky算法" class="headerlink" title="Liang-Barsky算法"></a>Liang-Barsky算法</h4><ol>
+<li><p>计算p和q值的值</p>
+<p>$p_1=x_1-x_2$  $q_1=x_1-x_{left}$</p>
+<p>$p_2=x_2-x_1$  $q_2=x_{right}-x_1$</p>
+<p>$p_3=y_1-y_2$  $q_3=y_1-y_{bottom}$</p>
+<p>$p_4=y_2-y_1$  $q_4=y_{top}-y_1$</p>
+</li>
+<li><p>计算使用公式$u_k=\frac{q_k}{p_k}$，计算出各个u值</p>
+</li>
+<li><p>根据$p_k$的符号将$u_k$两两分组</p>
+<ol>
+<li>$p_k&lt;0$组与0取最大</li>
+<li>$p_k&gt;0$组与1取最小</li>
+</ol>
+</li>
+<li><p>得到两个u值分别带入直线参数方程即可得到裁剪后的结果</p>
+<script type="math/tex; mode=display">\begin{cases}  x=x_1+u(x_2-x_1)  \\ y=y_1+u(y_2-y_1) \end{cases}</script></li>
+</ol>
+<h3 id="多边形裁剪"><a href="#多边形裁剪" class="headerlink" title="多边形裁剪"></a>多边形裁剪</h3><h4 id="Sutherland-Hodgeman算法"><a href="#Sutherland-Hodgeman算法" class="headerlink" title="Sutherland-Hodgeman算法"></a>Sutherland-Hodgeman算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/Sutherland-Hodgeman算法.svg" alt="Sutherland-Hodgeman算法"></p>
+<h4 id="Weiler-Atherton算法"><a href="#Weiler-Atherton算法" class="headerlink" title="Weiler-Atherton算法"></a>Weiler-Atherton算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/Weiler-Atherton算法.svg" alt="Weiler-Atherton算法"></p>
+<h3 id="二维观察流程"><a href="#二维观察流程" class="headerlink" title="二维观察流程"></a>二维观察流程</h3><ol>
+<li>用户坐标系生成图形</li>
+<li>将用户坐标系下的图形描述变换到观察坐标系</li>
+<li>在观察坐标系下对窗口进行裁剪</li>
+<li>裁剪后进行窗口到视区的变换</li>
+<li>将视区中图形内容变换到设备坐标系中</li>
+</ol>
+<h2 id="三维变换和三违观察"><a href="#三维变换和三违观察" class="headerlink" title="三维变换和三违观察"></a>三维变换和三违观察</h2><h3 id="变换-1"><a href="#变换-1" class="headerlink" title="变换"></a>变换</h3><h4 id="平移变换-1"><a href="#平移变换-1" class="headerlink" title="平移变换"></a>平移变换</h4><script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   x变化量 & y变化量 & z变化量 & 0
+  \end{matrix} 
+\right]</script><h4 id="比例变换-1"><a href="#比例变换-1" class="headerlink" title="比例变换"></a>比例变换</h4><ul>
+<li><p>局部</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   x缩放系数 & 0 & 0 & 0\\
+   0 & y缩放系数 & 0 & 0\\
+   0 & 0 & z缩放系数 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>整体</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 缩放系数
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="旋转变换-1"><a href="#旋转变换-1" class="headerlink" title="旋转变换"></a>旋转变换</h4><ul>
+<li><p>z轴旋转变换</p>
+<p>顺时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & sin\theta & 0 & 0\\
+   -sin\theta & cos\theta & 0 & 0\\
+   0& 0 & 1 & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script><p>逆时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   cos\theta & -sin\theta & 0 & 0\\
+   sin\theta & cos\theta & 0 & 0\\
+   0& 0 & 1 & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script></li>
+<li><p>x轴旋转变换</p>
+<p>顺时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & cos\theta & sin\theta & 0\\
+   0& -sin\theta & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script><p>逆时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & cos\theta & -sin\theta & 0\\
+   0& sin\theta & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script></li>
+<li><p>y轴旋转变换</p>
+<p>顺时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+    cos\theta & 0 & -sin\theta & 0\\
+   0 & 1 & 0 & 0\\
+   sin\theta& 0 & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script><p>逆时针</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+    cos\theta & 0 & sin\theta & 0\\
+   0 & 1 & 0 & 0\\
+   -sin\theta& 0 & cos\theta & 0\\
+  0 & 0 & 0 & 1\end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="对称变换-1"><a href="#对称变换-1" class="headerlink" title="对称变换"></a>对称变换</h4><ul>
+<li><p>xoy平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>yoz平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>zox平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>x轴</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>y轴</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>z轴</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>原点</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   -1 & 0 & 0 & 0\\
+   0 & -1 & 0 & 0\\
+   0 & 0 & -1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="相对任意参考点的三维变换"><a href="#相对任意参考点的三维变换" class="headerlink" title="相对任意参考点的三维变换"></a>相对任意参考点的三维变换</h4><ol>
+<li>将参考点移到原点</li>
+<li>针对原点进行变换</li>
+<li>参考点反平移到原来位置</li>
+</ol>
+<h4 id="参考任意轴的三维旋转变换"><a href="#参考任意轴的三维旋转变换" class="headerlink" title="参考任意轴的三维旋转变换"></a>参考任意轴的三维旋转变换</h4><ol>
+<li>将轴线段的一端移动到坐标原点</li>
+<li>将轴线段先旋转到坐标系平面上，再旋转到轴上</li>
+<li>进行绕轴旋转变换</li>
+<li>在将轴线段移动到原来位置</li>
+</ol>
+<h3 id="投影"><a href="#投影" class="headerlink" title="投影"></a>投影</h3><h4 id="三视图"><a href="#三视图" class="headerlink" title="三视图"></a>三视图</h4><ul>
+<li><p>主视图（xoz）</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 0 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>俯视图(xoy)：再绕x轴旋转负九十度，再z轴方向平移$z_0$距离</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   0 & 0 & -z_0 & 1
+  \end{matrix} 
+\right]</script></li>
+<li><p>侧视图（yoz）：再绕z轴旋转负九十度，再x轴方向平移$x_0$距离</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   0 & 0 & 0 & 0\\
+   -1 & 0 & 0 & 0\\
+   0 & 0 & 1 & 0\\
+   -x_0 & 0 & 0 & 1
+  \end{matrix} 
+\right]</script></li>
+</ul>
+<h4 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h4><ul>
+<li><p>一点透视:将三维物体平移到适当位置（l,m,n）,进行透视变换（d是视距），为了方便绘制，向xoy平面做正投影变换，将结果变换到xoy平面</p>
+<script type="math/tex; mode=display">\left[
+ \begin{matrix}
+   1 & 0 & 0 & 0\\
+   0 & 1 & 0 & 0\\
+   0 & 0 & 0 & \frac{1}{d}\\
+   l & m & 0 & 1+\frac{n}{d}
+  \end{matrix} 
+\right]</script></li>
+<li><p>两点透视</p>
+</li>
+<li><p>三点透视</p>
+</li>
+</ul>
+<h3 id="观察变换"><a href="#观察变换" class="headerlink" title="观察变换"></a>观察变换</h3><h4 id="观察坐标系"><a href="#观察坐标系" class="headerlink" title="观察坐标系"></a>观察坐标系</h4><p>$z_v$：视点（观察坐标系原点）与物体焦点的连线</p>
+<p>$y_v$：向上方向</p>
+<p>$x_v$：已知y和z轴后，根据右手定则得出</p>
+<h4 id="变换-2"><a href="#变换-2" class="headerlink" title="变换"></a>变换</h4><p>即求世界坐标系中点在观察坐标系中的坐标值</p>
+<ol>
+<li>将观察坐标系原点（视点）与世界坐标系移动重合，再经过旋转，使得两坐标系重合</li>
+<li>无需逆过程移回去，此变换矩阵就是点在观察坐标系的坐标的变换矩阵</li>
+</ol>
+<h3 id="三维观察流程"><a href="#三维观察流程" class="headerlink" title="三维观察流程"></a>三维观察流程</h3><ol>
+<li>在用户坐标系生成图形</li>
+<li>将用户坐标系下的图形描述变换到观察坐标系</li>
+<li>根据要求在观察坐标系下进行规范化投影变换</li>
+<li>进行三维裁剪</li>
+<li>进行正投影，投影到观察平面</li>
+<li>将矩形窗口图形依据二维坐标重构二维图形，经过窗口到视区的变换</li>
+</ol>
+<h2 id="简单光照模型"><a href="#简单光照模型" class="headerlink" title="简单光照模型"></a>简单光照模型</h2><ul>
+<li>环境光：$I_{环境光}=I_{环境光强度}K_{环境光反射系数}$</li>
+<li>理想漫反射光：$I_{漫反射光}=I_{点光源强度}K_{漫反射系数}(L_{点光源向量}·N_{物体表面法向量})$</li>
+<li>镜面反射光：$I_{镜面反射光}=I_{点光源强度}K_{镜面反射系数}(R_{镜面反射方向向量}·V_{视线方向向量})^{n_{镜面反射指数}}$</li>
+<li>向量点积：$\overrightarrow{a}·\overrightarrow{b}=x_1x_2+y_1y_2+z_1z_2$</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机图形学</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>软件工程</title>
     <url>/2020/05/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="软件与软件工程"><a href="#软件与软件工程" class="headerlink" title="软件与软件工程"></a>软件与软件工程</h2><ul>
@@ -1044,440 +1478,6 @@
       </tags>
   </entry>
   <entry>
-    <title>计算机图形学</title>
-    <url>/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/</url>
-    <content><![CDATA[<h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><ul>
-<li>构成图形的要素：点线面体等几何要素，物体材质颜色非几何要素</li>
-<li>参数法描述的图叫图形，点阵法描述的图叫图像</li>
-<li>专业词汇<ul>
-<li>计算机图形核心系统：GKS</li>
-<li>三维图形核心系统：GKS-3D</li>
-<li>交互式图形系统：PHIGS</li>
-<li>计算机图形元文件：CGM</li>
-<li>计算机图形接口：CGI</li>
-<li>基本图形转换规范：IGES</li>
-<li>产品数据转换规范：STEP</li>
-<li>计算机辅助设计：CAD</li>
-<li>计算机辅助制造：CAM</li>
-<li>计算机辅助教学：CAI</li>
-<li>计算机辅助手术：CAS（Computer-Aided Surgery）</li>
-<li>人机界面：HCI（Human Computer Interface）</li>
-<li>图形用户界面：GUI（Graphical User Interface）</li>
-<li>地理信息系统：GIS（Geographic Information System）</li>
-<li>虚拟现实：Virtual-reality</li>
-<li>科学计算可视化：Visualization in Scientific Computing</li>
-<li>工作站网络：NOW（Network of Workstation）</li>
-<li>工作站集群：Workstation Cluster</li>
-<li>可升级连接界面：Scalable Link Interface</li>
-<li>图形/视觉处理单元：Graphics/Visual Process Unit</li>
-</ul>
-</li>
-</ul>
-<h2 id="计算机图形系统及图形硬件"><a href="#计算机图形系统及图形硬件" class="headerlink" title="计算机图形系统及图形硬件"></a>计算机图形系统及图形硬件</h2><ul>
-<li>交互式计算机图形系统应该具备：计算、存储、交互、输入、输出五种功能</li>
-<li>CRT的成像原理：利用电磁场产生高速的、经过聚焦的电子束，偏转到屏幕的不同位置，轰击屏幕表面的荧光材料，从而产生课件图形</li>
-<li>CRT基本组成：电子枪、偏转系统、荧光屏</li>
-<li>CRT显示器：优点颜色视觉效果好，视角宽，可靠性高，便宜；缺点体积大耗电多<ul>
-<li>随机扫描图形显示器：电子束的扫描轨迹随显示内容而变化，只在需要的地方扫描</li>
-<li>直视存储管图形显示器：将图像信息存储在CRT内，不刷新屏幕，通过紧贴在屏幕荧光屏层后的电荷分布来存储图像信息</li>
-<li>光栅扫描图形显示器：电子束横向扫描屏幕，一次一行，从上到下顺次进行</li>
-</ul>
-</li>
-<li>LCD显示器：优点屏幕尺寸不受限，亮度高；缺点颜色视觉效果略差，对比度略差<ul>
-<li>利用液晶的电光效应，通过施加电压改变液晶的光学特性，从而造成入射光的调制，使通过液晶的透射光或反射光受所加电压的控制，达到显示的目的</li>
-</ul>
-</li>
-</ul>
-<h2 id="基本图形生成算法"><a href="#基本图形生成算法" class="headerlink" title="基本图形生成算法"></a>基本图形生成算法</h2><h3 id="直线"><a href="#直线" class="headerlink" title="直线"></a>直线</h3><h4 id="DDA数值微分法"><a href="#DDA数值微分法" class="headerlink" title="DDA数值微分法"></a>DDA数值微分法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/DDA数值微分法.svg" alt="DDA数值微分法"></p>
-<h4 id="中点Bresenham算法"><a href="#中点Bresenham算法" class="headerlink" title="中点Bresenham算法"></a>中点Bresenham算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/中点画线算法.svg" alt="中点画线算法"></p>
-<h4 id="Bresenham算法"><a href="#Bresenham算法" class="headerlink" title="Bresenham算法"></a>Bresenham算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/改进Bresenham算法.svg" alt="改进Bresenham算法"></p>
-<h3 id="圆"><a href="#圆" class="headerlink" title="圆"></a>圆</h3><h4 id="八分法画圆"><a href="#八分法画圆" class="headerlink" title="八分法画圆"></a>八分法画圆</h4><p>由于圆的对称性，只要画出圆的八分之一即可</p>
-<h4 id="中点Bresenham画圆"><a href="#中点Bresenham画圆" class="headerlink" title="中点Bresenham画圆"></a>中点Bresenham画圆</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/中点Bresenham画圆.svg" alt="中点Bresenham画圆"></p>
-<h4 id="椭圆的特征"><a href="#椭圆的特征" class="headerlink" title="椭圆的特征"></a>椭圆的特征</h4><p>椭圆是四分象限中对称的，需要进一步对一象限内分为上(-1&lt;=k&lt;=0)下(-1&lt;=1/k&lt;=0)两部分，即二分量相等的法向量</p>
-<h3 id="多边形"><a href="#多边形" class="headerlink" title="多边形"></a>多边形</h3><p>多边形的表示方法：顶点表示（顶点坐标表示边），点阵表示（内部像素表示形）</p>
-<h4 id="x扫描线的特点"><a href="#x扫描线的特点" class="headerlink" title="x扫描线的特点"></a>x扫描线的特点</h4><p>判定顶点交点取舍问题：共享顶点的另外两个端点的y值，大于交点的个数决定0，1，2</p>
-<h4 id="改进的有效边表算法"><a href="#改进的有效边表算法" class="headerlink" title="改进的有效边表算法"></a>改进的有效边表算法</h4><ul>
-<li>某扫描线的ATE表（活性边表）：（当前==交点==的x值，x的增量即斜率倒数，该条边的顶点y最大值，指向下一个==点==的指针）</li>
-<li>NET（新边表）<ul>
-<li>一个纵向的链表，长度为最大扫描线数，横向指向吊桶链表（只有顶点交点指向，若包括全部边后不再向后循环）</li>
-<li>吊桶：线段链表(当前==线段==的最大y值，当前==线段==的最小x值，x的增量即斜率倒数，指向下一条==边==的指针）</li>
-<li>水平线无需管</li>
-</ul>
-</li>
-</ul>
-<h4 id="区域填充"><a href="#区域填充" class="headerlink" title="区域填充"></a>区域填充</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/区域填充算法.svg" alt="区域填充算法"></p>
-<h5 id="边界填充算法"><a href="#边界填充算法" class="headerlink" title="边界填充算法"></a>边界填充算法</h5><p>用户勾划出轮廓后，填充颜色</p>
-<h5 id="泛填充算法"><a href="#泛填充算法" class="headerlink" title="泛填充算法"></a>泛填充算法</h5><p>给区域重新着色</p>
-<h4 id="内外测试"><a href="#内外测试" class="headerlink" title="内外测试"></a>内外测试</h4><p>奇偶规则：做射线，与多边形交点是奇数则是内部，否则是外部</p>
-<p>非零环绕数规则：做射线，多边形边为方向矢量，穿过正向向量环绕数+1,反之-1，最后环绕数0在外部，否则在外部</p>
-<h4 id="字符存储"><a href="#字符存储" class="headerlink" title="字符存储"></a>字符存储</h4><p>点阵字符：每个字符由点阵位图表示，存储空间大，缩放失真</p>
-<p>矢量字符：记录笔画信息，需要时间进行笔画扫描转换</p>
-<h3 id="反走样"><a href="#反走样" class="headerlink" title="反走样"></a>反走样</h3><p>走样：离散量表示连续量引起的失真</p>
-<p>非加权区域采样方法：根据物体覆盖像素的覆盖率，来给像素填充不同亮度的颜色</p>
-<p>加权区域采样方法：将一个像素分隔成为九宫格，每个宫格的权值不同，权值如此<script type="math/tex">\left[
- \begin{matrix}
-   1 & 2 & 1\\
-   2 & 4 & 2\\
-   1 & 2 & 1
-  \end{matrix} 
-\right]</script>，根据覆盖权值之和来给像素填充不同颜色</p>
-<h2 id="二维变换和二维观察"><a href="#二维变换和二维观察" class="headerlink" title="二维变换和二维观察"></a>二维变换和二维观察</h2><h3 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h3><p>用n+1维向量表示n维向量</p>
-<p>规范化齐次坐标：n+1维向量的最后一维是1</p>
-<h3 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h3><h4 id="平移变换"><a href="#平移变换" class="headerlink" title="平移变换"></a>平移变换</h4><script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0\\
-   0 & 1 & 0\\
-   x变化量 & y变化量 & 1
-  \end{matrix} 
-\right]</script><h4 id="比例变换"><a href="#比例变换" class="headerlink" title="比例变换"></a>比例变换</h4><ul>
-<li><p>缩放系数不相等</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   x缩放系数 & 0 & 0\\
-   0 & y缩放系数 & 0\\
-   0& 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>等比例缩放</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0\\
-   0 & 1 & 0\\
-   0& 0 & 缩放系数
-  \end{matrix} 
-\right]</script></li>
-</ul>
-<h4 id="对称变换"><a href="#对称变换" class="headerlink" title="对称变换"></a>对称变换</h4><ul>
-<li><p>关于x轴对称</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0\\
-   0 & -1 & 0\\
-   0& 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>关于y轴对称</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   -1 & 0 & 0\\
-   0 & 1 & 0\\
-   0& 0 & 1
-  \end{matrix} 
-\right]</script></li>
-</ul>
-<h4 id="旋转变换"><a href="#旋转变换" class="headerlink" title="旋转变换"></a>旋转变换</h4><ul>
-<li><p>绕原点逆时针旋转θ度</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   cos\theta & sin\theta & 0\\
-   -sin\theta & cos\theta & 0\\
-   0& 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>绕原点顺时针旋转θ度</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   cos\theta & -sin\theta & 0\\
-   sin\theta & cos\theta & 0\\
-   0& 0 & 1
-  \end{matrix} 
-\right]</script></li>
-</ul>
-<h4 id="错切变换"><a href="#错切变换" class="headerlink" title="错切变换"></a>错切变换</h4><ul>
-<li><p>沿x方向错切</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0\\
-   x错切量 & 1 & 0\\
-   0& 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>沿y方向错切</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & y错切量 & 0\\
-   0 & 1 & 0\\
-   0& 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>沿xy方向错切</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & b & 0\\
-   c & 1 & 0\\
-   0& 0 & 1
-  \end{matrix} 
-\right]</script></li>
-</ul>
-<h4 id="复合变换"><a href="#复合变换" class="headerlink" title="复合变换"></a>复合变换</h4><p>即变换矩阵相乘（注意顺序，因为矩阵乘法不满足交换律）</p>
-<h4 id="多点变换齐次坐标"><a href="#多点变换齐次坐标" class="headerlink" title="多点变换齐次坐标"></a>多点变换齐次坐标</h4><script type="math/tex; mode=display">\left[
- \begin{matrix}
-   x_1 & y_1 & 1\\
-   x_2 & y_2 & 1\\
-   ... & ... & 1
-  \end{matrix} 
-\right]</script><h4 id="相对任意参考点的二维几何变换"><a href="#相对任意参考点的二维几何变换" class="headerlink" title="相对任意参考点的二维几何变换"></a>相对任意参考点的二维几何变换</h4><ol>
-<li>将参考点移到原点</li>
-<li>对原点进行二维变换</li>
-<li>将参考点反平移回原来位置</li>
-</ol>
-<h3 id="窗口和视区"><a href="#窗口和视区" class="headerlink" title="窗口和视区"></a>窗口和视区</h3><p>世界坐标系的窗口与屏幕坐标系中的视区的映射</p>
-<h3 id="直线裁剪"><a href="#直线裁剪" class="headerlink" title="直线裁剪"></a>直线裁剪</h3><h4 id="Cohen-Sutherland裁剪算法"><a href="#Cohen-Sutherland裁剪算法" class="headerlink" title="Cohen-Sutherland裁剪算法"></a>Cohen-Sutherland裁剪算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/编码裁剪算法.svg" alt="编码裁剪算法"></p>
-<h4 id="Liang-Barsky算法"><a href="#Liang-Barsky算法" class="headerlink" title="Liang-Barsky算法"></a>Liang-Barsky算法</h4><ol>
-<li><p>计算p和q值的值</p>
-<p>$p_1=x_1-x_2$  $q_1=x_1-x_{left}$</p>
-<p>$p_2=x_2-x_1$  $q_2=x_{right}-x_1$</p>
-<p>$p_3=y_1-y_2$  $q_3=y_1-y_{bottom}$</p>
-<p>$p_4=y_2-y_1$  $q_4=y_{top}-y_1$</p>
-</li>
-<li><p>计算使用公式$u_k=\frac{q_k}{p_k}$，计算出各个u值</p>
-</li>
-<li><p>根据$p_k$的符号将$u_k$两两分组</p>
-<ol>
-<li>$p_k&lt;0$组与0取最大</li>
-<li>$p_k&gt;0$组与1取最小</li>
-</ol>
-</li>
-<li><p>得到两个u值分别带入直线参数方程即可得到裁剪后的结果</p>
-<script type="math/tex; mode=display">\begin{cases}  x=x_1+u(x_2-x_1)  \\ y=y_1+u(y_2-y_1) \end{cases}</script></li>
-</ol>
-<h3 id="多边形裁剪"><a href="#多边形裁剪" class="headerlink" title="多边形裁剪"></a>多边形裁剪</h3><h4 id="Sutherland-Hodgeman算法"><a href="#Sutherland-Hodgeman算法" class="headerlink" title="Sutherland-Hodgeman算法"></a>Sutherland-Hodgeman算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/Sutherland-Hodgeman算法.svg" alt="Sutherland-Hodgeman算法"></p>
-<h4 id="Weiler-Atherton算法"><a href="#Weiler-Atherton算法" class="headerlink" title="Weiler-Atherton算法"></a>Weiler-Atherton算法</h4><p><img src="/2020/05/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/Weiler-Atherton算法.svg" alt="Weiler-Atherton算法"></p>
-<h3 id="二维观察流程"><a href="#二维观察流程" class="headerlink" title="二维观察流程"></a>二维观察流程</h3><ol>
-<li>用户坐标系生成图形</li>
-<li>将用户坐标系下的图形描述变换到观察坐标系</li>
-<li>在观察坐标系下对窗口进行裁剪</li>
-<li>裁剪后进行窗口到视区的变换</li>
-<li>将视区中图形内容变换到设备坐标系中</li>
-</ol>
-<h2 id="三维变换和三违观察"><a href="#三维变换和三违观察" class="headerlink" title="三维变换和三违观察"></a>三维变换和三违观察</h2><h3 id="变换-1"><a href="#变换-1" class="headerlink" title="变换"></a>变换</h3><h4 id="平移变换-1"><a href="#平移变换-1" class="headerlink" title="平移变换"></a>平移变换</h4><script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0 & 0\\
-   0 & 1 & 0 & 0\\
-   0 & 0 & 1 & 0\\
-   x变化量 & y变化量 & z变化量 & 0
-  \end{matrix} 
-\right]</script><h4 id="比例变换-1"><a href="#比例变换-1" class="headerlink" title="比例变换"></a>比例变换</h4><ul>
-<li><p>局部</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   x缩放系数 & 0 & 0 & 0\\
-   0 & y缩放系数 & 0 & 0\\
-   0 & 0 & z缩放系数 & 0\\
-   0 & 0 & 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>整体</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0 & 0\\
-   0 & 1 & 0 & 0\\
-   0 & 0 & 1 & 0\\
-   0 & 0 & 0 & 缩放系数
-  \end{matrix} 
-\right]</script></li>
-</ul>
-<h4 id="旋转变换-1"><a href="#旋转变换-1" class="headerlink" title="旋转变换"></a>旋转变换</h4><ul>
-<li><p>z轴旋转变换</p>
-<p>顺时针</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   cos\theta & sin\theta & 0 & 0\\
-   -sin\theta & cos\theta & 0 & 0\\
-   0& 0 & 1 & 0\\
-  0 & 0 & 0 & 1\end{matrix} 
-\right]</script><p>逆时针</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   cos\theta & -sin\theta & 0 & 0\\
-   sin\theta & cos\theta & 0 & 0\\
-   0& 0 & 1 & 0\\
-  0 & 0 & 0 & 1\end{matrix} 
-\right]</script></li>
-<li><p>x轴旋转变换</p>
-<p>顺时针</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0 & 0\\
-   0 & cos\theta & sin\theta & 0\\
-   0& -sin\theta & cos\theta & 0\\
-  0 & 0 & 0 & 1\end{matrix} 
-\right]</script><p>逆时针</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0 & 0\\
-   0 & cos\theta & -sin\theta & 0\\
-   0& sin\theta & cos\theta & 0\\
-  0 & 0 & 0 & 1\end{matrix} 
-\right]</script></li>
-<li><p>y轴旋转变换</p>
-<p>顺时针</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-    cos\theta & 0 & -sin\theta & 0\\
-   0 & 1 & 0 & 0\\
-   sin\theta& 0 & cos\theta & 0\\
-  0 & 0 & 0 & 1\end{matrix} 
-\right]</script><p>逆时针</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-    cos\theta & 0 & sin\theta & 0\\
-   0 & 1 & 0 & 0\\
-   -sin\theta& 0 & cos\theta & 0\\
-  0 & 0 & 0 & 1\end{matrix} 
-\right]</script></li>
-</ul>
-<h4 id="对称变换-1"><a href="#对称变换-1" class="headerlink" title="对称变换"></a>对称变换</h4><ul>
-<li><p>xoy平面</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0 & 0\\
-   0 & 1 & 0 & 0\\
-   0 & 0 & -1 & 0\\
-   0 & 0 & 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>yoz平面</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   -1 & 0 & 0 & 0\\
-   0 & 1 & 0 & 0\\
-   0 & 0 & 1 & 0\\
-   0 & 0 & 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>zox平面</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0 & 0\\
-   0 & -1 & 0 & 0\\
-   0 & 0 & 1 & 0\\
-   0 & 0 & 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>x轴</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0 & 0\\
-   0 & -1 & 0 & 0\\
-   0 & 0 & -1 & 0\\
-   0 & 0 & 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>y轴</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   -1 & 0 & 0 & 0\\
-   0 & 1 & 0 & 0\\
-   0 & 0 & -1 & 0\\
-   0 & 0 & 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>z轴</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   -1 & 0 & 0 & 0\\
-   0 & -1 & 0 & 0\\
-   0 & 0 & 1 & 0\\
-   0 & 0 & 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>原点</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   -1 & 0 & 0 & 0\\
-   0 & -1 & 0 & 0\\
-   0 & 0 & -1 & 0\\
-   0 & 0 & 0 & 1
-  \end{matrix} 
-\right]</script></li>
-</ul>
-<h4 id="相对任意参考点的三维变换"><a href="#相对任意参考点的三维变换" class="headerlink" title="相对任意参考点的三维变换"></a>相对任意参考点的三维变换</h4><ol>
-<li>将参考点移到原点</li>
-<li>针对原点进行变换</li>
-<li>参考点反平移到原来位置</li>
-</ol>
-<h4 id="参考任意轴的三维旋转变换"><a href="#参考任意轴的三维旋转变换" class="headerlink" title="参考任意轴的三维旋转变换"></a>参考任意轴的三维旋转变换</h4><ol>
-<li>将轴线段的一端移动到坐标原点</li>
-<li>将轴线段先旋转到坐标系平面上，再旋转到轴上</li>
-<li>进行绕轴旋转变换</li>
-<li>在将轴线段移动到原来位置</li>
-</ol>
-<h3 id="投影"><a href="#投影" class="headerlink" title="投影"></a>投影</h3><h4 id="三视图"><a href="#三视图" class="headerlink" title="三视图"></a>三视图</h4><ul>
-<li><p>主视图（xoz）</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0 & 0\\
-   0 & 0 & 0 & 0\\
-   0 & 0 & 1 & 0\\
-   0 & 0 & 0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>俯视图(xoy)：再绕x轴旋转负九十度，再z轴方向平移$z_0$距离</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0 & 0\\
-   0 & 1 & 0 & 0\\
-   0 & 0 & 1 & 0\\
-   0 & 0 & -z_0 & 1
-  \end{matrix} 
-\right]</script></li>
-<li><p>侧视图（yoz）：再绕z轴旋转负九十度，再x轴方向平移$x_0$距离</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   0 & 0 & 0 & 0\\
-   -1 & 0 & 0 & 0\\
-   0 & 0 & 1 & 0\\
-   -x_0 & 0 & 0 & 1
-  \end{matrix} 
-\right]</script></li>
-</ul>
-<h4 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h4><ul>
-<li><p>一点透视:将三维物体平移到适当位置（l,m,n）,进行透视变换（d是视距），为了方便绘制，向xoy平面做正投影变换，将结果变换到xoy平面</p>
-<script type="math/tex; mode=display">\left[
- \begin{matrix}
-   1 & 0 & 0 & 0\\
-   0 & 1 & 0 & 0\\
-   0 & 0 & 0 & \frac{1}{d}\\
-   l & m & 0 & 1+\frac{n}{d}
-  \end{matrix} 
-\right]</script></li>
-<li><p>两点透视</p>
-</li>
-<li><p>三点透视</p>
-</li>
-</ul>
-<h3 id="观察变换"><a href="#观察变换" class="headerlink" title="观察变换"></a>观察变换</h3><h4 id="观察坐标系"><a href="#观察坐标系" class="headerlink" title="观察坐标系"></a>观察坐标系</h4><p>$z_v$：视点（观察坐标系原点）与物体焦点的连线</p>
-<p>$y_v$：向上方向</p>
-<p>$x_v$：已知y和z轴后，根据右手定则得出</p>
-<h4 id="变换-2"><a href="#变换-2" class="headerlink" title="变换"></a>变换</h4><p>即求世界坐标系中点在观察坐标系中的坐标值</p>
-<ol>
-<li>将观察坐标系原点（视点）与世界坐标系移动重合，再经过旋转，使得两坐标系重合</li>
-<li>无需逆过程移回去，此变换矩阵就是点在观察坐标系的坐标的变换矩阵</li>
-</ol>
-<h3 id="三维观察流程"><a href="#三维观察流程" class="headerlink" title="三维观察流程"></a>三维观察流程</h3><ol>
-<li>在用户坐标系生成图形</li>
-<li>将用户坐标系下的图形描述变换到观察坐标系</li>
-<li>根据要求在观察坐标系下进行规范化投影变换</li>
-<li>进行三维裁剪</li>
-<li>进行正投影，投影到观察平面</li>
-<li>将矩形窗口图形依据二维坐标重构二维图形，经过窗口到视区的变换</li>
-</ol>
-<h2 id="简单光照模型"><a href="#简单光照模型" class="headerlink" title="简单光照模型"></a>简单光照模型</h2><ul>
-<li>环境光：$I_{环境光}=I_{环境光强度}K_{环境光反射系数}$</li>
-<li>理想漫反射光：$I_{漫反射光}=I_{点光源强度}K_{漫反射系数}(L_{点光源向量}·N_{物体表面法向量})$</li>
-<li>镜面反射光：$I_{镜面反射光}=I_{点光源强度}K_{镜面反射系数}(R_{镜面反射方向向量}·V_{视线方向向量})^{n_{镜面反射指数}}$</li>
-<li>向量点积：$\overrightarrow{a}·\overrightarrow{b}=x_1x_2+y_1y_2+z_1z_2$</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机图形学</category>
-      </categories>
-      <tags>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>面向对象系统分析与设计</title>
     <url>/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<h2 id="面向对象系统开发概述"><a href="#面向对象系统开发概述" class="headerlink" title="面向对象系统开发概述"></a>面向对象系统开发概述</h2><h3 id="系统与系统思想"><a href="#系统与系统思想" class="headerlink" title="系统与系统思想"></a>系统与系统思想</h3><ul>
@@ -1698,6 +1698,528 @@
 ]]></content>
       <categories>
         <category>面向对象系统分析与设计</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>人工智能</title>
+    <url>/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</url>
+    <content><![CDATA[<h3 id="人工智能的三大学派"><a href="#人工智能的三大学派" class="headerlink" title="人工智能的三大学派"></a>人工智能的三大学派</h3><p>符号学派：专家系统：智能行为</p>
+<p>连接学派：神经网络：仿生</p>
+<p>行为学派：遗传算法：低级生物智能</p>
+<h3 id="知识表示方法"><a href="#知识表示方法" class="headerlink" title="知识表示方法"></a>知识表示方法</h3><h4 id="状态空间"><a href="#状态空间" class="headerlink" title="状态空间"></a>状态空间</h4><p>三元组：初始状态集，操作集，目标状态集</p>
+<h4 id="谓词逻辑"><a href="#谓词逻辑" class="headerlink" title="谓词逻辑"></a>谓词逻辑</h4><h5 id="原子公式"><a href="#原子公式" class="headerlink" title="原子公式"></a>原子公式</h5><h6 id="基本组成"><a href="#基本组成" class="headerlink" title="基本组成"></a>基本组成</h6><ul>
+<li>谓词符号：关系（首字母大写）</li>
+<li>个体符号：常量（全大写）、变量（小写）、函数（函数名小写）</li>
+<li>注意：==谓词内可以嵌套函数，但是不能嵌套谓词==</li>
+</ul>
+<h6 id="n元谓词"><a href="#n元谓词" class="headerlink" title="n元谓词"></a>n元谓词</h6><ol>
+<li>一元谓词：性质、属性</li>
+<li>二元谓词：两个个体关系</li>
+<li>多元谓词：多个个体关系</li>
+</ol>
+<h5 id="分子公式"><a href="#分子公式" class="headerlink" title="分子公式"></a>分子公式</h5><h6 id="连词"><a href="#连词" class="headerlink" title="连词"></a>连词</h6><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\lor$</td>
+<td style="text-align:left">或（析取）</td>
+</tr>
+<tr>
+<td>$\land$</td>
+<td style="text-align:left">与（合取）</td>
+</tr>
+<tr>
+<td>$\lnot$、~</td>
+<td style="text-align:left">非</td>
+</tr>
+<tr>
+<td>$\longrightarrow$</td>
+<td style="text-align:left">蕴含（推理）关系，如果…那么…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="谓词公式"><a href="#谓词公式" class="headerlink" title="谓词公式"></a>谓词公式</h5><h6 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h6><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\forall$</td>
+<td style="text-align:left">全称量词（针对变量），所有</td>
+</tr>
+<tr>
+<td>$\exists$</td>
+<td style="text-align:left">存在量词（针对变量），至少有一个</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="置换与合一"><a href="#置换与合一" class="headerlink" title="置换与合一"></a>置换与合一</h5><h6 id="什么是置换合一？"><a href="#什么是置换合一？" class="headerlink" title="什么是置换合一？"></a>什么是置换合一？</h6><p>若F=P(x)</p>
+<p>置换：$\theta$={a/x}</p>
+<p>示例：G=F$\theta$ =P(a)</p>
+<p><strong>合一置换</strong>：一个置换使得两个不同谓词得到==相同示例==（不唯一）</p>
+<p><strong>最一般的合一</strong>：最简合一置换（唯一）</p>
+<h6 id="可以合一的条件"><a href="#可以合一的条件" class="headerlink" title="可以合一的条件"></a>可以合一的条件</h6><ol>
+<li>谓词一致</li>
+<li>项数一致</li>
+<li>常量置换变量，函数置换变量</li>
+</ol>
+<h4 id="语义网络"><a href="#语义网络" class="headerlink" title="语义网络"></a>语义网络</h4><h5 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h5><p>节点：实体、属性、状态、动作等</p>
+<p>有向弧：表示联系</p>
+<h5 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h5><p>匹配：问题构造语义网络片段，去匹配知识库中的片段</p>
+<p>继承：建立结点栈，讲继承关系结点入栈，逐个出栈，将出栈实体属性加入解中</p>
+<h3 id="搜索技术（状态空间）"><a href="#搜索技术（状态空间）" class="headerlink" title="搜索技术（状态空间）"></a>搜索技术（状态空间）</h3><h4 id="图搜索策略"><a href="#图搜索策略" class="headerlink" title="图搜索策略"></a>图搜索策略</h4><p>open表：当前未扩展结点</p>
+<p>close表：已扩展结点</p>
+<p><img src="/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/图搜索过程及数据结构.svg" alt="图搜索过程及数据结构"></p>
+<h4 id="盲目搜索"><a href="#盲目搜索" class="headerlink" title="盲目搜索"></a>盲目搜索</h4><p>==不重排open表==</p>
+<ol>
+<li>宽度优先：open表是队列</li>
+<li>深度优先：open表是栈</li>
+<li>等代价优先：根据代价决定加入队列的优先级，所有连接弧代价都相等即为宽度优先</li>
+</ol>
+<h4 id="启发式搜索"><a href="#启发式搜索" class="headerlink" title="启发式搜索"></a>启发式搜索</h4><p>==重排open表==，即决定先扩展那个结点，或放弃哪一个结点扩展</p>
+<ol>
+<li><p>A算法(有序搜索)：根据估计函数来重排open表</p>
+</li>
+<li><p>A*算法：理想的A算法最佳路径</p>
+<p>估价函数：已经付出的代价+估计还要付出的代价</p>
+</li>
+<li><p>博弈树（己方与max，对方或min的<strong>与或树</strong>）</p>
+<ol>
+<li>极大极小搜索：用宽度优先算法根据规定深度找出全部博弈树，为了使得自己利益最大化，从最底层结点倒推，就得使得己方max估价函数取值最大的节点，对方min估价函数取最小的节点</li>
+<li>$\alpha(max)-\beta(min)$剪枝搜索：深度优先，max确定下界，min确定上界，不同层的$\alpha(max)&gt;=\beta(min)$就剪枝<ol>
+<li>$\alpha$剪枝：先辈是$\alpha$</li>
+<li>$\beta$剪枝：先辈是$\beta$</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="推理技术（经典推理）"><a href="#推理技术（经典推理）" class="headerlink" title="推理技术（经典推理）"></a>推理技术（经典推理）</h3><h4 id="消解原理（谓词逻辑）"><a href="#消解原理（谓词逻辑）" class="headerlink" title="消解原理（谓词逻辑）"></a>消解原理（谓词逻辑）</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p>文字：一个原子公式及其否定，$P(x)、 \lnot P(x)$</p>
+<p>子句：文字的析取（或），$P(x) \lor Q(x)$</p>
+<p>空子句：不包含任何子句的文字，用$NIL$</p>
+<p>子句集：由子句或空子句构成的集合</p>
+<p>消解：对谓词演算公式进行分解和化简，消去一些符号，得到子句</p>
+<p>消解式：两个子句通过消解，得到的新子句</p>
+<p>重言式：互补文字的文字，例如：$P(x)\lor \lnot P(x)$、$P(x)\lor Q(y)  \lor \lnot P(x) \lor \lnot Q(y)$</p>
+<h5 id="求子句集的九个步骤"><a href="#求子句集的九个步骤" class="headerlink" title="求子句集的九个步骤"></a>求子句集的九个步骤</h5><ol>
+<li>消去蕴涵符号：$A \longrightarrow B &lt;=&gt; \lnot A \lor B$</li>
+<li><p>减少否定符号管辖范围；摩根定律和量词转换定律</p>
+<ul>
+<li>$\lnot (A \lor B) &lt;=&gt; \lnot A \land \lnot B$</li>
+<li>$\lnot (A \land B) &lt;=&gt; \lnot A \lor \lnot B$</li>
+<li>$\lnot (\exists x)P(x) &lt;=&gt; \forall x[\lnot P(x)]$</li>
+<li>$\lnot (\forall x)P(x) &lt;=&gt; \exists x[\lnot P(x)]$</li>
+</ul>
+</li>
+<li>对变量标准化（改名）：不同量词辖域变量，使用不同变量名</li>
+<li><p>消去存在量词</p>
+<ol>
+<li><p>是其他量词被包裹的：使用Skolem函数</p>
+<ul>
+<li><p>利用外层约束构造Skolem函数替换内层被约束变量</p>
+</li>
+<li><p>例：$\forall y [(\exists x)P(x,y)] &lt;=&gt; \forall y P(g(y),y)$</p>
+</li>
+</ul>
+</li>
+<li><p>没有被包裹：$(\exists x)P(x) &lt;=&gt; P(X)$ X是常量</p>
+</li>
+</ol>
+</li>
+<li>化为前束式：将全称量词都移到公式前面，量词部分称为前缀，后面称为母式</li>
+<li><p>将母式化为子句合取范式：使用分配律改为或的关系</p>
+<ul>
+<li>不使用$ A \lor(B \land C) &lt;=&gt; (A \lor B) \land (A \lor C)$</li>
+<li>==$ A \land (B \lor C) &lt;=&gt; (A \land B) \lor (A \land C)$==</li>
+</ul>
+</li>
+<li>消去全称量词：$(\forall x)P(x) &lt;=&gt; P(y)$</li>
+<li>消去连接符号$\land$：使用$\{A,B\}$代替$A \land B$</li>
+<li>对集合中每个子句的变量进行唯一变量名更改(改名)</li>
+</ol>
+<h5 id="消解"><a href="#消解" class="headerlink" title="消解"></a>消解</h5><p>不含变量的消解：两个子句，消去互补文字，剩下未消去的内容任然用子句连接符号$\lor$(或)进行连接</p>
+<p>含变量的消解：两个子句，将可能互补的一对，置换为合一式，消去，其他非互补谓词中也要使用该置换进行置换，剩下未消去的内容任然用子句连接符号$\lor$(或)进行连接</p>
+<h5 id="消解反演证明问题"><a href="#消解反演证明问题" class="headerlink" title="消解反演证明问题"></a>消解反演证明问题</h5><ol>
+<li>定义谓词</li>
+<li>使用定义谓词将已知的知识（问题和要证明的结论）表示出来</li>
+<li>将问题和要证明的结论的否定分别求取子句集</li>
+<li>合并两个求取的子句集</li>
+<li>对新子句集使用消解原理，推出空子句即可证明</li>
+</ol>
+<h5 id="消解反演求解问题"><a href="#消解反演求解问题" class="headerlink" title="消解反演求解问题"></a>消解反演求解问题</h5><ol>
+<li>定义谓词</li>
+<li>使用定义谓词将已知的知识（问题和问题目标）表示出来</li>
+<li>将问题和问题目标的否定分别求取子句集</li>
+<li>对问题目标子句集中每个子句，构造重言式，加入到问题子句集中</li>
+<li>对新子句集使用消解原理，该子句集的根子句为求解问题的答案</li>
+</ol>
+<h4 id="规则演绎系统（产生式规则）"><a href="#规则演绎系统（产生式规则）" class="headerlink" title="规则演绎系统（产生式规则）"></a>规则演绎系统（产生式规则）</h4><h5 id="正向规则演绎系统"><a href="#正向规则演绎系统" class="headerlink" title="正向规则演绎系统"></a>正向规则演绎系统</h5><ol>
+<li><p>将事实转换为与或形：只有文字的析取（或）和合取（与）</p>
+<ol>
+<li>减少否定符号管辖范围；摩根定律和量词转换定律</li>
+<li>对变量标准化（改名）：各项合取（与）变量名不同</li>
+<li>消去存在量词，常量消去</li>
+<li>化为前束式，后消除全称量词：将全称量词都移到公式前面，量词部分称为前缀，后面称为母式</li>
+</ol>
+</li>
+<li><p>用与或图表示与或表达式：与关系层1连接符，或关系层k连接符</p>
+</li>
+<li><p>与或图的F规则转换</p>
+<ol>
+<li><p>将规则转换为单文字蕴含与或形公式：例：</p>
+<ol>
+<li>左面是单文字，右面是与或形可转为与或图</li>
+</ol>
+<ul>
+<li>$S \longrightarrow A \land B \lor C$</li>
+<li>$A \lor B \longrightarrow C &lt;=&gt; A\longrightarrow C 、 B \longrightarrow C $ </li>
+<li>$A \land B \longrightarrow C 无效 $</li>
+</ul>
+</li>
+<li><p>规则蕴含式左面单文字配匹的已知与或图节点，用匹配符连接规则蕴含式右的新与或图</p>
+</li>
+</ol>
+</li>
+<li><p>得到作为终止条件的目标公式</p>
+<ol>
+<li>由与或树得到的子句集中出现就终止</li>
+<li>子句集是析取层（或）父节点不同的节点组合</li>
+</ol>
+</li>
+</ol>
+<h5 id="逆向规则演绎系统"><a href="#逆向规则演绎系统" class="headerlink" title="逆向规则演绎系统"></a>逆向规则演绎系统</h5><ol>
+<li><p>将事实转换为与或形：只有文字的析取（或）和合取（与）</p>
+<ol>
+<li>减少否定符号管辖范围；摩根定律和量词转换定律</li>
+<li>对变量标准化（改名）：与正向演绎相反，各项析取（或）变量名不同</li>
+<li>消去存在量词，skolem函数消</li>
+<li>化为前束式，后消除全称量词：将全称量词都移到公式前面，量词部分称为前缀，后面称为母式</li>
+</ol>
+</li>
+<li><p>用与或图表示与或表达式：连接符与正向演绎相反，与关系层k连接符，或关系层1连接符</p>
+</li>
+<li><p>与或图的B规则转换</p>
+<ol>
+<li><p>将规则转换为与或形蕴含单文字公式：例：</p>
+<ol>
+<li>右面是单文字，左面面是与或形可转为与或图</li>
+</ol>
+<ul>
+<li>$A \land B \lor C\longrightarrow S$</li>
+<li>$C \longrightarrow A \lor B &lt;=&gt; C\longrightarrow A 、 C \longrightarrow B $ </li>
+<li>$C \longrightarrow A \land B :无效 $</li>
+</ul>
+</li>
+<li><p>规则蕴含式右面单文字配匹的已知与或图节点，用匹配符连接规则蕴含式右的新与或图</p>
+</li>
+<li><p>置换后与已知事实一致则证明成功</p>
+</li>
+</ol>
+</li>
+</ol>
+<h5 id="双向规则演绎系统"><a href="#双向规则演绎系统" class="headerlink" title="双向规则演绎系统"></a>双向规则演绎系统</h5><p>使用正向和反向演绎同时进行推理，正向和逆向叶节点都匹配了，则证明成功</p>
+<h4 id="产生式系统（产生式规则）"><a href="#产生式系统（产生式规则）" class="headerlink" title="产生式系统（产生式规则）"></a>产生式系统（产生式规则）</h4><h5 id="总数据库"><a href="#总数据库" class="headerlink" title="总数据库"></a>总数据库</h5><ul>
+<li>存放初始证据</li>
+<li>原始证据（证据不足询问的新证据）</li>
+<li>中间结论</li>
+<li>结果</li>
+</ul>
+<h5 id="规则库"><a href="#规则库" class="headerlink" title="规则库"></a>规则库</h5><ul>
+<li>规则集（一条条IF…THEN…）</li>
+</ul>
+<h5 id="控制策略"><a href="#控制策略" class="headerlink" title="控制策略"></a>控制策略</h5><h6 id="推理策略"><a href="#推理策略" class="headerlink" title="推理策略"></a>推理策略</h6><ul>
+<li>推理方向<ul>
+<li>正向推理：由总数据库的初始证据一步步得到结果</li>
+<li>反向推理：假设成立，一步步搜索支持假设的证据是否存在总数据库中</li>
+<li>双向推理：先正向或反向推理，推理不下去了，回头询问用户原始证据再接着推理</li>
+</ul>
+</li>
+<li>冲突消解：解决满足多条规则都满足的情况选则那条结论</li>
+</ul>
+<h6 id="搜索策略"><a href="#搜索策略" class="headerlink" title="搜索策略"></a>搜索策略</h6><p>搜索路线决定效率</p>
+<h3 id="非经典推理"><a href="#非经典推理" class="headerlink" title="非经典推理"></a>非经典推理</h3><h4 id="不确定推理"><a href="#不确定推理" class="headerlink" title="不确定推理"></a>不确定推理</h4><h5 id="不确定的表示和度量"><a href="#不确定的表示和度量" class="headerlink" title="不确定的表示和度量"></a>不确定的表示和度量</h5><ul>
+<li>知识不确定：知识表示方法不确定</li>
+<li>证据不确定：对于可能有，不知道等词的证据，确定其可能值</li>
+<li>结论不确定：证据充足但结论不确定</li>
+<li>度量不确定：不确定的程度有多大</li>
+</ul>
+<h5 id="不确定匹配"><a href="#不确定匹配" class="headerlink" title="不确定匹配"></a>不确定匹配</h5><p>相似度匹配算法：设置阈值，在阈值内则认为匹配，否则该证据不可用</p>
+<h5 id="不确定性传递"><a href="#不确定性传递" class="headerlink" title="不确定性传递"></a>不确定性传递</h5><ul>
+<li>不确定更新算法：根据知识和规则不确定算出结论的不确定程度</li>
+<li>证据的合取不确定算法（与）</li>
+<li>证据的析取不确定算法（或）</li>
+</ul>
+<h5 id="不确定性合成"><a href="#不确定性合成" class="headerlink" title="不确定性合成"></a>不确定性合成</h5><ul>
+<li>并行规则算法：根据不同知识和不同规则，得到相同结论的不确定，==综合==两条不确定结论程度</li>
+<li>组合证据不确定算法（多条证据的与或）<ul>
+<li>最大最小法：与取最小，或取最大</li>
+<li>概率法：与取乘积，或取和减去乘积</li>
+<li>有界法：保证与大于0，或小于1，确定在0到1之间</li>
+</ul>
+</li>
+</ul>
+<h4 id="概率论"><a href="#概率论" class="headerlink" title="概率论"></a>概率论</h4><ul>
+<li>样本点：可能出现的单个结果</li>
+<li>样本空间：全部结果</li>
+<li>随机事件：样本点构成的集合<ul>
+<li>至少有一个发生：$A \cup B$</li>
+<li>同时发生：$A \cap B$</li>
+<li>互逆事件：不会同时发生，两个事件并集是整个样本空间</li>
+</ul>
+</li>
+<li>统计概率：大量重复实验，得到时间发生的概论<ul>
+<li>不可能事件：不可能发生的事件</li>
+<li>必然事件：必定发生的事件</li>
+<li>互不相容事件：不可能同时发生</li>
+</ul>
+</li>
+<li>条件概率<ul>
+<li>事件B发生的前提下（已经发生，也就是说样本空间发生了变化），A发生的概率</li>
+<li>$P(A|B)=\frac{P(A \cap B)}{P(B)}$</li>
+</ul>
+</li>
+<li>全概率公式<ul>
+<li>事件A：各个事件互不相容，并集是整个样本空间</li>
+<li>事件B则有：$P(B) = \sum\limits_{i=1}^{n}(P(A_i) * P(B|A_i))$</li>
+</ul>
+</li>
+<li>贝叶斯公式<ul>
+<li>事件A：各个事件互不相容，并集是整个样本空间</li>
+<li>事件B则有：$P(A_i|B)= \frac{P(A_i)<em>P(B|A_i)}{\sum\limits_{j=1}^{n} P(A_j)</em>P(B|A_j)}$</li>
+</ul>
+</li>
+</ul>
+<h4 id="可信度方法（C-F模型）"><a href="#可信度方法（C-F模型）" class="headerlink" title="可信度方法（C-F模型）"></a>可信度方法（C-F模型）</h4><ul>
+<li>知识不确定表示：<code>IF 证据 THEN 结论 CF(结论,证据)</code></li>
+<li>可信度的度量：$CF\in [-1,1]$，越大越真，越小越假，0则证据与结论无关</li>
+<li>证据可信度：<code>CF(证据)</code>，$CF\in [-1,1]$，越大越真，越小越假，0则是不知道该证据</li>
+<li>结论可信度和传递：$CF(结论)=CF(结论,证据)*max(0,CF(证据))$</li>
+<li>不确定合成<ul>
+<li>组合证据不确定合成：最大最小法（与取最小，或取最大）</li>
+<li>结论不确定合成：<script type="math/tex">CF_总(结论)=\begin{cases} 和减积 & 都大于0 \\ 和加积 & 都小于0\\ 1减去绝对值较小的那个CF值分之和 & 其他  \end{cases}</script></li>
+</ul>
+</li>
+</ul>
+<h4 id="带加权因子的可信度推理方法"><a href="#带加权因子的可信度推理方法" class="headerlink" title="带加权因子的可信度推理方法"></a>带加权因子的可信度推理方法</h4><ul>
+<li>知识的不确定：<code>IF 证据1(加权因子值1) AND 证据2(加权因子值2)... THEN 结论 CF(结论,证据)</code><ul>
+<li>加权因子：该证据对结论的影响程度，取值范围[0,1]之间</li>
+<li>所有加权因子之和是1，若不是1则转换为1</li>
+</ul>
+</li>
+<li>不确定合成：各个CF值与各个加权因子值的乘积之和</li>
+</ul>
+<h4 id="贝叶斯方法"><a href="#贝叶斯方法" class="headerlink" title="贝叶斯方法"></a>贝叶斯方法</h4><h5 id="几率函数"><a href="#几率函数" class="headerlink" title="几率函数"></a>几率函数</h5><p>几率=发生的概率÷不发生的概率，$几率 \in [0,+\infty ] $</p>
+<script type="math/tex; mode=display">O(x)＝\frac{P(x)}{(1-P(x))}</script><h5 id="知识的不确定表示"><a href="#知识的不确定表示" class="headerlink" title="知识的不确定表示"></a>知识的不确定表示</h5><ul>
+<li>表示方法：<code>IF 证据 THEN 结论 (LS,LN)</code>$LS,LN\in [0,+\infty ]$</li>
+<li>LS（充分性度量：此证据出现LS越大结论越真）<ul>
+<li>此证据==出现==对结论为真的影响程度</li>
+<li>根据贝叶斯公式推出的几率公式：$O(H|E)＝LS×O(H),其中H=结论,E=证据$</li>
+<li>结论发生的前提下是有此证据概率÷结论不发生的前提下有此证据的概率</li>
+<li>$LS=\frac {P(E|H)}{P(E| \lnot H)} H=结论,E=证据$</li>
+</ul>
+</li>
+<li>LN（必要性度量：此证据不出现LN越大结论越真）<ul>
+<li>此证据==不出现==对结论为真的影响程度</li>
+<li>根据贝叶斯公式推出的几率公式：$O(H|\lnot E)＝LN×O(H),其中H=结论,E=证据$</li>
+<li>结论发生的前提下不是没有此证据的概率÷结论不发生的前提下没有此证据的概率</li>
+<li>$LN=\frac{P(E|\lnot H)}{P(\lnot E|\lnot H)}H=结论,E=证据$</li>
+</ul>
+</li>
+<li>LS、LN的关系<ul>
+<li>LS&gt;LN：越出现越支持</li>
+<li>LS&lt;LN：越不出现越支持</li>
+<li>LS=LN=1：此证据与结论无关</li>
+</ul>
+</li>
+</ul>
+<h5 id="证据不确定描述"><a href="#证据不确定描述" class="headerlink" title="证据不确定描述"></a>证据不确定描述</h5><p>使用该证据出现的先验概率转换成几率（$几率\in [0,+\infty ]$）来表示，越大越真</p>
+<h5 id="不确定性合成-1"><a href="#不确定性合成-1" class="headerlink" title="不确定性合成"></a>不确定性合成</h5><p>在某个观察到的条件下对各个证据的条件概率使用：最大最小法（与取最小，或取最大）</p>
+<h5 id="不确定的更新（证据不确定转换为概率模式）"><a href="#不确定的更新（证据不确定转换为概率模式）" class="headerlink" title="不确定的更新（证据不确定转换为概率模式）"></a>不确定的更新（证据不确定转换为概率模式）</h5><ol>
+<li>证据为真：$P(E)＝1时,O(H|E)＝LS×O(H),其中H=结论,E=证据$</li>
+<li>证据为假：$P(\lnot E)＝1时,O(H|\lnot E)＝LN×O(H),其中H=结论,E=证据$</li>
+<li>证据不确定：设S是对证据的所有观察<ol>
+<li>当P(E|S)＝1时：$P(H|S)＝P(H|E)＝\frac{ LS×P(H)}{(LS-1)×P(H)+1}$</li>
+<li>当P(E|S)＝0时：$P(H|S)＝P(H|\lnot E)＝\frac{ LN×P(H)}{(LN-1)×P(H)+1}$</li>
+<li>当P(E|S)＝P(E)时：$P(H|S)=P(H|E) ×P(E)+P(H|\lnot E) ×P(\lnot E)=P(H)$</li>
+<li>当P(E|S)为其他值时：<script type="math/tex">P(H|S)=\begin{cases} P(H|\lnot E)+\frac {(P(H)-P(H|\lnot E))}{P(E)}*P(E|S) & 若0≤P(E|S)＜P(E) \\ P(H)+\frac {P(H|E)-P(H)}{1-P(E)}*[P(E|S)-P(E)] & 若P(E)≤P(E|S)≤1  \end{cases}</script></li>
+</ol>
+</li>
+</ol>
+<h5 id="结论不确定合成"><a href="#结论不确定合成" class="headerlink" title="结论不确定合成"></a>结论不确定合成</h5><p>一组证据E1,E2…，对应一组观察S1,S2…，这组证据推出同一结论</p>
+<script type="math/tex; mode=display">O(H|S1,S2…)=O(H)*\frac{O(H|S1)}{O(H)}*\frac{O(H|S1)}{O(H)}...</script><h3 id="专家系统"><a href="#专家系统" class="headerlink" title="专家系统"></a>专家系统</h3><h4 id="专家系统的特点"><a href="#专家系统的特点" class="headerlink" title="专家系统的特点"></a>专家系统的特点</h4><ol>
+<li>启发性：运用知识和经验进行推理</li>
+<li>透明性：自然语言交互</li>
+<li>灵活性：知识可扩展，可修改</li>
+</ol>
+<h4 id="专家系统的优点"><a href="#专家系统的优点" class="headerlink" title="专家系统的优点"></a>专家系统的优点</h4><ol>
+<li>高效，准确，不知疲倦</li>
+<li>不受环境影响</li>
+<li>不受时间地点限制</li>
+<li>易传播</li>
+<li>可集成多个领域专家</li>
+</ol>
+<h4 id="专家系统的分类"><a href="#专家系统的分类" class="headerlink" title="专家系统的分类"></a>专家系统的分类</h4><ul>
+<li>解释专家系统：语音理解、图象分析</li>
+<li>预测专家系统：气象预报</li>
+<li>诊断专家系统：医疗诊断</li>
+<li>设计专家系统：VAX计算机结构设计专家系统</li>
+<li>规划专家系统：军事指挥调度系统、机器人规划系统，火车汽车运行调度系统</li>
+<li>监视专家系统：粘虫测报专家系统</li>
+<li>控制专家系统：具有解释、预报、诊断、规划 和执行等多功能系统，自主机器人控制</li>
+<li>调试专家系统：具有规划、设计、预报和诊断等专家系统的功能</li>
+<li>教学专家系统：计算机辅助教学系统</li>
+<li>修理专家系统：有诊断、调试、计划和执行等功能</li>
+</ul>
+<h3 id="计算智能"><a href="#计算智能" class="headerlink" title="计算智能"></a>计算智能</h3><h4 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h4><h5 id="人工神经元模型"><a href="#人工神经元模型" class="headerlink" title="人工神经元模型"></a>人工神经元模型</h5><p><img src="/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/人工神经元模型.svg" alt="人工神经元模型"></p>
+<h5 id="神经网络连接形式"><a href="#神经网络连接形式" class="headerlink" title="神经网络连接形式"></a>神经网络连接形式</h5><ol>
+<li>前向网络：第一层输入层、中间层隐含层、最后一层输出，输入层与输出层神经元个数可以不一致</li>
+<li>从输入到输出有反馈的前向网络：输入层与输出层神经元个数必须不一致</li>
+<li>同层的层内互连前向网络</li>
+<li>相互结合型网络（全连接）</li>
+</ol>
+<h5 id="神经网络的学习算法"><a href="#神经网络的学习算法" class="headerlink" title="神经网络的学习算法"></a>神经网络的学习算法</h5><ol>
+<li>有监督学习：输出与期望输出作比较（即监督），调整连接权重，将差异变小</li>
+<li>无监督学习</li>
+<li>再励学习</li>
+</ol>
+<h5 id="学习规则（调整权重规则）"><a href="#学习规则（调整权重规则）" class="headerlink" title="学习规则（调整权重规则）"></a>学习规则（调整权重规则）</h5><ol>
+<li>hebb学习规则：该权重的改变值是两个连接神经元的输出，以及学习速率（给定的常量）的乘积</li>
+<li>delta学习规则：该权重的改变值是前一个神经元的输出，和后一个神经元的期望输出和实际输出的差值函数值的乘积，以及学习速率（给定的常量）的乘积</li>
+</ol>
+<h5 id="单层感知器网络"><a href="#单层感知器网络" class="headerlink" title="单层感知器网络"></a>单层感知器网络</h5><p>响应函数：阈值函数$ F(x)=\begin{cases} 0  \\ 1   \end{cases}$</p>
+<p>解决：分类问题</p>
+<h5 id="线性神经网络"><a href="#线性神经网络" class="headerlink" title="线性神经网络"></a>线性神经网络</h5><p>响应函数：线性函数$F(x)=x$</p>
+<p>解决：线性拟合问题</p>
+<h5 id="W-H学习算法"><a href="#W-H学习算法" class="headerlink" title="W-H学习算法"></a>W-H学习算法</h5><p>误差：$E=|Y-Y_真|^2$</p>
+<p>响应函数类型：$Y=WX+B$</p>
+<p>梯度下降思想：用误差对响应函数求导，将WB将向导数反方向进行调整</p>
+<h5 id="BP神经网络（反向传播）"><a href="#BP神经网络（反向传播）" class="headerlink" title="BP神经网络（反向传播）"></a>BP神经网络（反向传播）</h5><p>模型：至少三层前向网络模型（输入层、隐含层、输出层）</p>
+<p>误差效能：$误差*输出层响应函数的求导$</p>
+<p>隐含层权重的修正量：$学习率<em>后一个神经元的误差效能</em>前一个神经元的输入$</p>
+<p>解决：非线性问题</p>
+<h4 id="进化计算"><a href="#进化计算" class="headerlink" title="进化计算"></a>进化计算</h4><h5 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h5><ul>
+<li>自然选择、优胜略汰</li>
+<li>生物遗传学</li>
+<li>随机自适应的全局搜索算法</li>
+</ul>
+<h5 id="遗传算法"><a href="#遗传算法" class="headerlink" title="遗传算法"></a>遗传算法</h5><ol>
+<li><p>编码与译码：问题的解转换为位串形式，反正为译码</p>
+<ul>
+<li>基因型（染色体）：位串<ul>
+<li>染色体长度：位串长度</li>
+<li>基因位：位串的一位</li>
+</ul>
+</li>
+<li>表现型：解码后的位串</li>
+<li>解空间：表现型的空间</li>
+<li>编码空间：基因型空间，搜索空间</li>
+<li>编码：位串与解空间的映射</li>
+<li>种群：个体集合（遗传算法中种群规模不变）</li>
+</ul>
+</li>
+<li><p>适应度函数</p>
+<ul>
+<li>评价个体的优秀程度</li>
+<li>越优秀函数值越大</li>
+<li>函数值都大于等于零</li>
+</ul>
+</li>
+<li><p>遗传操作</p>
+<ol>
+<li><p>选择：轮盘赌、转轮法</p>
+<ol>
+<li>染色体的选择概率：$\frac{该个体适应度函数值} {所有个体适应度函数值之和}$</li>
+<li>每个个体的累计概率：$当前选择概率+之前所有个体选择概率$</li>
+<li>产生随机数，根据随机数大小在累计概率那个区间，选择出个体，放入交配池</li>
+</ol>
+</li>
+<li><p>交叉</p>
+<ul>
+<li><p>交叉概率：根据交叉概率，选取交叉多少对个体</p>
+</li>
+<li><p>随机选择交配池中的两条染色体，随机指定一点或多点交叉位置，进行交换，得到两条新染色体</p>
+</li>
+</ul>
+</li>
+<li><p>变异</p>
+<ul>
+<li>根据变异概率在交叉后的新个体中选择个体变异</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="模糊计算"><a href="#模糊计算" class="headerlink" title="模糊计算"></a>模糊计算</h4><h5 id="模糊性和随机性的区别"><a href="#模糊性和随机性的区别" class="headerlink" title="模糊性和随机性的区别"></a>模糊性和随机性的区别</h5><p>随机性：是描述事件或现象含义是清楚的，可能事件概率总和为1</p>
+<p>模糊性：所描述的现象或概念本身边界是不清楚的，模糊性用可能性来度量，也是0到1之间的数，但是总和不要求是1</p>
+<h5 id="模糊集"><a href="#模糊集" class="headerlink" title="模糊集"></a>模糊集</h5><p>模糊集（隶属度集或隶属函数映射集）：0到1之间的数表示状态，属于该状态的程度，即隶属度，越大越属于，一个模糊集对应一个模糊语言值</p>
+<p>经典集：0或1表示状态</p>
+<p>论域：讨论的范围，可以是连续的，也可以是不连续的</p>
+<p>隶属函数：将论域映射到0到1上的一个数字，用来映射模糊集</p>
+<p>模糊集表示</p>
+<ul>
+<li>$F=隶属度/论域中的一个值+…$</li>
+<li>$F=隶属度函数/论域中的一个值+…$</li>
+<li></li>
+</ul>
+<h5 id="模糊集的运算"><a href="#模糊集的运算" class="headerlink" title="模糊集的运算"></a>模糊集的运算</h5><p>相等：两个模糊集合所有元素相等则模糊集相等</p>
+<p>包含：一个模糊集中的元素都小于或等于另一个模糊集，则这个集合包含另一个集合，另一个集合其实更加精确</p>
+<p>并集：两个模糊集同一个论域点，隶属度取最大，表示两个模糊语言的或者关系</p>
+<p>交集：连个模糊集同一个论域点，隶属度取最小，表示连个模糊语言同时满足</p>
+<p>补集：记作~F，将集合中的所有隶属函数换成$1-u_F(u)$，表示该模糊集的非集</p>
+<p>集中：将模糊集中的隶属度平方，表示非常，很等修饰</p>
+<p>扩张：将模糊集中的隶属度开根号，表示有些，稍微等修饰</p>
+<p>加强对比：对隶属度0.5以上$2u_F^2(u)$，对0.5以下$1-2(1-u_F(u))^2$，表示明确，确定等修饰</p>
+<h5 id="模糊关系"><a href="#模糊关系" class="headerlink" title="模糊关系"></a>模糊关系</h5><ol>
+<li><p>两个模糊关系做笛卡尔乘积，V={郭德纲，于谦}，U={抽烟，喝酒，烫头}，，U×V={（郭德纲，抽烟），（郭德纲，喝酒），（郭德纲，烫头），（于谦，抽烟），（于谦，喝酒），（于谦，烫头）}</p>
+</li>
+<li><p>对得到的结果计算隶属度，有关系的程度$\mu_R(于谦，烫头)=1$等</p>
+</li>
+<li><p>使用矩阵表示$\mu_R$的值，一行表示一个U元素，一列表示一个V元素</p>
+<script type="math/tex; mode=display">\begin{matrix}   0.1 & 0.2 & 0.3 \\   0.4 & 0.5 & 1  \end{matrix}</script></li>
+</ol>
+<h5 id="模糊关系合成"><a href="#模糊关系合成" class="headerlink" title="模糊关系合成"></a>模糊关系合成</h5><p>对于两个关系矩阵R1（模糊集1×模糊集2）和R2（模糊集2×模糊集3），合成记作R=R1·R2，合成方法如下，最终得到的关系是模糊集1和模糊集3的关系</p>
+<p><img src="/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/模糊关系合成.svg" alt="模糊关系合成"></p>
+<h5 id="模糊变换（推导另一个模糊集）"><a href="#模糊变换（推导另一个模糊集）" class="headerlink" title="模糊变换（推导另一个模糊集）"></a>模糊变换（推导另一个模糊集）</h5><p>已知一个模糊集（F），已知模糊关系矩阵（R=U×V），则$F·R=G$，运算方法与关系合成一样</p>
+<h5 id="模糊推理"><a href="#模糊推理" class="headerlink" title="模糊推理"></a>模糊推理</h5><h6 id="模糊概念的匹配"><a href="#模糊概念的匹配" class="headerlink" title="模糊概念的匹配"></a>模糊概念的匹配</h6><ul>
+<li><p>海明距离：两个模糊集的每个隶属度做差取绝对值，全部相加后取平均，$d(F,G)=\frac{\vert\mu_F(u_1)-\mu_G(u_1)\vert + \vert\mu_F(u_2)-\mu_G(u_2)\vert + … +\vert\mu_F(u_n)-\mu_G(u_n)\vert}{n}$</p>
+</li>
+<li><p>贴进度：内积加上一减去外积除以二，$(F,G)= \frac{(F·G+(1-F\bigodot G))}{2}$</p>
+<ul>
+<li>内积：先两个模糊集中每对应个元素取最小，再整体取最大$F·G=max<min(\mu_F(u_1),\mu_G(u_1)),min(\mu_F(u_2),\mu_G(u_2)),...,min(\mu_F(u_n),\mu_G(u_n))>$</min(\mu_F(u_1),\mu_G(u_1)),min(\mu_F(u_2),\mu_G(u_2)),...,min(\mu_F(u_n),\mu_G(u_n))></li>
+<li>外积：先两个模糊集中对应元素取最大，再整体取最小$F\bigodot  G=min<max(\mu_F(u_1),\mu_G(u_1)),max(\mu_F(u_2),\mu_G(u_2)),...,max(\mu_F(u_n),\mu_G(u_n))>$</max(\mu_F(u_1),\mu_G(u_1)),max(\mu_F(u_2),\mu_G(u_2)),...,max(\mu_F(u_n),\mu_G(u_n))></li>
+</ul>
+</li>
+</ul>
+<h6 id="模糊规则"><a href="#模糊规则" class="headerlink" title="模糊规则"></a>模糊规则</h6><p>IF x is A THEN y is B    =&gt;x和y表示语言变量，A和B表示该语言变量（模糊语言）取具体值的时候</p>
+<h6 id="模糊规则矩阵构造方法"><a href="#模糊规则矩阵构造方法" class="headerlink" title="模糊规则矩阵构造方法"></a>模糊规则矩阵构造方法</h6><p>说明：A(x)等表示该模糊集取论域中的值的隶属度</p>
+<p>行表示一个模糊集，列表示另一个模糊集，矩阵中每个对应元素应用以下算法</p>
+<ul>
+<li>Mamdani算法：R(x，y)=min{A(x),B(y)}或者R(x，y)=A(x)*B(y)</li>
+<li>Zadeh算法：R(x，y)=max{min{A(x),B(y)},1-A(x)}</li>
+</ul>
+<h6 id="模糊推理-1"><a href="#模糊推理-1" class="headerlink" title="模糊推理"></a>模糊推理</h6><ul>
+<li>模糊假言推理：利用模糊变换（模糊集*关系矩阵）得到一个模糊结论</li>
+<li>模糊拒取式推理方法：已知模糊结论，倒推证据，利用模糊变换（关系矩阵*模糊集的转置)得到证据</li>
+<li>模糊假言三段论：已知两条规则，利用模糊关系合成，得到新的规则矩阵</li>
+</ul>
+]]></content>
+      <categories>
+        <category>人工智能</category>
       </categories>
       <tags>
         <tag>笔记</tag>
@@ -2525,475 +3047,6 @@
 ]]></content>
       <categories>
         <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>人工智能</title>
-    <url>/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</url>
-    <content><![CDATA[<h3 id="人工智能的三大学派"><a href="#人工智能的三大学派" class="headerlink" title="人工智能的三大学派"></a>人工智能的三大学派</h3><p>符号学派：专家系统：智能行为</p>
-<p>连接学派：神经网络：仿生</p>
-<p>行为学派：遗传算法：低级生物智能</p>
-<h3 id="知识表示方法"><a href="#知识表示方法" class="headerlink" title="知识表示方法"></a>知识表示方法</h3><h4 id="状态空间"><a href="#状态空间" class="headerlink" title="状态空间"></a>状态空间</h4><p>三元组：初始状态集，操作集，目标状态集</p>
-<h4 id="谓词逻辑"><a href="#谓词逻辑" class="headerlink" title="谓词逻辑"></a>谓词逻辑</h4><h5 id="原子公式"><a href="#原子公式" class="headerlink" title="原子公式"></a>原子公式</h5><h6 id="基本组成"><a href="#基本组成" class="headerlink" title="基本组成"></a>基本组成</h6><ul>
-<li>谓词符号：关系（首字母大写）</li>
-<li>个体符号：常量（全大写）、变量（小写）、函数（函数名小写）</li>
-<li>注意：==谓词内可以嵌套函数，但是不能嵌套谓词==</li>
-</ul>
-<h6 id="n元谓词"><a href="#n元谓词" class="headerlink" title="n元谓词"></a>n元谓词</h6><ol>
-<li>一元谓词：性质、属性</li>
-<li>二元谓词：两个个体关系</li>
-<li>多元谓词：多个个体关系</li>
-</ol>
-<h5 id="分子公式"><a href="#分子公式" class="headerlink" title="分子公式"></a>分子公式</h5><h6 id="连词"><a href="#连词" class="headerlink" title="连词"></a>连词</h6><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>符号</th>
-<th style="text-align:left">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$\lor$</td>
-<td style="text-align:left">与（合取）</td>
-</tr>
-<tr>
-<td>$\land$</td>
-<td style="text-align:left">或（析取）</td>
-</tr>
-<tr>
-<td>$\lnot$、~</td>
-<td style="text-align:left">非</td>
-</tr>
-<tr>
-<td>$\longrightarrow$</td>
-<td style="text-align:left">蕴含（推理）关系，如果…那么…</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h5 id="谓词公式"><a href="#谓词公式" class="headerlink" title="谓词公式"></a>谓词公式</h5><h6 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h6><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>符号</th>
-<th style="text-align:left">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$\forall$</td>
-<td style="text-align:left">全称量词（针对变量），所有</td>
-</tr>
-<tr>
-<td>$\exists$</td>
-<td style="text-align:left">存在量词（针对变量），至少有一个</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h5 id="置换与合一"><a href="#置换与合一" class="headerlink" title="置换与合一"></a>置换与合一</h5><h6 id="什么是置换合一？"><a href="#什么是置换合一？" class="headerlink" title="什么是置换合一？"></a>什么是置换合一？</h6><p>若F=P(x)</p>
-<p>置换：$\theta$={a/x}</p>
-<p>示例：G=F$\theta$ =P(a)</p>
-<p><strong>合一置换</strong>：一个置换使得两个不同谓词得到==相同示例==（不唯一）</p>
-<p><strong>最一般的合一</strong>：最简合一置换（唯一）</p>
-<h6 id="可以合一的条件"><a href="#可以合一的条件" class="headerlink" title="可以合一的条件"></a>可以合一的条件</h6><ol>
-<li>谓词一致</li>
-<li>项数一致</li>
-<li>常量置换变量，函数置换变量</li>
-</ol>
-<h4 id="语义网络"><a href="#语义网络" class="headerlink" title="语义网络"></a>语义网络</h4><h5 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h5><p>节点：实体、属性、状态、动作等</p>
-<p>有向弧：表示联系</p>
-<h5 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h5><p>匹配：问题构造语义网络片段，去匹配知识库中的片段</p>
-<p>继承：建立结点栈，讲继承关系结点入栈，逐个出栈，将出栈实体属性加入解中</p>
-<h3 id="搜索技术（状态空间）"><a href="#搜索技术（状态空间）" class="headerlink" title="搜索技术（状态空间）"></a>搜索技术（状态空间）</h3><h4 id="图搜索策略"><a href="#图搜索策略" class="headerlink" title="图搜索策略"></a>图搜索策略</h4><p>open表：当前未扩展结点</p>
-<p>close表：已扩展结点</p>
-<p><img src="/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/图搜索过程及数据结构-1590048943613.svg" alt="图搜索过程及数据结构"></p>
-<h4 id="盲目搜索"><a href="#盲目搜索" class="headerlink" title="盲目搜索"></a>盲目搜索</h4><p>==不重排open表==</p>
-<ol>
-<li>宽度优先：open表是队列</li>
-<li>深度优先：open表是栈</li>
-<li>等代价优先：根据代价决定加入队列的优先级，所有连接弧代价都相等即为宽度优先</li>
-</ol>
-<h4 id="启发式搜索"><a href="#启发式搜索" class="headerlink" title="启发式搜索"></a>启发式搜索</h4><p>==重排open表==，即决定先扩展那个结点，或放弃哪一个结点扩展</p>
-<ol>
-<li><p>A算法(有序搜索)：根据估计函数来重排open表</p>
-</li>
-<li><p>A*算法：理想的A算法最佳路径</p>
-<p>估价函数：已经付出的代价+估计还要付出的代价</p>
-</li>
-<li><p>博弈树（己方与max，对方或min的<strong>与或树</strong>）</p>
-<ol>
-<li>极大极小搜索：用宽度优先算法根据规定深度找出全部博弈树，为了使得自己利益最大化，从最底层结点倒推，就得使得己方max估价函数取值最大的节点，对方min估价函数取最小的节点</li>
-<li>$\alpha(max)-\beta(min)$剪枝搜索：深度优先，max确定下界，min确定上界，不同层的$\alpha(max)&gt;=\beta(min)$就剪枝<ol>
-<li>$\alpha$剪枝：先辈是$\alpha$</li>
-<li>$\beta$剪枝：先辈是$\beta$</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h3 id="推理技术（经典推理）"><a href="#推理技术（经典推理）" class="headerlink" title="推理技术（经典推理）"></a>推理技术（经典推理）</h3><h4 id="消解原理（谓词逻辑）"><a href="#消解原理（谓词逻辑）" class="headerlink" title="消解原理（谓词逻辑）"></a>消解原理（谓词逻辑）</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p>文字：一个原子公式及其否定，$P(x)、 \lnot P(x)$</p>
-<p>子句：文字的析取（或），$P(x) \lor Q(x)$</p>
-<p>空子句：不包含任何子句的文字，用$NIL$</p>
-<p>子句集：由子句或空子句构成的集合</p>
-<p>消解：对谓词演算公式进行分解和化简，消去一些符号，得到子句</p>
-<p>消解式：两个子句通过消解，得到的新子句</p>
-<p>重言式：互补文字的文字，例如：$P(x)\lor \lnot P(x)$、$P(x)\lor Q(y)  \lor \lnot P(x) \lor \lnot Q(y)$</p>
-<h5 id="求子句集的九个步骤"><a href="#求子句集的九个步骤" class="headerlink" title="求子句集的九个步骤"></a>求子句集的九个步骤</h5><ol>
-<li>消去蕴涵符号：$A \longrightarrow B &lt;=&gt; \lnot A \lor B$</li>
-<li><p>减少否定符号管辖范围；摩根定律和量词转换定律</p>
-<ul>
-<li>$\lnot (A \lor B) &lt;=&gt; \lnot A \land \lnot B$</li>
-<li>$\lnot (A \land B) &lt;=&gt; \lnot A \lor \lnot B$</li>
-<li>$\lnot (\exists x)P(x) &lt;=&gt; \forall x[\lnot P(x)]$</li>
-<li>$\lnot (\forall x)P(x) &lt;=&gt; \exists x[\lnot P(x)]$</li>
-</ul>
-</li>
-<li>对变量标准化（改名）：不同量词辖域变量，使用不同变量名</li>
-<li><p>消去存在量词</p>
-<ol>
-<li><p>是其他量词被包裹的：使用Skolem函数</p>
-<ul>
-<li><p>利用外层约束构造Skolem函数替换内层被约束变量</p>
-</li>
-<li><p>例：$\forall y [(\exists x)P(x,y)] &lt;=&gt; \forall y P(g(y),y)$</p>
-</li>
-</ul>
-</li>
-<li><p>没有被包裹：$(\exists x)P(x) &lt;=&gt; P(X)$ X是常量</p>
-</li>
-</ol>
-</li>
-<li>化为前束式：将全称量词都移到公式前面，量词部分称为前缀，后面称为母式</li>
-<li><p>将母式化为子句合取范式：使用分配律改为或的关系</p>
-<ul>
-<li>不使用$ A \lor(B \land C) &lt;=&gt; (A \lor B) \land (A \lor C)$</li>
-<li>==$ A \land (B \lor C) &lt;=&gt; (A \land B) \lor (A \land C)$==</li>
-</ul>
-</li>
-<li>消去全称量词：$(\forall x)P(x) &lt;=&gt; P(y)$</li>
-<li>消去连接符号$\land$：使用$\{A,B\}$代替$A \land B$</li>
-<li>对集合中每个子句的变量进行唯一变量名更改(改名)</li>
-</ol>
-<h5 id="消解"><a href="#消解" class="headerlink" title="消解"></a>消解</h5><p>不含变量的消解：两个子句，消去互补文字，剩下未消去的内容任然用子句连接符号$\lor$(或)进行连接</p>
-<p>含变量的消解：两个子句，将可能互补的一对，置换为合一式，消去，其他非互补谓词中也要使用该置换进行置换，剩下未消去的内容任然用子句连接符号$\lor$(或)进行连接</p>
-<h5 id="消解反演证明问题"><a href="#消解反演证明问题" class="headerlink" title="消解反演证明问题"></a>消解反演证明问题</h5><ol>
-<li>定义谓词</li>
-<li>使用定义谓词将已知的知识（问题和要证明的结论）表示出来</li>
-<li>将问题和要证明的结论的否定分别求取子句集</li>
-<li>合并两个求取的子句集</li>
-<li>对新子句集使用消解原理，推出空子句即可证明</li>
-</ol>
-<h5 id="消解反演求解问题"><a href="#消解反演求解问题" class="headerlink" title="消解反演求解问题"></a>消解反演求解问题</h5><ol>
-<li>定义谓词</li>
-<li>使用定义谓词将已知的知识（问题和问题目标）表示出来</li>
-<li>将问题和问题目标的否定分别求取子句集</li>
-<li>对问题目标子句集中每个子句，构造重言式，加入到问题子句集中</li>
-<li>对新子句集使用消解原理，该子句集的根子句为求解问题的答案</li>
-</ol>
-<h4 id="规则演绎系统（产生式规则）"><a href="#规则演绎系统（产生式规则）" class="headerlink" title="规则演绎系统（产生式规则）"></a>规则演绎系统（产生式规则）</h4><h5 id="正向规则演绎系统"><a href="#正向规则演绎系统" class="headerlink" title="正向规则演绎系统"></a>正向规则演绎系统</h5><ol>
-<li><p>将事实转换为与或形：只有文字的析取（或）和合取（与）</p>
-<ol>
-<li>减少否定符号管辖范围；摩根定律和量词转换定律</li>
-<li>对变量标准化（改名）：各项合取（与）变量名不同</li>
-<li>消去存在量词，常量消去</li>
-<li>化为前束式，后消除全称量词：将全称量词都移到公式前面，量词部分称为前缀，后面称为母式</li>
-</ol>
-</li>
-<li><p>用与或图表示与或表达式：与关系层1连接符，或关系层k连接符</p>
-</li>
-<li><p>与或图的F规则转换</p>
-<ol>
-<li><p>将规则转换为单文字蕴含与或形公式：例：</p>
-<ol>
-<li>左面是单文字，右面是与或形可转为与或图</li>
-</ol>
-<ul>
-<li>$S \longrightarrow A \land B \lor C$</li>
-<li>$A \lor B \longrightarrow C &lt;=&gt; A\longrightarrow C 、 B \longrightarrow C $ </li>
-<li>$A \land B \longrightarrow C 无效 $</li>
-</ul>
-</li>
-<li><p>规则蕴含式左面单文字配匹的已知与或图节点，用匹配符连接规则蕴含式右的新与或图</p>
-</li>
-</ol>
-</li>
-<li><p>得到作为终止条件的目标公式</p>
-<ol>
-<li>由与或树得到的子句集中出现就终止</li>
-<li>子句集是析取层（或）父节点不同的节点组合</li>
-</ol>
-</li>
-</ol>
-<h5 id="逆向规则演绎系统"><a href="#逆向规则演绎系统" class="headerlink" title="逆向规则演绎系统"></a>逆向规则演绎系统</h5><ol>
-<li><p>将事实转换为与或形：只有文字的析取（或）和合取（与）</p>
-<ol>
-<li>减少否定符号管辖范围；摩根定律和量词转换定律</li>
-<li>对变量标准化（改名）：与正向演绎相反，各项析取（或）变量名不同</li>
-<li>消去存在量词，skolem函数消</li>
-<li>化为前束式，后消除全称量词：将全称量词都移到公式前面，量词部分称为前缀，后面称为母式</li>
-</ol>
-</li>
-<li><p>用与或图表示与或表达式：连接符与正向演绎相反，与关系层k连接符，或关系层1连接符</p>
-</li>
-<li><p>与或图的B规则转换</p>
-<ol>
-<li><p>将规则转换为与或形蕴含单文字公式：例：</p>
-<ol>
-<li>右面是单文字，左面面是与或形可转为与或图</li>
-</ol>
-<ul>
-<li>$A \land B \lor C\longrightarrow S$</li>
-<li>$C \longrightarrow A \lor B &lt;=&gt; C\longrightarrow A 、 C \longrightarrow B $ </li>
-<li>$C \longrightarrow A \land B :无效 $</li>
-</ul>
-</li>
-<li><p>规则蕴含式右面单文字配匹的已知与或图节点，用匹配符连接规则蕴含式右的新与或图</p>
-</li>
-<li><p>置换后与已知事实一致则证明成功</p>
-</li>
-</ol>
-</li>
-</ol>
-<h5 id="双向规则演绎系统"><a href="#双向规则演绎系统" class="headerlink" title="双向规则演绎系统"></a>双向规则演绎系统</h5><p>使用正向和反向演绎同时进行推理，正向和逆向叶节点都匹配了，则证明成功</p>
-<h4 id="产生式系统（产生式规则）"><a href="#产生式系统（产生式规则）" class="headerlink" title="产生式系统（产生式规则）"></a>产生式系统（产生式规则）</h4><h5 id="总数据库"><a href="#总数据库" class="headerlink" title="总数据库"></a>总数据库</h5><ul>
-<li>存放初始证据</li>
-<li>原始证据（证据不足询问的新证据）</li>
-<li>中间结论</li>
-<li>结果</li>
-</ul>
-<h5 id="规则库"><a href="#规则库" class="headerlink" title="规则库"></a>规则库</h5><ul>
-<li>规则集（一条条IF…THEN…）</li>
-</ul>
-<h5 id="控制策略"><a href="#控制策略" class="headerlink" title="控制策略"></a>控制策略</h5><h6 id="推理策略"><a href="#推理策略" class="headerlink" title="推理策略"></a>推理策略</h6><ul>
-<li>推理方向<ul>
-<li>正向推理：由总数据库的初始证据一步步得到结果</li>
-<li>反向推理：假设成立，一步步搜索支持假设的证据是否存在总数据库中</li>
-<li>双向推理：先正向或反向推理，推理不下去了，回头询问用户原始证据再接着推理</li>
-</ul>
-</li>
-<li>冲突消解：解决满足多条规则都满足的情况选则那条结论</li>
-</ul>
-<h6 id="搜索策略"><a href="#搜索策略" class="headerlink" title="搜索策略"></a>搜索策略</h6><p>搜索路线决定效率</p>
-<h3 id="非经典推理"><a href="#非经典推理" class="headerlink" title="非经典推理"></a>非经典推理</h3><h4 id="不确定推理"><a href="#不确定推理" class="headerlink" title="不确定推理"></a>不确定推理</h4><h5 id="不确定的表示和度量"><a href="#不确定的表示和度量" class="headerlink" title="不确定的表示和度量"></a>不确定的表示和度量</h5><ul>
-<li>知识不确定：知识表示方法不确定</li>
-<li>证据不确定：对于可能有，不知道等词的证据，确定其可能值</li>
-<li>结论不确定：证据充足但结论不确定</li>
-<li>度量不确定：不确定的程度有多大</li>
-</ul>
-<h5 id="不确定匹配"><a href="#不确定匹配" class="headerlink" title="不确定匹配"></a>不确定匹配</h5><p>相似度匹配算法：设置阈值，在阈值内则认为匹配，否则该证据不可用</p>
-<h5 id="不确定性传递"><a href="#不确定性传递" class="headerlink" title="不确定性传递"></a>不确定性传递</h5><ul>
-<li>不确定更新算法：根据知识和规则不确定算出结论的不确定程度</li>
-<li>证据的合取不确定算法（与）</li>
-<li>证据的析取不确定算法（或）</li>
-</ul>
-<h5 id="不确定性合成"><a href="#不确定性合成" class="headerlink" title="不确定性合成"></a>不确定性合成</h5><ul>
-<li>并行规则算法：根据不同知识和不同规则，得到相同结论的不确定，==综合==两条不确定结论程度</li>
-<li>组合证据不确定算法（多条证据的与或）<ul>
-<li>最大最小法：与取最小，或取最大</li>
-<li>概率法：与取乘积，或取和减去乘积</li>
-<li>有界法：保证与大于0，或小于1，确定在0到1之间</li>
-</ul>
-</li>
-</ul>
-<h4 id="概率论"><a href="#概率论" class="headerlink" title="概率论"></a>概率论</h4><ul>
-<li>样本点：可能出现的单个结果</li>
-<li>样本空间：全部结果</li>
-<li>随机事件：样本点构成的集合<ul>
-<li>至少有一个发生：$A \cup B$</li>
-<li>同时发生：$A \cap B$</li>
-<li>互逆事件：不会同时发生，两个事件并集是整个样本空间</li>
-</ul>
-</li>
-<li>统计概率：大量重复实验，得到时间发生的概论<ul>
-<li>不可能事件：不可能发生的事件</li>
-<li>必然事件：必定发生的事件</li>
-<li>互不相容事件：不可能同时发生</li>
-</ul>
-</li>
-<li>条件概率<ul>
-<li>事件B发生的前提下（已经发生，也就是说样本空间发生了变化），A发生的概率</li>
-<li>$P(A|B)=\frac{P(A \cap B)}{P(B)}$</li>
-</ul>
-</li>
-<li>全概率公式<ul>
-<li>事件A：各个事件互不相容，并集是整个样本空间</li>
-<li>事件B则有：$P(B) = \sum\limits_{i=1}^{n}(P(A_i) * P(B|A_i))$</li>
-</ul>
-</li>
-<li>贝叶斯公式<ul>
-<li>事件A：各个事件互不相容，并集是整个样本空间</li>
-<li>事件B则有：$P(A_i|B)= \frac{P(A_i)<em>P(B|A_i)}{\sum\limits_{j=1}^{n} P(A_j)</em>P(B|A_j)}$</li>
-</ul>
-</li>
-</ul>
-<h4 id="可信度方法（C-F模型）"><a href="#可信度方法（C-F模型）" class="headerlink" title="可信度方法（C-F模型）"></a>可信度方法（C-F模型）</h4><ul>
-<li>知识不确定表示：<code>IF 证据 THEN 结论 CF(结论,证据)</code></li>
-<li>可信度的度量：$CF\in [-1,1]$，越大越真，越小越假，0则证据与结论无关</li>
-<li>证据可信度：<code>CF(证据)</code>，$CF\in [-1,1]$，越大越真，越小越假，0则是不知道该证据</li>
-<li>结论可信度和传递：$CF(结论)=CF(结论,证据)*max(0,CF(证据))$</li>
-<li>不确定合成<ul>
-<li>组合证据不确定合成：最大最小法（与取最小，或取最大）</li>
-<li>结论不确定合成：<script type="math/tex">CF_总(结论)=\begin{cases} 和减积 & 都大于0 \\ 和加积 & 都小于0\\ 1减去绝对值较小的那个CF值分之和 & 其他  \end{cases}</script></li>
-</ul>
-</li>
-</ul>
-<h4 id="带加权因子的可信度推理方法"><a href="#带加权因子的可信度推理方法" class="headerlink" title="带加权因子的可信度推理方法"></a>带加权因子的可信度推理方法</h4><ul>
-<li>知识的不确定：<code>IF 证据1(加权因子值1) AND 证据2(加权因子值2)... THEN 结论 CF(结论,证据)</code><ul>
-<li>加权因子：该证据对结论的影响程度，取值范围[0,1]之间</li>
-<li>所有加权因子之和是1，若不是1则转换为1</li>
-</ul>
-</li>
-<li>不确定合成：各个CF值与各个加权因子值的乘积之和</li>
-</ul>
-<h4 id="贝叶斯方法"><a href="#贝叶斯方法" class="headerlink" title="贝叶斯方法"></a>贝叶斯方法</h4><h5 id="几率函数"><a href="#几率函数" class="headerlink" title="几率函数"></a>几率函数</h5><p>几率=发生的概率÷不发生的概率，$几率 \in [0,+\infty ] $</p>
-<script type="math/tex; mode=display">O(x)＝\frac{P(x)}{(1-P(x))}</script><h5 id="知识的不确定表示"><a href="#知识的不确定表示" class="headerlink" title="知识的不确定表示"></a>知识的不确定表示</h5><ul>
-<li>表示方法：<code>IF 证据 THEN 结论 (LS,LN)</code>$LS,LN\in [0,+\infty ]$</li>
-<li>LS（充分性度量：此证据出现LS越大结论越真）<ul>
-<li>此证据==出现==对结论为真的影响程度</li>
-<li>根据贝叶斯公式推出的几率公式：$O(H|E)＝LS×O(H),其中H=结论,E=证据$</li>
-<li>结论发生的前提下是有此证据概率÷结论不发生的前提下有此证据的概率</li>
-<li>$LS=\frac {P(E|H)}{P(E| \lnot H)} H=结论,E=证据$</li>
-</ul>
-</li>
-<li>LN（必要性度量：此证据不出现LN越大结论越真）<ul>
-<li>此证据==不出现==对结论为真的影响程度</li>
-<li>根据贝叶斯公式推出的几率公式：$O(H|\lnot E)＝LN×O(H),其中H=结论,E=证据$</li>
-<li>结论发生的前提下不是没有此证据的概率÷结论不发生的前提下没有此证据的概率</li>
-<li>$LN=\frac{P(E|\lnot H)}{P(\lnot E|\lnot H)}H=结论,E=证据$</li>
-</ul>
-</li>
-<li>LS、LN的关系<ul>
-<li>LS&gt;LN：越出现越支持</li>
-<li>LS&lt;LN：越不出现越支持</li>
-<li>LS=LN=1：此证据与结论无关</li>
-</ul>
-</li>
-</ul>
-<h5 id="证据不确定描述"><a href="#证据不确定描述" class="headerlink" title="证据不确定描述"></a>证据不确定描述</h5><p>使用该证据出现的先验概率转换成几率（$几率\in [0,+\infty ]$）来表示，越大越真</p>
-<h5 id="不确定性合成-1"><a href="#不确定性合成-1" class="headerlink" title="不确定性合成"></a>不确定性合成</h5><p>在某个观察到的条件下对各个证据的条件概率使用：最大最小法（与取最小，或取最大）</p>
-<h5 id="不确定的更新（证据不确定转换为概率模式）"><a href="#不确定的更新（证据不确定转换为概率模式）" class="headerlink" title="不确定的更新（证据不确定转换为概率模式）"></a>不确定的更新（证据不确定转换为概率模式）</h5><ol>
-<li>证据为真：$P(E)＝1时,O(H|E)＝LS×O(H),其中H=结论,E=证据$</li>
-<li>证据为假：$P(\lnot E)＝1时,O(H|\lnot E)＝LN×O(H),其中H=结论,E=证据$</li>
-<li>证据不确定：设S是对证据的所有观察<ol>
-<li>当P(E|S)＝1时：$P(H|S)＝P(H|E)＝\frac{ LS×P(H)}{(LS-1)×P(H)+1}$</li>
-<li>当P(E|S)＝0时：$P(H|S)＝P(H|\lnot E)＝\frac{ LN×P(H)}{(LN-1)×P(H)+1}$</li>
-<li>当P(E|S)＝P(E)时：$P(H|S)=P(H|E) ×P(E)+P(H|\lnot E) ×P(\lnot E)=P(H)$</li>
-<li>当P(E|S)为其他值时：<script type="math/tex">P(H|S)=\begin{cases} P(H|\lnot E)+\frac {(P(H)-P(H|\lnot E))}{P(E)}*P(E|S) & 若0≤P(E|S)＜P(E) \\ P(H)+\frac {P(H|E)-P(H)}{1-P(E)}*[P(E|S)-P(E)] & 若P(E)≤P(E|S)≤1  \end{cases}</script></li>
-</ol>
-</li>
-</ol>
-<h5 id="结论不确定合成"><a href="#结论不确定合成" class="headerlink" title="结论不确定合成"></a>结论不确定合成</h5><p>一组证据E1,E2…，对应一组观察S1,S2…，这组证据推出同一结论</p>
-<script type="math/tex; mode=display">O(H|S1,S2…)=O(H)*\frac{O(H|S1)}{O(H)}*\frac{O(H|S1)}{O(H)}...</script><h3 id="专家系统"><a href="#专家系统" class="headerlink" title="专家系统"></a>专家系统</h3><h4 id="专家系统的特点"><a href="#专家系统的特点" class="headerlink" title="专家系统的特点"></a>专家系统的特点</h4><ol>
-<li>启发性：运用知识和经验进行推理</li>
-<li>透明性：自然语言交互</li>
-<li>灵活性：知识可扩展，可修改</li>
-</ol>
-<h4 id="专家系统的优点"><a href="#专家系统的优点" class="headerlink" title="专家系统的优点"></a>专家系统的优点</h4><ol>
-<li>高效，准确，不知疲倦</li>
-<li>不受环境影响</li>
-<li>不受时间地点限制</li>
-<li>易传播</li>
-<li>可集成多个领域专家</li>
-</ol>
-<h4 id="专家系统的分类"><a href="#专家系统的分类" class="headerlink" title="专家系统的分类"></a>专家系统的分类</h4><ul>
-<li>解释专家系统：语音理解、图象分析</li>
-<li>预测专家系统：气象预报</li>
-<li>诊断专家系统：医疗诊断</li>
-<li>设计专家系统：VAX计算机结构设计专家系统</li>
-<li>规划专家系统：军事指挥调度系统、机器人规划系统，火车汽车运行调度系统</li>
-<li>监视专家系统：粘虫测报专家系统</li>
-<li>控制专家系统：具有解释、预报、诊断、规划 和执行等多功能系统，自主机器人控制</li>
-<li>调试专家系统：具有规划、设计、预报和诊断等专家系统的功能</li>
-<li>教学专家系统：计算机辅助教学系统</li>
-<li>修理专家系统：有诊断、调试、计划和执行等功能</li>
-</ul>
-<h3 id="计算智能"><a href="#计算智能" class="headerlink" title="计算智能"></a>计算智能</h3><h4 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h4><h5 id="人工神经元模型"><a href="#人工神经元模型" class="headerlink" title="人工神经元模型"></a>人工神经元模型</h5><p><img src="/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/人工神经元模型-1590048943614.svg" alt="人工神经元模型"></p>
-<h5 id="神经网络连接形式"><a href="#神经网络连接形式" class="headerlink" title="神经网络连接形式"></a>神经网络连接形式</h5><ol>
-<li>前向网络：第一层输入层、中间层隐含层、最后一层输出，输入层与输出层神经元个数可以不一致</li>
-<li>从输入到输出有反馈的前向网络：输入层与输出层神经元个数必须不一致</li>
-<li>同层的层内互连前向网络</li>
-<li>相互结合型网络（全连接）</li>
-</ol>
-<h5 id="神经网络的学习算法"><a href="#神经网络的学习算法" class="headerlink" title="神经网络的学习算法"></a>神经网络的学习算法</h5><ol>
-<li>有监督学习：输出与期望输出作比较（即监督），调整连接权重，将差异变小</li>
-<li>无监督学习</li>
-<li>再励学习</li>
-</ol>
-<h5 id="学习规则（调整权重规则）"><a href="#学习规则（调整权重规则）" class="headerlink" title="学习规则（调整权重规则）"></a>学习规则（调整权重规则）</h5><ol>
-<li>hebb学习规则：该权重的改变值是两个连接神经元的输出，以及学习速率（给定的常量）的乘积</li>
-<li>delta学习规则：该权重的改变值是前一个神经元的输出，和后一个神经元的期望输出和实际输出的差值函数值的乘积，以及学习速率（给定的常量）的乘积</li>
-</ol>
-<h5 id="单层感知器网络"><a href="#单层感知器网络" class="headerlink" title="单层感知器网络"></a>单层感知器网络</h5><p>响应函数：阈值函数$ F(x)=\begin{cases} 0  \\ 1   \end{cases}$</p>
-<p>解决：分类问题</p>
-<h5 id="线性神经网络"><a href="#线性神经网络" class="headerlink" title="线性神经网络"></a>线性神经网络</h5><p>响应函数：线性函数$F(x)=x$</p>
-<p>解决：线性拟合问题</p>
-<h5 id="W-H学习算法"><a href="#W-H学习算法" class="headerlink" title="W-H学习算法"></a>W-H学习算法</h5><p>误差：$E=|Y-Y_真|^2$</p>
-<p>响应函数类型：$Y=WX+B$</p>
-<p>梯度下降思想：用误差对响应函数求导，将WB将向导数反方向进行调整</p>
-<h5 id="BP神经网络（反向传播）"><a href="#BP神经网络（反向传播）" class="headerlink" title="BP神经网络（反向传播）"></a>BP神经网络（反向传播）</h5><p>模型：至少三层前向网络模型（输入层、隐含层、输出层）</p>
-<p>误差效能：$误差*输出层响应函数的求导$</p>
-<p>隐含层权重的修正量：$学习率<em>后一个神经元的误差效能</em>前一个神经元的输入$</p>
-<p>解决：非线性问题</p>
-<h4 id="进化计算"><a href="#进化计算" class="headerlink" title="进化计算"></a>进化计算</h4><h5 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h5><ul>
-<li>自然选择、优胜略汰</li>
-<li>生物遗传学</li>
-<li>随机自适应的全局搜索算法</li>
-</ul>
-<h5 id="遗传算法"><a href="#遗传算法" class="headerlink" title="遗传算法"></a>遗传算法</h5><ol>
-<li><p>编码与译码：问题的解转换为位串形式，反正为译码</p>
-<ul>
-<li>基因型（染色体）：位串<ul>
-<li>染色体长度：位串长度</li>
-<li>基因位：位串的一位</li>
-</ul>
-</li>
-<li>表现型：解码后的位串</li>
-<li>解空间：表现型的空间</li>
-<li>编码空间：基因型空间，搜索空间</li>
-<li>编码：位串与解空间的映射</li>
-<li>种群：个体集合（遗传算法中种群规模不变）</li>
-</ul>
-</li>
-<li><p>适应度函数</p>
-<ul>
-<li>评价个体的优秀程度</li>
-<li>越优秀函数值越大</li>
-<li>函数值都大于等于零</li>
-</ul>
-</li>
-<li><p>遗传操作</p>
-<ol>
-<li><p>选择：轮盘赌、转轮法</p>
-<ol>
-<li>染色体的选择概率：$\frac{该个体适应度函数值} {所有个体适应度函数值之和}$</li>
-<li>每个个体的累计概率：$当前选择概率+之前所有个体选择概率$</li>
-<li>产生随机数，根据随机数大小在累计概率那个区间，选择出个体，放入交配池</li>
-</ol>
-</li>
-<li><p>交叉</p>
-<ul>
-<li><p>交叉概率：根据交叉概率，选取交叉多少对个体</p>
-</li>
-<li><p>随机选择交配池中的两条染色体，随机指定一点或多点交叉位置，进行交换，得到两条新染色体</p>
-</li>
-</ul>
-</li>
-<li><p>变异</p>
-<ul>
-<li>根据变异概率在交叉后的新个体中选择个体变异</li>
-</ul>
-</li>
-</ol>
-</li>
-</ol>
-<h4 id="模糊计算"><a href="#模糊计算" class="headerlink" title="模糊计算"></a>模糊计算</h4>]]></content>
-      <categories>
-        <category>人工智能</category>
       </categories>
       <tags>
         <tag>笔记</tag>
