@@ -1478,232 +1478,6 @@
       </tags>
   </entry>
   <entry>
-    <title>面向对象系统分析与设计</title>
-    <url>/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h2 id="面向对象系统开发概述"><a href="#面向对象系统开发概述" class="headerlink" title="面向对象系统开发概述"></a>面向对象系统开发概述</h2><h3 id="系统与系统思想"><a href="#系统与系统思想" class="headerlink" title="系统与系统思想"></a>系统与系统思想</h3><ul>
-<li>系统<ul>
-<li>components（部件）：系统是由若干要素组成的集合体</li>
-<li>Interrelationship（相互关系）：系统有一定的结构，同一系统元素之间相互联系相互作用</li>
-<li>Boundary（边界）：划分系统内部和外部的界限</li>
-<li>Interface（接口）：系统与其所处环境相连接点，是系统对外表现的行为</li>
-<li>环境：系统边界之外影响该系统</li>
-<li>input（输入）：从环境到系统的输入数据</li>
-<li>output（输出）：从系统到环境的输出数据</li>
-</ul>
-</li>
-<li>系统特性<ul>
-<li>系统多元性：多个部件构成</li>
-<li>系统相关性：部件之间有相互依赖与作用关系</li>
-<li>系统层次性；多个子系统构成整个系统</li>
-<li>系统的整体性：不是简单的部件组合，系统有新的性质和行为</li>
-</ul>
-</li>
-<li>系统相关概念<ul>
-<li>系统分解：将系统分解为更小要素单元，子系统或最终单元</li>
-<li>模块化：系统分解直接后果</li>
-<li>耦合：子系统间的相互依赖（高内聚低耦合）</li>
-<li>内聚：子系统仅实现的单元功能（高内聚低耦合）</li>
-</ul>
-</li>
-<li>系统思想：从定义需求出发，明确目标，设计满足需求的系统</li>
-</ul>
-<h3 id="信息系统概述"><a href="#信息系统概述" class="headerlink" title="信息系统概述"></a>信息系统概述</h3><h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
-<li>事务处理系统（TPS）：也被称为数据处理系统(data processing system，DPS)，面向企业最底层的管理系统</li>
-<li>管理信息系统（MIS）：以事务处理系统为基础，对事务处理系统获得数据进行分析</li>
-<li>决策支持系统（DDS）：在管理信息系统基础上，服务于高层决策的管理信息系统</li>
-<li>专家系统：模拟人类专家解决问题的计算机程序系统</li>
-<li>办公自动化（OA）：利用现代化设备和信息化技术，代替手工办公</li>
-</ul>
-<h4 id="信息系统的分析与设计"><a href="#信息系统的分析与设计" class="headerlink" title="信息系统的分析与设计"></a>信息系统的分析与设计</h4><h5 id="系统常用开发方式"><a href="#系统常用开发方式" class="headerlink" title="系统常用开发方式"></a>系统常用开发方式</h5><ul>
-<li>独立开发方式</li>
-<li>委托开发方式</li>
-<li>合作开发方式</li>
-<li>购买现成软件</li>
-</ul>
-<h5 id="SDLC—-System-Development-Life-Cycle（系统开发生命周期）"><a href="#SDLC—-System-Development-Life-Cycle（系统开发生命周期）" class="headerlink" title="SDLC—- System Development Life Cycle（系统开发生命周期）"></a>SDLC—- System Development Life Cycle（系统开发生命周期）</h5><p>项目管理与计划：定义需求，指定项目计划</p>
-<p>系统分析：确定需求，研究需求，申城初始设计方案</p>
-<p>系统设计：逻辑设计，物理设计（决定用的编程语音和数据库等）</p>
-<p>系统实现与运转：编码、测试</p>
-<h5 id="结构化开发方式"><a href="#结构化开发方式" class="headerlink" title="结构化开发方式"></a>结构化开发方式</h5><p>四阶段：计划与选择，分析，设计，实现与操作</p>
-<p>基本思想：自顶向下、逐步求精，分阶段实现的软件开发方法</p>
-<h5 id="原型化开发方式"><a href="#原型化开发方式" class="headerlink" title="原型化开发方式"></a>原型化开发方式</h5><p>明确用户的基本需求后，构建系统原型，然后反复对原型进行修改，使之逐步完善，直到用户对系统完全满意为止。</p>
-<h4 id="面向对象的系统分析与设计"><a href="#面向对象的系统分析与设计" class="headerlink" title="面向对象的系统分析与设计"></a>面向对象的系统分析与设计</h4><ul>
-<li>面向对象开发（Object Oriented ，简称OO方法）：用面向对象方法模拟客观世界，子系统相对独立，便于维护</li>
-<li>迭代递增<ul>
-<li>迭代方法：经历若干时间周期增长、改进和细化方法来开发软件部分</li>
-<li>递增方法：逐个部分开发，这些部分渐进集成和测试</li>
-</ul>
-</li>
-<li>RUP（Rational Unified Process，统一软件开发过程）<ul>
-<li>初始阶段：确定项目作用域和业务用例</li>
-<li>细化阶段：细化项目需求分析</li>
-<li>构造阶段：写程序设计和源代码</li>
-<li>交付阶段：将系统交付用户</li>
-</ul>
-</li>
-</ul>
-<h2 id="面向对象导论"><a href="#面向对象导论" class="headerlink" title="面向对象导论"></a>面向对象导论</h2><p>对象：对客观世界具体的或抽象的事物</p>
-<p>类：类是对对象的抽象</p>
-<p>抽象：对复杂世界的简单表示</p>
-<p>类和类之间的关系：</p>
-<ul>
-<li>关联：同一个类实例化的对象之间的关系</li>
-<li>聚合：整体消失，部分不消失</li>
-<li>组合：整体消失，部分也消失</li>
-</ul>
-<p>封装：把对象属性和行为结合成一个独立单位，外界不能直接访问这些数据和代码，只能通过接口函数来访问</p>
-<p>继承：是机制，子类自动拥有父类非私有属性和方法</p>
-<p>多态：使用指向父类的指针，能调用子类对象，表现有重载和覆盖</p>
-<h2 id="UML模型图介绍"><a href="#UML模型图介绍" class="headerlink" title="UML模型图介绍"></a>UML模型图介绍</h2><h3 id="结构图（静态）"><a href="#结构图（静态）" class="headerlink" title="结构图（静态）"></a>结构图（静态）</h3><h4 id="类图：一组类之间的关系"><a href="#类图：一组类之间的关系" class="headerlink" title="类图：一组类之间的关系"></a>类图：一组类之间的关系</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/类图.svg" alt="类图"></p>
-<h4 id="对象图（与类图类似，只不过是类的实例化）"><a href="#对象图（与类图类似，只不过是类的实例化）" class="headerlink" title="对象图（与类图类似，只不过是类的实例化）"></a>对象图（与类图类似，只不过是类的实例化）</h4><h4 id="组件图"><a href="#组件图" class="headerlink" title="组件图"></a>组件图</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/组件图.svg" alt="组件图"></p>
-<h4 id="部署图"><a href="#部署图" class="headerlink" title="部署图"></a>部署图</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/部署图.svg" alt="部署图"></p>
-<h3 id="行为图（动态）"><a href="#行为图（动态）" class="headerlink" title="行为图（动态）"></a>行为图（动态）</h3><h4 id="用例图：对外部角色和系统功能建模"><a href="#用例图：对外部角色和系统功能建模" class="headerlink" title="用例图：对外部角色和系统功能建模"></a>用例图：对外部角色和系统功能建模</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/用例图.svg" alt="用例图"></p>
-<h4 id="顺序图：时序方式说明对象之间的交互"><a href="#顺序图：时序方式说明对象之间的交互" class="headerlink" title="顺序图：时序方式说明对象之间的交互"></a>顺序图：时序方式说明对象之间的交互</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/顺序图.svg" alt="顺序图"></p>
-<h4 id="通信图：非时序方式说明对象之间的交互"><a href="#通信图：非时序方式说明对象之间的交互" class="headerlink" title="通信图：非时序方式说明对象之间的交互"></a>通信图：非时序方式说明对象之间的交互</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/通信图.svg" alt="通信图"></p>
-<h4 id="状态图：对象响应各种事件状态的改变"><a href="#状态图：对象响应各种事件状态的改变" class="headerlink" title="状态图：对象响应各种事件状态的改变"></a>状态图：对象响应各种事件状态的改变</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/状态图.svg" alt="状态图"></p>
-<h4 id="活动图：一个活动（对象）到另一个活动（对象）的工作流"><a href="#活动图：一个活动（对象）到另一个活动（对象）的工作流" class="headerlink" title="活动图：一个活动（对象）到另一个活动（对象）的工作流"></a>活动图：一个活动（对象）到另一个活动（对象）的工作流</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/活动图.svg" alt="活动图"></p>
-<h2 id="面向对象项目管理"><a href="#面向对象项目管理" class="headerlink" title="面向对象项目管理"></a>面向对象项目管理</h2><h3 id="面向对象项目特点"><a href="#面向对象项目特点" class="headerlink" title="面向对象项目特点"></a>面向对象项目特点</h3><ul>
-<li>主要特点：迭代、递增</li>
-<li>将系统定义为一组组件（组件又称垂直切片，即一个系统用例）</li>
-<li>首先处理难题：可减少项目风险</li>
-<li>使用迭代来管理项目：<ul>
-<li>每次迭代都执行系统开发周期活动，包括管理与计划、分析、设计、实现与运转</li>
-<li>迭代输入就是上一次迭代的结果和当前期间要完成的项目组件，输出也是下一次迭代的输入</li>
-</ul>
-</li>
-<li>不要在前期计划的过于详细</li>
-<li>每个阶段的重点不同<ul>
-<li>初始阶段重点：分析</li>
-<li>细化阶段重点：设计</li>
-<li>构建阶段重点：实现</li>
-<li>转换阶段重点：运转</li>
-</ul>
-</li>
-</ul>
-<h3 id="面向对象的项目四个阶段"><a href="#面向对象的项目四个阶段" class="headerlink" title="面向对象的项目四个阶段"></a>面向对象的项目四个阶段</h3><ol>
-<li>初始</li>
-<li>细化</li>
-<li>构建</li>
-<li>转换</li>
-</ol>
-<h3 id="项目管理过程的四个阶段"><a href="#项目管理过程的四个阶段" class="headerlink" title="项目管理过程的四个阶段"></a>项目管理过程的四个阶段</h3><ol>
-<li>项目启动：估计项目规模、作用域、复杂度、并建立支持后续工作的规程</li>
-<li>项目计划：明确离散活动和完成这些活动所需要的工作</li>
-<li>项目执行：执行基准项目计划（简称BPP：结构化走查方式评审；项目章程SOW给用户看），并加以监控</li>
-<li>项目关闭：结束一个项目</li>
-</ol>
-<h3 id="项目进度计划（PM-项目经理）"><a href="#项目进度计划（PM-项目经理）" class="headerlink" title="项目进度计划（PM=项目经理）"></a>项目进度计划（PM=项目经理）</h3><h4 id="甘特图"><a href="#甘特图" class="headerlink" title="甘特图"></a>甘特图</h4><p>侧轴：任务列表</p>
-<p>横轴：日期</p>
-<p>需要了解：各个任务，任务开始时间，任务持续时间，根据日期来追踪项目进度</p>
-<h4 id="网络图"><a href="#网络图" class="headerlink" title="网络图"></a>网络图</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/网络图.svg" alt="网络图"></p>
-<p>正推最早：多个前趋取最大，第一个最早开始时间假设为0</p>
-<p>逆推最晚：多个前趋取最小，最后一个最晚结束时间假设与最早结束时间相等</p>
-<p>富裕时间：最早开始减最晚开始，或最早完成减最晚完成</p>
-<p>关键路径：富裕时间为0的活动串，即为关键路径</p>
-<h2 id="项目的管理和计划"><a href="#项目的管理和计划" class="headerlink" title="项目的管理和计划"></a>项目的管理和计划</h2><h3 id="经济可行性分析"><a href="#经济可行性分析" class="headerlink" title="经济可行性分析"></a>经济可行性分析</h3><p>资金时间价值：$n年折扣率=\frac {n-1年折扣率}{(1+题目折扣率)^n}$、$现在的价值=收益*折扣率$</p>
-<p>投资回报率：$总净现值/总成本$</p>
-<p>收支平衡比例(总净现值为正的拐点)：$(年净现值-总净现值)/年净现值$</p>
-<h3 id="技术可行性分析"><a href="#技术可行性分析" class="headerlink" title="技术可行性分析"></a>技术可行性分析</h3><h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><h3 id="传统需求获取方法"><a href="#传统需求获取方法" class="headerlink" title="传统需求获取方法"></a>传统需求获取方法</h3><ul>
-<li>访谈与倾听</li>
-<li>问卷</li>
-<li>观察工作人员</li>
-<li>业务文档</li>
-</ul>
-<h3 id="现代需求获取方法"><a href="#现代需求获取方法" class="headerlink" title="现代需求获取方法"></a>现代需求获取方法</h3><ul>
-<li>联合应用程序设计（JAD）</li>
-<li>原型化</li>
-</ul>
-<h2 id="用例分析"><a href="#用例分析" class="headerlink" title="用例分析"></a>用例分析</h2><h3 id="功能性需求"><a href="#功能性需求" class="headerlink" title="功能性需求"></a>功能性需求</h3><p>系统必须能做什么</p>
-<h3 id="非功能性需求"><a href="#非功能性需求" class="headerlink" title="非功能性需求"></a>非功能性需求</h3><ul>
-<li>性能需求</li>
-<li>可靠性需求：失效频率，易恢复性、故障预测性</li>
-<li>易用性需求：易上手</li>
-<li>可保障性需求：可维护可扩展</li>
-<li>安全性需求</li>
-<li>运行环境需求</li>
-<li>接口需求</li>
-</ul>
-<h3 id="用例图"><a href="#用例图" class="headerlink" title="用例图"></a>用例图</h3><ul>
-<li>参与者</li>
-<li>用例</li>
-<li>系统边界</li>
-<li>连接</li>
-<li>用例关系<ul>
-<li>扩展关系：可选或特定条件下执行的用例</li>
-<li>包含关系：对重复行为的抽离</li>
-</ul>
-</li>
-</ul>
-<h3 id="用例描述"><a href="#用例描述" class="headerlink" title="用例描述"></a>用例描述</h3><p>用例名称</p>
-<p>参与者</p>
-<p>简要描述</p>
-<p>前置条件：用例开始之前需要满足的条件</p>
-<p>后置条件：用例结束后的成功保证</p>
-<p>主事件流：成功的业务流程</p>
-<h2 id="数据概念模型"><a href="#数据概念模型" class="headerlink" title="数据概念模型"></a>数据概念模型</h2><h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
-<li>简单属性：简单数据项</li>
-<li>标识符：即主键，用<code>&lt;&lt;PK&gt;&gt;</code>来表示</li>
-<li>多值属性：同时包含多个值的属性，用<code>&lt;&lt;Multivalued&gt;&gt;</code>表示（例如电话号码，一个人可以有好多个）</li>
-<li>组合属性：相关属性的组合（类的嵌套，如地址）</li>
-</ul>
-<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><h4 id="实体"><a href="#实体" class="headerlink" title="实体"></a>实体</h4><ul>
-<li>一元关系（一度）</li>
-<li>二元关系（二度）</li>
-<li>多元关系（多度）</li>
-</ul>
-<h4 id="类-1"><a href="#类-1" class="headerlink" title="类"></a>类</h4><p>越往下关系越强</p>
-<ul>
-<li>依赖：使用关系，虚线箭头</li>
-<li>关联：拥有关系，实线</li>
-<li>聚合：整体消失部分不消失，实线空心菱形箭头</li>
-<li>组合：整体消失部分消失，实线实心菱形箭头</li>
-<li>实现：类实现接口，虚线空心三角箭头</li>
-<li>泛化：继承，实线空心三角箭头</li>
-</ul>
-<h2 id="对象关系建模"><a href="#对象关系建模" class="headerlink" title="对象关系建模"></a>对象关系建模</h2><h3 id="关系-1"><a href="#关系-1" class="headerlink" title="关系"></a>关系</h3><ul>
-<li>继承</li>
-<li>多值属性</li>
-<li>聚合或组合</li>
-<li>其他面向对象扩展</li>
-</ul>
-<h2 id="判定表"><a href="#判定表" class="headerlink" title="判定表"></a>判定表</h2><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/判定表.svg" alt="判定表"></p>
-<h2 id="物理数据库设计（索引）"><a href="#物理数据库设计（索引）" class="headerlink" title="物理数据库设计（索引）"></a>物理数据库设计（索引）</h2><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>表名</th>
-<th>行对象数目</th>
-<th>单行字节数</th>
-<th>分块因子</th>
-<th>总块数</th>
-<th>总扫描时间</th>
-<th>索引</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>已知</td>
-<td>已知</td>
-<td>已知</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>分块因子=数据块大小(B)÷单行对象字节数(B)</p>
-<p>总数据块数=行对象数÷分块因子</p>
-<p>总扫描时间=总数据块数*磁盘块扫描时间</p>
-]]></content>
-      <categories>
-        <category>面向对象系统分析与设计</category>
-      </categories>
-      <tags>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>人工智能</title>
     <url>/2020/05/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</url>
     <content><![CDATA[<h3 id="人工智能的三大学派"><a href="#人工智能的三大学派" class="headerlink" title="人工智能的三大学派"></a>人工智能的三大学派</h3><p>符号学派：专家系统：智能行为</p>
@@ -2000,7 +1774,7 @@
 </li>
 <li>贝叶斯公式<ul>
 <li>事件A：各个事件互不相容，并集是整个样本空间</li>
-<li>事件B则有：$P(A_i|B)= \frac{P(A_i)<em>P(B|A_i)}{\sum\limits_{j=1}^{n} P(A_j)</em>P(B|A_j)}$</li>
+<li>事件B则有：<script type="math/tex">P(A_i|B)= \frac{P(A_i)*P(B|A_i)}{\sum\limits_{j=1}^{n} P(A_j)*P(B|A_j)}</script></li>
 </ul>
 </li>
 </ul>
@@ -3047,6 +2821,232 @@
 ]]></content>
       <categories>
         <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面向对象系统分析与设计</title>
+    <url>/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h2 id="面向对象系统开发概述"><a href="#面向对象系统开发概述" class="headerlink" title="面向对象系统开发概述"></a>面向对象系统开发概述</h2><h3 id="系统与系统思想"><a href="#系统与系统思想" class="headerlink" title="系统与系统思想"></a>系统与系统思想</h3><ul>
+<li>系统<ul>
+<li>components（部件）：系统是由若干要素组成的集合体</li>
+<li>Interrelationship（相互关系）：系统有一定的结构，同一系统元素之间相互联系相互作用</li>
+<li>Boundary（边界）：划分系统内部和外部的界限</li>
+<li>Interface（接口）：系统与其所处环境相连接点，是系统对外表现的行为</li>
+<li>环境：系统边界之外影响该系统</li>
+<li>input（输入）：从环境到系统的输入数据</li>
+<li>output（输出）：从系统到环境的输出数据</li>
+</ul>
+</li>
+<li>系统特性<ul>
+<li>系统多元性：多个部件构成</li>
+<li>系统相关性：部件之间有相互依赖与作用关系</li>
+<li>系统层次性；多个子系统构成整个系统</li>
+<li>系统的整体性：不是简单的部件组合，系统有新的性质和行为</li>
+</ul>
+</li>
+<li>系统相关概念<ul>
+<li>系统分解：将系统分解为更小要素单元，子系统或最终单元</li>
+<li>模块化：系统分解直接后果</li>
+<li>耦合：子系统间的相互依赖（高内聚低耦合）</li>
+<li>内聚：子系统仅实现的单元功能（高内聚低耦合）</li>
+</ul>
+</li>
+<li>系统思想：从定义需求出发，明确目标，设计满足需求的系统</li>
+</ul>
+<h3 id="信息系统概述"><a href="#信息系统概述" class="headerlink" title="信息系统概述"></a>信息系统概述</h3><h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
+<li>事务处理系统（TPS）：也被称为数据处理系统(data processing system，DPS)，面向企业最底层的管理系统</li>
+<li>管理信息系统（MIS）：以事务处理系统为基础，对事务处理系统获得数据进行分析</li>
+<li>决策支持系统（DDS）：在管理信息系统基础上，服务于高层决策的管理信息系统</li>
+<li>专家系统：模拟人类专家解决问题的计算机程序系统</li>
+<li>办公自动化（OA）：利用现代化设备和信息化技术，代替手工办公</li>
+</ul>
+<h4 id="信息系统的分析与设计"><a href="#信息系统的分析与设计" class="headerlink" title="信息系统的分析与设计"></a>信息系统的分析与设计</h4><h5 id="系统常用开发方式"><a href="#系统常用开发方式" class="headerlink" title="系统常用开发方式"></a>系统常用开发方式</h5><ul>
+<li>独立开发方式</li>
+<li>委托开发方式</li>
+<li>合作开发方式</li>
+<li>购买现成软件</li>
+</ul>
+<h5 id="SDLC—-System-Development-Life-Cycle（系统开发生命周期）"><a href="#SDLC—-System-Development-Life-Cycle（系统开发生命周期）" class="headerlink" title="SDLC—- System Development Life Cycle（系统开发生命周期）"></a>SDLC—- System Development Life Cycle（系统开发生命周期）</h5><p>项目管理与计划：定义需求，指定项目计划</p>
+<p>系统分析：确定需求，研究需求，申城初始设计方案</p>
+<p>系统设计：逻辑设计，物理设计（决定用的编程语音和数据库等）</p>
+<p>系统实现与运转：编码、测试</p>
+<h5 id="结构化开发方式"><a href="#结构化开发方式" class="headerlink" title="结构化开发方式"></a>结构化开发方式</h5><p>四阶段：计划与选择，分析，设计，实现与操作</p>
+<p>基本思想：自顶向下、逐步求精，分阶段实现的软件开发方法</p>
+<h5 id="原型化开发方式"><a href="#原型化开发方式" class="headerlink" title="原型化开发方式"></a>原型化开发方式</h5><p>明确用户的基本需求后，构建系统原型，然后反复对原型进行修改，使之逐步完善，直到用户对系统完全满意为止。</p>
+<h4 id="面向对象的系统分析与设计"><a href="#面向对象的系统分析与设计" class="headerlink" title="面向对象的系统分析与设计"></a>面向对象的系统分析与设计</h4><ul>
+<li>面向对象开发（Object Oriented ，简称OO方法）：用面向对象方法模拟客观世界，子系统相对独立，便于维护</li>
+<li>迭代递增<ul>
+<li>迭代方法：经历若干时间周期增长、改进和细化方法来开发软件部分</li>
+<li>递增方法：逐个部分开发，这些部分渐进集成和测试</li>
+</ul>
+</li>
+<li>RUP（Rational Unified Process，统一软件开发过程）<ul>
+<li>初始阶段：确定项目作用域和业务用例</li>
+<li>细化阶段：细化项目需求分析</li>
+<li>构造阶段：写程序设计和源代码</li>
+<li>交付阶段：将系统交付用户</li>
+</ul>
+</li>
+</ul>
+<h2 id="面向对象导论"><a href="#面向对象导论" class="headerlink" title="面向对象导论"></a>面向对象导论</h2><p>对象：对客观世界具体的或抽象的事物</p>
+<p>类：类是对对象的抽象</p>
+<p>抽象：对复杂世界的简单表示</p>
+<p>类和类之间的关系：</p>
+<ul>
+<li>关联：同一个类实例化的对象之间的关系</li>
+<li>聚合：整体消失，部分不消失</li>
+<li>组合：整体消失，部分也消失</li>
+</ul>
+<p>封装：把对象属性和行为结合成一个独立单位，外界不能直接访问这些数据和代码，只能通过接口函数来访问</p>
+<p>继承：是机制，子类自动拥有父类非私有属性和方法</p>
+<p>多态：使用指向父类的指针，能调用子类对象，表现有重载和覆盖</p>
+<h2 id="UML模型图介绍"><a href="#UML模型图介绍" class="headerlink" title="UML模型图介绍"></a>UML模型图介绍</h2><h3 id="结构图（静态）"><a href="#结构图（静态）" class="headerlink" title="结构图（静态）"></a>结构图（静态）</h3><h4 id="类图：一组类之间的关系"><a href="#类图：一组类之间的关系" class="headerlink" title="类图：一组类之间的关系"></a>类图：一组类之间的关系</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/类图.svg" alt="类图"></p>
+<h4 id="对象图（与类图类似，只不过是类的实例化）"><a href="#对象图（与类图类似，只不过是类的实例化）" class="headerlink" title="对象图（与类图类似，只不过是类的实例化）"></a>对象图（与类图类似，只不过是类的实例化）</h4><h4 id="组件图"><a href="#组件图" class="headerlink" title="组件图"></a>组件图</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/组件图.svg" alt="组件图"></p>
+<h4 id="部署图"><a href="#部署图" class="headerlink" title="部署图"></a>部署图</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/部署图.svg" alt="部署图"></p>
+<h3 id="行为图（动态）"><a href="#行为图（动态）" class="headerlink" title="行为图（动态）"></a>行为图（动态）</h3><h4 id="用例图：对外部角色和系统功能建模"><a href="#用例图：对外部角色和系统功能建模" class="headerlink" title="用例图：对外部角色和系统功能建模"></a>用例图：对外部角色和系统功能建模</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/用例图.svg" alt="用例图"></p>
+<h4 id="顺序图：时序方式说明对象之间的交互"><a href="#顺序图：时序方式说明对象之间的交互" class="headerlink" title="顺序图：时序方式说明对象之间的交互"></a>顺序图：时序方式说明对象之间的交互</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/顺序图.svg" alt="顺序图"></p>
+<h4 id="通信图：非时序方式说明对象之间的交互"><a href="#通信图：非时序方式说明对象之间的交互" class="headerlink" title="通信图：非时序方式说明对象之间的交互"></a>通信图：非时序方式说明对象之间的交互</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/通信图.svg" alt="通信图"></p>
+<h4 id="状态图：对象响应各种事件状态的改变"><a href="#状态图：对象响应各种事件状态的改变" class="headerlink" title="状态图：对象响应各种事件状态的改变"></a>状态图：对象响应各种事件状态的改变</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/状态图.svg" alt="状态图"></p>
+<h4 id="活动图：一个活动（对象）到另一个活动（对象）的工作流"><a href="#活动图：一个活动（对象）到另一个活动（对象）的工作流" class="headerlink" title="活动图：一个活动（对象）到另一个活动（对象）的工作流"></a>活动图：一个活动（对象）到另一个活动（对象）的工作流</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/活动图.svg" alt="活动图"></p>
+<h2 id="面向对象项目管理"><a href="#面向对象项目管理" class="headerlink" title="面向对象项目管理"></a>面向对象项目管理</h2><h3 id="面向对象项目特点"><a href="#面向对象项目特点" class="headerlink" title="面向对象项目特点"></a>面向对象项目特点</h3><ul>
+<li>主要特点：迭代、递增</li>
+<li>将系统定义为一组组件（组件又称垂直切片，即一个系统用例）</li>
+<li>首先处理难题：可减少项目风险</li>
+<li>使用迭代来管理项目：<ul>
+<li>每次迭代都执行系统开发周期活动，包括管理与计划、分析、设计、实现与运转</li>
+<li>迭代输入就是上一次迭代的结果和当前期间要完成的项目组件，输出也是下一次迭代的输入</li>
+</ul>
+</li>
+<li>不要在前期计划的过于详细</li>
+<li>每个阶段的重点不同<ul>
+<li>初始阶段重点：分析</li>
+<li>细化阶段重点：设计</li>
+<li>构建阶段重点：实现</li>
+<li>转换阶段重点：运转</li>
+</ul>
+</li>
+</ul>
+<h3 id="面向对象的项目四个阶段"><a href="#面向对象的项目四个阶段" class="headerlink" title="面向对象的项目四个阶段"></a>面向对象的项目四个阶段</h3><ol>
+<li>初始</li>
+<li>细化</li>
+<li>构建</li>
+<li>转换</li>
+</ol>
+<h3 id="项目管理过程的四个阶段"><a href="#项目管理过程的四个阶段" class="headerlink" title="项目管理过程的四个阶段"></a>项目管理过程的四个阶段</h3><ol>
+<li>项目启动：估计项目规模、作用域、复杂度、并建立支持后续工作的规程</li>
+<li>项目计划：明确离散活动和完成这些活动所需要的工作</li>
+<li>项目执行：执行基准项目计划（简称BPP：结构化走查方式评审；项目章程SOW给用户看），并加以监控</li>
+<li>项目关闭：结束一个项目</li>
+</ol>
+<h3 id="项目进度计划（PM-项目经理）"><a href="#项目进度计划（PM-项目经理）" class="headerlink" title="项目进度计划（PM=项目经理）"></a>项目进度计划（PM=项目经理）</h3><h4 id="甘特图"><a href="#甘特图" class="headerlink" title="甘特图"></a>甘特图</h4><p>侧轴：任务列表</p>
+<p>横轴：日期</p>
+<p>需要了解：各个任务，任务开始时间，任务持续时间，根据日期来追踪项目进度</p>
+<h4 id="网络图"><a href="#网络图" class="headerlink" title="网络图"></a>网络图</h4><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/网络图.svg" alt="网络图"></p>
+<p>正推最早：多个前趋取最大，第一个最早开始时间假设为0</p>
+<p>逆推最晚：多个前趋取最小，最后一个最晚结束时间假设与最早结束时间相等</p>
+<p>富裕时间：最早开始减最晚开始，或最早完成减最晚完成</p>
+<p>关键路径：富裕时间为0的活动串，即为关键路径</p>
+<h2 id="项目的管理和计划"><a href="#项目的管理和计划" class="headerlink" title="项目的管理和计划"></a>项目的管理和计划</h2><h3 id="经济可行性分析"><a href="#经济可行性分析" class="headerlink" title="经济可行性分析"></a>经济可行性分析</h3><p>资金时间价值：$n年折扣率=\frac {n-1年折扣率}{(1+题目折扣率)^n}$、$现在的价值=收益*折扣率$</p>
+<p>投资回报率：$总净现值/总成本$</p>
+<p>收支平衡比例(总净现值为正的拐点)：$(年净现值-总净现值)/年净现值$</p>
+<h3 id="技术可行性分析"><a href="#技术可行性分析" class="headerlink" title="技术可行性分析"></a>技术可行性分析</h3><h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><h3 id="传统需求获取方法"><a href="#传统需求获取方法" class="headerlink" title="传统需求获取方法"></a>传统需求获取方法</h3><ul>
+<li>访谈与倾听</li>
+<li>问卷</li>
+<li>观察工作人员</li>
+<li>业务文档</li>
+</ul>
+<h3 id="现代需求获取方法"><a href="#现代需求获取方法" class="headerlink" title="现代需求获取方法"></a>现代需求获取方法</h3><ul>
+<li>联合应用程序设计（JAD）</li>
+<li>原型化</li>
+</ul>
+<h2 id="用例分析"><a href="#用例分析" class="headerlink" title="用例分析"></a>用例分析</h2><h3 id="功能性需求"><a href="#功能性需求" class="headerlink" title="功能性需求"></a>功能性需求</h3><p>系统必须能做什么</p>
+<h3 id="非功能性需求"><a href="#非功能性需求" class="headerlink" title="非功能性需求"></a>非功能性需求</h3><ul>
+<li>性能需求</li>
+<li>可靠性需求：失效频率，易恢复性、故障预测性</li>
+<li>易用性需求：易上手</li>
+<li>可保障性需求：可维护可扩展</li>
+<li>安全性需求</li>
+<li>运行环境需求</li>
+<li>接口需求</li>
+</ul>
+<h3 id="用例图"><a href="#用例图" class="headerlink" title="用例图"></a>用例图</h3><ul>
+<li>参与者</li>
+<li>用例</li>
+<li>系统边界</li>
+<li>连接</li>
+<li>用例关系<ul>
+<li>扩展关系：可选或特定条件下执行的用例</li>
+<li>包含关系：对重复行为的抽离</li>
+</ul>
+</li>
+</ul>
+<h3 id="用例描述"><a href="#用例描述" class="headerlink" title="用例描述"></a>用例描述</h3><p>用例名称</p>
+<p>参与者</p>
+<p>简要描述</p>
+<p>前置条件：用例开始之前需要满足的条件</p>
+<p>后置条件：用例结束后的成功保证</p>
+<p>主事件流：成功的业务流程</p>
+<h2 id="数据概念模型"><a href="#数据概念模型" class="headerlink" title="数据概念模型"></a>数据概念模型</h2><h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
+<li>简单属性：简单数据项</li>
+<li>标识符：即主键，用<code>&lt;&lt;PK&gt;&gt;</code>来表示</li>
+<li>多值属性：同时包含多个值的属性，用<code>&lt;&lt;Multivalued&gt;&gt;</code>表示（例如电话号码，一个人可以有好多个）</li>
+<li>组合属性：相关属性的组合（类的嵌套，如地址）</li>
+</ul>
+<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><h4 id="实体"><a href="#实体" class="headerlink" title="实体"></a>实体</h4><ul>
+<li>一元关系（一度）</li>
+<li>二元关系（二度）</li>
+<li>多元关系（多度）</li>
+</ul>
+<h4 id="类-1"><a href="#类-1" class="headerlink" title="类"></a>类</h4><p>越往下关系越强</p>
+<ul>
+<li>依赖：使用关系，虚线箭头</li>
+<li>关联：拥有关系，实线</li>
+<li>聚合：整体消失部分不消失，实线空心菱形箭头</li>
+<li>组合：整体消失部分消失，实线实心菱形箭头</li>
+<li>实现：类实现接口，虚线空心三角箭头</li>
+<li>泛化：继承，实线空心三角箭头</li>
+</ul>
+<h2 id="对象关系建模"><a href="#对象关系建模" class="headerlink" title="对象关系建模"></a>对象关系建模</h2><h3 id="关系-1"><a href="#关系-1" class="headerlink" title="关系"></a>关系</h3><ul>
+<li>继承</li>
+<li>多值属性</li>
+<li>聚合或组合</li>
+<li>其他面向对象扩展</li>
+</ul>
+<h2 id="判定表"><a href="#判定表" class="headerlink" title="判定表"></a>判定表</h2><p><img src="/2020/05/12/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/判定表.svg" alt="判定表"></p>
+<h2 id="物理数据库设计（索引）"><a href="#物理数据库设计（索引）" class="headerlink" title="物理数据库设计（索引）"></a>物理数据库设计（索引）</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>表名</th>
+<th>行对象数目</th>
+<th>单行字节数</th>
+<th>分块因子</th>
+<th>总块数</th>
+<th>总扫描时间</th>
+<th>索引</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>已知</td>
+<td>已知</td>
+<td>已知</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>分块因子=数据块大小(B)÷单行对象字节数(B)</p>
+<p>总数据块数=行对象数÷分块因子</p>
+<p>总扫描时间=总数据块数*磁盘块扫描时间</p>
+]]></content>
+      <categories>
+        <category>面向对象系统分析与设计</category>
       </categories>
       <tags>
         <tag>笔记</tag>
